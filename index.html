@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. Contact: vivek@deepmanthan.ai -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeepManthan Juniors · Learn Science by Playing! (SSC Class 9 & 10)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#0b1020; --bg2:#0f1630; --panel:#151d38; --line:#26315a; --ink:#EAF0FF; --dim:#93a2c8;
+    --cyan:#38E1FF; --teal:#2DD4BF; --amber:#FFB454; --green:#5BE49B; --pink:#FF7BC0; --violet:#A78BFA; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{ font-family:'Nunito',sans-serif; background:radial-gradient(1000px 560px at 20% -10%,#26205e,transparent),radial-gradient(900px 500px at 90% 10%,#123a63,transparent),linear-gradient(160deg,var(--bg),var(--bg2)); color:var(--ink); min-height:100vh; }
+  h1,h2,h3{ font-family:'Baloo 2',cursive; }
+  .top{ display:flex; align-items:center; gap:12px; padding:16px 22px; }
+  .brand{ font-family:'Baloo 2'; font-weight:800; font-size:1.3rem; } .brand span{ color:var(--amber); }
+  .pill{ margin-left:auto; font-size:.72rem; font-weight:800; color:#05121c; background:var(--cyan); padding:5px 13px; border-radius:20px; }
+  .wrap{ max-width:1040px; margin:0 auto; padding:14px 20px 60px; }
+
+  .hero{ text-align:center; padding:24px 10px 6px; }
+  .hero .emji{ font-size:2.6rem; letter-spacing:6px; }
+  .hero h1{ font-size:clamp(2rem,6vw,3.2rem); margin:6px 0; background:linear-gradient(90deg,var(--cyan),var(--violet),var(--amber)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+  .hero p{ font-size:clamp(1rem,2.5vw,1.25rem); color:#cdd3ff; font-weight:700; max-width:600px; margin:0 auto; }
+
+  .subrow{ display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin:20px 0 6px; }
+  .sub{ font-family:'Baloo 2'; font-weight:700; font-size:.86rem; padding:7px 14px; border-radius:20px; border:2px solid var(--line); color:var(--dim); background:var(--panel); }
+  .sub.phys{ color:var(--cyan); border-color:rgba(56,225,255,.4); }
+
+  .lead{ text-align:center; color:var(--dim); font-weight:700; margin:14px 0 6px; }
+
+  .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px; margin-top:14px; }
+  a.tile{ text-decoration:none; color:inherit; background:var(--panel); border:2px solid var(--line); border-radius:22px; padding:20px; display:block; position:relative; transition:.18s; overflow:hidden; }
+  a.tile:hover{ transform:translateY(-5px); border-color:var(--c); box-shadow:0 16px 40px -18px var(--c); }
+  .tile .ic{ font-size:2.5rem; }
+  .tile h3{ font-size:1.3rem; margin:8px 0 4px; color:var(--c); }
+  .tile p{ color:#c7cdf5; font-weight:600; font-size:.92rem; }
+  .tile .cls{ position:absolute; top:16px; right:16px; font-size:.66rem; font-weight:800; color:#05121c; background:var(--c); padding:3px 10px; border-radius:20px; }
+  .tile .go{ margin-top:12px; font-family:'Baloo 2'; font-weight:700; color:var(--c); }
+  .tile.soon{ opacity:.55; pointer-events:none; }
+  .tile.soon .cls{ background:#3a4a78; color:#cdd3ff; }
+
+  .why{ background:linear-gradient(120deg,rgba(56,225,255,.1),rgba(167,139,250,.1)); border:2px solid rgba(255,255,255,.14); border-radius:22px; padding:22px; margin-top:30px; text-align:center; }
+  .why h2{ color:var(--amber); font-size:1.5rem; margin-bottom:8px; }
+  .why p{ color:#eaf0ff; font-weight:700; max-width:680px; margin:0 auto; }
+  .foot{ text-align:center; color:#8b93c7; font-size:.8rem; margin-top:26px; font-weight:600; }
+  .foot b{ color:#cdd3ff; }
+</style>
+</head>
+<body>
+  <div class="top">
+    <span class="brand">DeepManthan <span>Juniors</span></span>
+    <span class="pill">SSC · Class 9 &amp; 10</span>
+  </div>
+
+  <div class="wrap">
+    <div class="hero">
+      <div class="emji">🔬🎮⚡</div>
+      <h1>Learn Science by Playing!</h1>
+      <p>Tough concepts from your textbook — turned into things you can <b style="color:var(--amber)">touch, drag and play with</b>. Pick a lesson and start exploring! 🚀</p>
+    </div>
+
+    <div class="subrow">
+      <span class="sub phys">⚡ Physics</span>
+      <span class="sub">🧪 Chemistry</span>
+      <span class="sub">🌱 Biology</span>
+      <span class="sub">📐 Maths</span>
+    </div>
+    <div class="lead">✨ Ready to play — Physics interactives</div>
+
+    <div class="grid">
+      <a class="tile" href="juniors_light.html" style="--c:var(--cyan)">
+        <span class="cls">Class 10</span>
+        <div class="ic">🔦</div>
+        <h3>Light — Reflection &amp; Refraction</h3>
+        <p>Drag an object near mirrors &amp; lenses and watch the rays trace and the image form — real or virtual!</p>
+        <div class="go">Play →</div>
+      </a>
+      <a class="tile" href="juniors_circuit.html" style="--c:var(--violet)">
+        <span class="cls">Class 10</span>
+        <div class="ic">⚡</div>
+        <h3>Electric Circuits</h3>
+        <p>Build circuits, light the bulbs, discover Ohm's Law, and see why parallel beats series at home.</p>
+        <div class="go">Play →</div>
+      </a>
+      <a class="tile" href="juniors_motion.html" style="--c:var(--amber)">
+        <span class="cls">Class 9</span>
+        <div class="ic">🚗</div>
+        <h3>Motion &amp; Graphs</h3>
+        <p>Drive a car and watch its distance–time and velocity–time graphs draw themselves, live!</p>
+        <div class="go">Play →</div>
+      </a>
+
+      <div class="tile soon" style="--c:var(--green)"><span class="cls">Soon</span><div class="ic">🧪</div><h3>Balancing Equations</h3><p>Turn balancing chemical equations into a drag-and-drop puzzle game.</p><div class="go">Coming soon</div></div>
+      <div class="tile soon" style="--c:var(--pink)"><span class="cls">Soon</span><div class="ic">🌱</div><h3>Explore the Cell</h3><p>Click through a plant &amp; animal cell — every organelle, up close.</p><div class="go">Coming soon</div></div>
+      <div class="tile soon" style="--c:var(--teal)"><span class="cls">Soon</span><div class="ic">📐</div><h3>Trigonometry Circle</h3><p>Spin the unit circle and see sin, cos &amp; tan come alive.</p><div class="go">Coming soon</div></div>
+    </div>
+
+    <div class="why">
+      <h2>🌟 Why learn this way?</h2>
+      <p>You remember what you <b>do</b> far better than what you read. These playgrounds let you experiment, make mistakes safely, and <i>see</i> the science happen — so exam concepts finally click. 🎯</p>
+    </div>
+
+    <div class="foot">
+      Made with ❤️ by <b>DeepManthan AI</b> — a deep-tech company that builds real AI systems and loves teaching young minds.<br>
+      © 2026 DeepManthan AI · All Rights Reserved.
+    </div>
+  </div>
+</body>
+</html>
