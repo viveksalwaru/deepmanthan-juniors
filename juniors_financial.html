@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Financial Planning · DeepManthan Juniors (SSC Maths)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b1020;--bg2:#0f1630;--panel:#151d38;--line:#26315a;--ink:#EAF0FF;--dim:#93a2c8;--cyan:#38E1FF;--teal:#2DD4BF;--amber:#FFB454;--green:#5BE49B;--pink:#FF7BC0;--violet:#A78BFA;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(900px 500px at 80% -10%,#2a2450,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:var(--violet);padding:4px 12px;border-radius:20px}
+  .wrap{max-width:900px;margin:0 auto;padding:22px 18px 50px}
+  .hero{text-align:center;margin-bottom:14px}.hero h1{font-size:clamp(1.5rem,5vw,2.2rem);color:var(--violet)}.hero p{color:var(--dim);font-weight:700;max-width:660px;margin:4px auto 0}
+  .layout{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}
+  .card h3{color:var(--violet);margin-bottom:10px}
+  .ctl{margin:8px 0}.ctl label{display:flex;justify-content:space-between;font-weight:800;font-size:.82rem;margin-bottom:3px}.ctl label b{font-family:'Baloo 2';color:var(--amber)}
+  input[type=range]{width:100%;accent-color:var(--violet)}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 8px}
+  .chip{font-family:'Baloo 2';font-weight:700;font-size:.78rem;border:1px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:9px;padding:5px 9px;cursor:pointer}.chip.on{border-color:var(--violet);background:rgba(167,139,250,.18);color:#fff}
+  .rows{margin-top:6px}.row{display:flex;justify-content:space-between;padding:7px 10px;border-bottom:1px dashed var(--line);font-weight:700}.row b{font-family:'Baloo 2'}
+  .total{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:10px;margin-top:8px;text-align:center}.total .v{font-family:'Baloo 2';font-size:1.4rem;color:var(--green)}
+  .toggle2{display:flex;gap:6px;margin-bottom:8px}.t2{font-family:'Baloo 2';font-weight:700;font-size:.8rem;border:2px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:10px;padding:6px 11px;cursor:pointer}.t2.on{border-color:var(--violet);background:rgba(167,139,250,.18);color:#fff}
+  .idea{background:linear-gradient(120deg,rgba(167,139,250,.12),rgba(56,225,255,.1));border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:16px}
+  .idea h2{color:var(--violet);font-size:1.15rem;margin-bottom:6px}.idea li{margin:7px 0;font-weight:700;padding-left:22px;position:relative;list-style:none}.idea li::before{content:"💰";position:absolute;left:0}.idea b{color:var(--cyan)}
+  .foot{text-align:center;color:#6f7c9e;font-size:.78rem;margin-top:22px;font-weight:600}
+  @media(max-width:760px){.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html" class="back" onclick="if(history.length>1){history.back();return false;}location.href='index.html';return false;">← Back</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span><span class="tag">SSC · Maths</span>
+  </div>
+  <div class="wrap">
+    <div class="hero"><h1>💰 Financial Planning</h1><p>The maths of real money — <b style="color:var(--amber)">GST</b> on your bills and <b style="color:var(--green)">interest</b> on your savings!</p></div>
+    <div class="layout">
+      <div class="card">
+        <h3>🧾 GST Calculator</h3>
+        <div class="ctl"><label>Price (before GST) <b>₹<span id="pV">1000</span></b></label><input type="range" id="price" min="100" max="10000" step="100" value="1000"></div>
+        <div style="font-weight:800;font-size:.82rem;margin-bottom:4px">GST rate</div>
+        <div class="chips" id="gstChips"></div>
+        <div class="rows">
+          <div class="row"><span>Price</span><b id="rPrice">₹1000</b></div>
+          <div class="row"><span>CGST (half)</span><b id="rCgst" style="color:var(--cyan)">₹90</b></div>
+          <div class="row"><span>SGST (half)</span><b id="rSgst" style="color:var(--pink)">₹90</b></div>
+        </div>
+        <div class="total"><div style="font-size:.7rem;color:var(--dim);font-weight:800">TOTAL PAYABLE</div><div class="v" id="gTotal">₹1180</div></div>
+      </div>
+
+      <div class="card">
+        <h3>🏦 Interest Calculator</h3>
+        <div class="toggle2"><button class="t2 on" id="siBtn">Simple Interest</button><button class="t2" id="ciBtn">Compound Interest</button></div>
+        <div class="ctl"><label>Principal <b>₹<span id="prV">5000</span></b></label><input type="range" id="prin" min="1000" max="50000" step="1000" value="5000"></div>
+        <div class="ctl"><label>Rate <b><span id="rtV">8</span>% p.a.</b></label><input type="range" id="rate" min="1" max="15" step="1" value="8"></div>
+        <div class="ctl"><label>Time <b><span id="tmV">3</span> years</b></label><input type="range" id="time" min="1" max="10" step="1" value="3"></div>
+        <div class="rows">
+          <div class="row"><span id="iLabel">Interest earned</span><b id="rInt" style="color:var(--amber)">₹1200</b></div>
+        </div>
+        <div class="total"><div style="font-size:.7rem;color:var(--dim);font-weight:800">AMOUNT AFTER TIME</div><div class="v" id="iTotal">₹6200</div></div>
+      </div>
+    </div>
+    <div class="idea"><h2>🧠 The Big Idea</h2><ul>
+      <li><b>GST</b> (Goods &amp; Services Tax) is added to a price; within a state it splits equally into <b>CGST + SGST</b>.</li>
+      <li><b>Simple interest:</b> SI = P×R×T/100. <b>Compound interest</b> earns "interest on interest": A = P(1 + R/100)ᵀ.</li>
+      <li>These are the tools behind bills, loans, savings, shares &amp; SIPs — real-life money maths! 🪙</li>
+    </ul></div>
+    <div class="foot">DeepManthan Juniors · learn by playing · © 2026 DeepManthan AI — All Rights Reserved.</div>
+  </div>
+<script>
+  // GST
+  let gstRate=18;
+  const gstChips=document.getElementById('gstChips');
+  [5,12,18,28].forEach(r=>{ const b=document.createElement('button'); b.className='chip'+(r===18?' on':''); b.textContent=r+'%'; b.onclick=()=>{gstRate=r;[...gstChips.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');gst();}; gstChips.appendChild(b); });
+  function gst(){ const p=+document.getElementById('price').value; document.getElementById('pV').textContent=p;
+    const g=p*gstRate/100; document.getElementById('rPrice').textContent='₹'+p;
+    document.getElementById('rCgst').textContent='₹'+(+(g/2).toFixed(2));
+    document.getElementById('rSgst').textContent='₹'+(+(g/2).toFixed(2));
+    document.getElementById('gTotal').textContent='₹'+(+(p+g).toFixed(2));
+  }
+  document.getElementById('price').addEventListener('input',gst); gst();
+  // interest
+  let ci=false;
+  function interest(){ const P=+document.getElementById('prin').value, R=+document.getElementById('rate').value, T=+document.getElementById('time').value;
+    document.getElementById('prV').textContent=P;document.getElementById('rtV').textContent=R;document.getElementById('tmV').textContent=T;
+    let I,A; if(ci){ A=P*Math.pow(1+R/100,T); I=A-P; document.getElementById('iLabel').textContent='Compound interest'; } else { I=P*R*T/100; A=P+I; document.getElementById('iLabel').textContent='Simple interest'; }
+    document.getElementById('rInt').textContent='₹'+(+I.toFixed(2));
+    document.getElementById('iTotal').textContent='₹'+(+A.toFixed(2));
+  }
+  ['prin','rate','time'].forEach(id=>document.getElementById(id).addEventListener('input',interest));
+  document.getElementById('siBtn').onclick=()=>{ci=false;document.getElementById('siBtn').classList.add('on');document.getElementById('ciBtn').classList.remove('on');interest();};
+  document.getElementById('ciBtn').onclick=()=>{ci=true;document.getElementById('ciBtn').classList.add('on');document.getElementById('siBtn').classList.remove('on');interest();};
+  interest();
+</script>
+</body>
+</html>

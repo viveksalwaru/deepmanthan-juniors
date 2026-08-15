@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Effects of Electric Current · DeepManthan Juniors (SSC Class 10)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b1020;--bg2:#0f1630;--panel:#151d38;--line:#26315a;--ink:#EAF0FF;--dim:#93a2c8;--cyan:#38E1FF;--teal:#2DD4BF;--amber:#FFB454;--green:#5BE49B;--pink:#FF7BC0;--violet:#A78BFA;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(900px 500px at 20% -10%,#241a4a,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:var(--cyan);padding:4px 12px;border-radius:20px}
+  .wrap{max-width:900px;margin:0 auto;padding:22px 18px 50px}
+  .hero{text-align:center;margin-bottom:14px}.hero h1{font-size:clamp(1.6rem,5vw,2.3rem);color:var(--cyan)}.hero p{color:var(--dim);font-weight:700;max-width:640px;margin:4px auto 0}
+  .modes{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+  .mode{font-family:'Baloo 2';font-weight:700;font-size:.86rem;border:2px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:12px;padding:8px 13px;cursor:pointer}.mode.on{background:linear-gradient(135deg,rgba(56,225,255,.22),rgba(45,212,191,.14));border-color:var(--cyan);color:#fff}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}
+  svg.stage{width:100%;height:auto;display:block;background:#0c1330;border-radius:12px}
+  .controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px;align-items:center}
+  .btn{font-family:'Baloo 2';font-weight:700;border:none;border-radius:12px;padding:10px 16px;cursor:pointer;color:#05121c;box-shadow:0 5px 0 rgba(0,0,0,.25)}.btn:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.25)}
+  .btn.on2{background:var(--green)}.btn.off2{background:var(--pink)}.btn.p{background:var(--cyan)}
+  input[type=range]{accent-color:var(--cyan);width:150px}
+  .msg{text-align:center;font-family:'Baloo 2';font-size:1.05rem;margin-top:10px;min-height:26px;color:var(--amber)}
+  .idea{background:linear-gradient(120deg,rgba(56,225,255,.1),rgba(167,139,250,.1));border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:16px}
+  .idea h2{color:var(--cyan);font-size:1.15rem;margin-bottom:6px}.idea li{margin:7px 0;font-weight:700;padding-left:22px;position:relative;list-style:none}.idea li::before{content:"🧲";position:absolute;left:0}.idea b{color:var(--amber)}
+  .foot{text-align:center;color:#6f7c9e;font-size:.78rem;margin-top:22px;font-weight:600}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html" class="back" onclick="if(history.length>1){history.back();return false;}location.href='index.html';return false;">← Back</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span><span class="tag">SSC · Class 10 · Physics</span>
+  </div>
+  <div class="wrap">
+    <div class="hero"><h1>🧲 Effects of Electric Current</h1><p>Electricity can make <b style="color:var(--cyan)">magnetism</b>, and magnetism can make electricity! Explore the electromagnet, motor and generator.</p></div>
+    <div class="modes" id="modes">
+      <button class="mode on" data-m="mag">🧲 Electromagnet</button>
+      <button class="mode" data-m="motor">🔄 Electric Motor</button>
+      <button class="mode" data-m="gen">⚡ Generator</button>
+    </div>
+    <div class="card">
+      <svg class="stage" id="svg" viewBox="0 0 460 260"></svg>
+      <div class="controls" id="controls"></div>
+      <div class="msg" id="msg"></div>
+    </div>
+    <div class="idea"><h2>🧠 The Big Idea</h2><ul>
+      <li><b>Magnetic effect:</b> current in a wire creates a magnetic field. Coil it around iron → a strong <b>electromagnet</b> (more current = stronger).</li>
+      <li><b>Motor:</b> a current-carrying coil in a magnetic field feels a <b>force</b> and spins — electrical energy → motion. (Fans, mixers, EVs. 🚗)</li>
+      <li><b>Generator / induction:</b> moving a magnet near a coil <b>induces</b> a current — motion → electricity. (This is how power stations work! 🏭)</li>
+    </ul></div>
+    <div class="foot">DeepManthan Juniors · learn by playing · © 2026 DeepManthan AI — All Rights Reserved.</div>
+  </div>
+<script>
+  let mode='mag', current=6, motorOn=false, raf=null, angle=0, needle=0, needleTarget=0;
+  const svg=document.getElementById('svg'), ctrl=document.getElementById('controls'), msg=document.getElementById('msg');
+
+  function render(){
+    if(mode==='mag') drawMag();
+    else if(mode==='motor') drawMotor();
+    else drawGen();
+  }
+  function drawMag(){
+    ctrl.innerHTML=`<span style="font-weight:800">Current:</span><input type="range" id="cur" min="0" max="10" value="${current}"><b style="font-family:'Baloo 2';color:var(--cyan)">${current} A</b>`;
+    document.getElementById('cur').oninput=e=>{current=+e.target.value;render();};
+    const strong=current/10; const pins=Math.round(current);
+    let coil=''; for(let i=0;i<6;i++){ coil+=`<ellipse cx="${150+i*28}" cy="130" rx="10" ry="34" fill="none" stroke="#c98a3a" stroke-width="4"/>`; }
+    let field=''; if(current>0){ for(let r=1;r<=3;r++){ const o=r*(0.2+strong*0.6); field+=`<ellipse cx="240" cy="130" rx="${60+r*28}" ry="${44+r*20}" fill="none" stroke="rgba(56,225,255,${o})" stroke-width="1.5"/>`; } }
+    let pinEls=''; for(let i=0;i<pins;i++){ pinEls+=`<line x1="${318+ (i%5)*3}" y1="${110+Math.floor(i/5)*20}" x2="${330+(i%5)*3}" y2="${112+Math.floor(i/5)*20}" stroke="#9fb0d0" stroke-width="3"/>`; }
+    svg.innerHTML=`${field}
+      <rect x="140" y="120" width="180" height="20" fill="#4a5578" rx="3"/>
+      ${coil}
+      <text x="145" y="200" fill="#93a2c8" font-size="11" font-family="monospace">iron core + coil</text>
+      <rect x="60" y="105" width="34" height="50" rx="4" fill="#182246" stroke="#3a4a78"/><text x="77" y="135" fill="#5BE49B" font-size="14" text-anchor="middle">🔋</text>
+      <line x1="94" y1="120" x2="140" y2="122" stroke="#39456e" stroke-width="3"/><line x1="94" y1="150" x2="140" y2="140" stroke="#39456e" stroke-width="3"/>
+      ${pinEls}`;
+    msg.innerHTML = current===0? 'No current → no magnetism. The pins fall!' : `Attracting <b style="color:var(--cyan)">${pins}</b> iron pins — more current makes a stronger magnet! 🧲`;
+  }
+  function drawMotor(){
+    ctrl.innerHTML=`<button class="btn ${motorOn?'off2':'on2'}" id="pw">${motorOn?'⏹ Power OFF':'▶ Power ON'}</button>`;
+    document.getElementById('pw').onclick=()=>{ motorOn=!motorOn; if(motorOn){loop();} render(); };
+    drawMotorFrame();
+    msg.innerHTML = motorOn? 'Current + magnetic field → force → the coil spins! ⚙️ Electrical energy becomes motion.' : 'Switch the power ON to make the coil spin.';
+  }
+  function dra13(){}
+  function drawMotorFrame(){
+    const cx=230,cy=130; const rad=angle*Math.PI/180; const w=70*Math.cos(rad);
+    svg.innerHTML=`
+      <rect x="40" y="70" width="34" height="120" rx="5" fill="#b34a4a" stroke="#e08a8a" stroke-width="2"/><text x="57" y="135" fill="#fff" font-size="16" text-anchor="middle" font-weight="bold">N</text>
+      <rect x="386" y="70" width="34" height="120" rx="5" fill="#3b6ea5" stroke="#7fb0e0" stroke-width="2"/><text x="403" y="135" fill="#fff" font-size="16" text-anchor="middle" font-weight="bold">S</text>
+      <line x1="74" y1="130" x2="386" y2="130" stroke="#26315a" stroke-dasharray="4 5"/>
+      <g transform="translate(${cx},${cy})">
+        <ellipse cx="0" cy="0" rx="${Math.abs(w)}" ry="46" fill="none" stroke="#38E1FF" stroke-width="5"/>
+        <rect x="${-Math.abs(w)-3}" y="-3" width="6" height="6" fill="#FFB454"/><rect x="${Math.abs(w)-3}" y="-3" width="6" height="6" fill="#FFB454"/>
+      </g>
+      <rect x="200" y="200" width="60" height="16" rx="3" fill="#4a5578"/><text x="230" y="234" fill="#93a2c8" font-size="11" text-anchor="middle" font-family="monospace">coil on axle</text>
+      <rect x="90" y="196" width="30" height="26" rx="4" fill="#182246" stroke="#3a4a78"/><text x="105" y="214" fill="#5BE49B" font-size="12" text-anchor="middle">🔋</text>`;
+  }
+  function loop(){ if(!motorOn){return;} angle=(angle+9)%360; drawMotorFrame(); raf=requestAnimationFrame(loop); }
+
+  function drawGen(){
+    ctrl.innerHTML=`<button class="btn p" id="pin">⬇️ Push magnet in</button><button class="btn p" id="pout">⬆️ Pull magnet out</button>`;
+    document.getElementById('pin').onclick=()=>flick(1); document.getElementById('pout').onclick=()=>flick(-1);
+    drawGenFrame(0);
+    msg.innerHTML='Move the magnet to <b>induce</b> a current — watch the meter needle jump!';
+  }
+  function flick(dir){ needleTarget=dir*40; msg.innerHTML=`⚡ Current induced! Needle swings ${dir>0?'right ▶':'◀ left'} — motion made electricity!`; let t=0;
+    function anim(){ needle+=(needleTarget-needle)*0.25; drawGenFrame(needle); t++; if(t>6){needleTarget=0;} if(Math.abs(needle)>0.5||Math.abs(needleTarget)>0.5){requestAnimationFrame(anim);}else{needle=0;drawGenFrame(0);} }
+    anim();
+  }
+  function drawGenFrame(defl){
+    let coil=''; for(let i=0;i<5;i++){ coil+=`<ellipse cx="${150+i*24}" cy="140" rx="9" ry="30" fill="none" stroke="#c98a3a" stroke-width="4"/>`; }
+    const nx=380+Math.sin(defl*Math.PI/180)*30, ny=90-Math.cos(defl*Math.PI/180)*40;
+    svg.innerHTML=`${coil}
+      <rect x="60" y="120" width="70" height="40" rx="4" fill="#b34a4a" stroke="#e08a8a" stroke-width="2"/><text x="95" y="145" fill="#fff" font-size="13" text-anchor="middle" font-weight="bold">N&nbsp;&nbsp;S</text>
+      <text x="150" y="195" fill="#93a2c8" font-size="11" font-family="monospace">coil</text>
+      <line x1="270" y1="130" x2="345" y2="120" stroke="#39456e" stroke-width="3"/><line x1="270" y1="150" x2="345" y2="130" stroke="#39456e" stroke-width="3"/>
+      <circle cx="380" cy="120" r="42" fill="#182246" stroke="#3a4a78" stroke-width="2"/><text x="380" y="150" fill="#93a2c8" font-size="9" text-anchor="middle" font-family="monospace">galvanometer</text>
+      <line x1="380" y1="120" x2="${nx}" y2="${ny}" stroke="#5BE49B" stroke-width="3"/><circle cx="380" cy="120" r="4" fill="#5BE49B"/>`;
+  }
+  document.getElementById('modes').addEventListener('click',e=>{ const b=e.target.closest('.mode'); if(!b)return; if(raf)cancelAnimationFrame(raf); motorOn=false; mode=b.dataset.m; document.querySelectorAll('.mode').forEach(x=>x.classList.toggle('on',x===b)); render(); });
+  render();
+</script>
+</body>
+</html>

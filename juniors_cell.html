@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cell Biology · DeepManthan Juniors (SSC Class 9-10)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b1020;--bg2:#0f1630;--panel:#151d38;--line:#26315a;--ink:#EAF0FF;--dim:#93a2c8;--cyan:#38E1FF;--teal:#2DD4BF;--amber:#FFB454;--green:#5BE49B;--pink:#FF7BC0;--violet:#A78BFA;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(900px 500px at 80% -10%,#123a2e,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:var(--pink);padding:4px 12px;border-radius:20px}
+  .wrap{max-width:940px;margin:0 auto;padding:22px 18px 50px}
+  .hero{text-align:center;margin-bottom:14px}.hero h1{font-size:clamp(1.6rem,5vw,2.3rem);color:var(--pink)}.hero p{color:var(--dim);font-weight:700;max-width:640px;margin:4px auto 0}
+  .toggle{display:flex;gap:8px;justify-content:center;margin-bottom:12px}
+  .tb{font-family:'Baloo 2';font-weight:700;border:2px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:12px;padding:8px 16px;cursor:pointer}.tb.on{background:linear-gradient(135deg,rgba(91,228,155,.22),rgba(56,225,255,.14));border-color:var(--green);color:#fff}
+  .layout{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;align-items:start}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px}
+  svg.cell{width:100%;height:auto;display:block}
+  .org{cursor:pointer;transition:.15s}.org:hover{opacity:.8}
+  .info{min-height:130px}.info .nm{font-family:'Baloo 2';font-size:1.3rem;color:var(--green)}.info .ic{font-size:2rem}.info p{color:#aeb8dd;font-weight:600;font-size:.92rem;margin-top:6px}
+  .list{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .pl{font-size:.74rem;font-weight:700;background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:5px 10px;cursor:pointer}.pl:hover{border-color:var(--green);color:#fff}
+  .idea{background:linear-gradient(120deg,rgba(255,123,192,.12),rgba(56,225,255,.1));border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:16px}
+  .idea h2{color:var(--pink);font-size:1.15rem;margin-bottom:6px}.idea li{margin:7px 0;font-weight:700;padding-left:22px;position:relative;list-style:none}.idea li::before{content:"🔬";position:absolute;left:0}.idea b{color:var(--cyan)}
+  .foot{text-align:center;color:#6f7c9e;font-size:.78rem;margin-top:22px;font-weight:600}
+  @media(max-width:760px){.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html" class="back" onclick="if(history.length>1){history.back();return false;}location.href='index.html';return false;">← Back</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span><span class="tag">SSC · Class 9-10 · Biology</span>
+  </div>
+  <div class="wrap">
+    <div class="hero"><h1>🔬 Explore the Cell</h1><p>Tap any part of the cell to learn what it does. Switch between an <b style="color:var(--green)">animal</b> and a <b style="color:var(--green)">plant</b> cell!</p></div>
+    <div class="toggle"><button class="tb on" id="animalBtn">🐾 Animal Cell</button><button class="tb" id="plantBtn">🌿 Plant Cell</button></div>
+    <div class="layout">
+      <div class="card"><svg class="cell" id="svg" viewBox="0 0 400 320"></svg></div>
+      <div class="card">
+        <div class="info" id="info"></div>
+        <div class="list" id="list"></div>
+      </div>
+    </div>
+    <div class="idea"><h2>🧠 The Big Idea</h2><ul>
+      <li>The <b>cell</b> is the basic unit of life. Each <b>organelle</b> is like an organ doing a special job.</li>
+      <li><b>Plant cells</b> have extras: a stiff <b>cell wall</b>, green <b>chloroplasts</b> (for photosynthesis) and a big central <b>vacuole</b>.</li>
+      <li>The <b>nucleus</b> is the control centre; <b>mitochondria</b> are the powerhouses. ⚡</li>
+    </ul></div>
+    <div class="foot">DeepManthan Juniors · learn by playing · © 2026 DeepManthan AI — All Rights Reserved.</div>
+  </div>
+<script>
+  const ORG={
+    membrane:{n:'Cell Membrane',ic:'🧫',d:'The outer boundary that controls what enters and leaves the cell.'},
+    cytoplasm:{n:'Cytoplasm',ic:'🌫️',d:'The jelly-like fluid where all the organelles float and reactions happen.'},
+    nucleus:{n:'Nucleus',ic:'🧠',d:'The control centre — it holds the DNA and directs all cell activities.'},
+    mito:{n:'Mitochondria',ic:'⚡',d:'The "powerhouse" — makes energy (ATP) through respiration.'},
+    er:{n:'Endoplasmic Reticulum',ic:'🕸️',d:'A network of tubes that makes and transports proteins and fats.'},
+    ribo:{n:'Ribosomes',ic:'⚫',d:'Tiny factories that build proteins.'},
+    golgi:{n:'Golgi Apparatus',ic:'📦',d:'Packages and ships materials made by the cell.'},
+    wall:{n:'Cell Wall',ic:'🧱',d:'A rigid outer layer (plant only) that gives shape and support.'},
+    chloro:{n:'Chloroplast',ic:'🟢',d:'Green organelle (plant only) that makes food using sunlight — photosynthesis!'},
+    vacuole:{n:'Vacuole',ic:'💧',d:'Storage sac. In plants it is large and keeps the cell firm.'}
+  };
+  let mode='animal';
+  function show(k){ const o=ORG[k]; document.getElementById('info').innerHTML=`<div class="ic">${o.ic}</div><div class="nm">${o.n}</div><p>${o.d}</p>`; }
+  function build(){
+    const plant=mode==='plant'; const bg=plant?'#1c3326':'#2a1c33';
+    let s=`<rect x="8" y="8" width="384" height="304" rx="${plant?14:120}" fill="${bg}" stroke="${plant?'#5BE49B':'#FF7BC0'}" stroke-width="${plant?6:3}" class="org" data-o="${plant?'wall':'membrane'}"/>`;
+    if(plant) s+=`<rect x="20" y="20" width="360" height="280" rx="90" fill="#132a1f" stroke="#3a8f66" stroke-width="2.5" class="org" data-o="membrane"/>`;
+    s+=`<rect x="24" y="24" width="352" height="272" rx="${plant?80:110}" fill="rgba(56,225,255,.03)" class="org" data-o="cytoplasm"/>`;
+    if(plant) s+=`<ellipse cx="200" cy="165" rx="120" ry="88" fill="rgba(120,200,255,.06)" stroke="#3a4a78" stroke-dasharray="4 5" class="org" data-o="vacuole"/>`;
+    // nucleus
+    s+=`<circle cx="${plant?120:200}" cy="${plant?100:160}" r="40" fill="#5a3a7a" stroke="#A78BFA" stroke-width="2.5" class="org" data-o="nucleus"/><circle cx="${plant?120:200}" cy="${plant?100:160}" r="16" fill="#7a5aa0" class="org" data-o="nucleus"/>`;
+    // mitochondria
+    s+=`<ellipse cx="290" cy="90" rx="30" ry="16" fill="#7a4a2a" stroke="#FFB454" stroke-width="2" class="org" data-o="mito"/>`;
+    s+=`<ellipse cx="110" cy="235" rx="28" ry="15" fill="#7a4a2a" stroke="#FFB454" stroke-width="2" class="org" data-o="mito"/>`;
+    // ER
+    s+=`<path d="M 150 200 q 30 -14 60 0 q 30 14 60 0" fill="none" stroke="#38E1FF" stroke-width="3" class="org" data-o="er"/>`;
+    // golgi
+    s+=`<path d="M 250 220 q 22 -8 44 0 M 254 232 q 20 -7 36 0 M 258 244 q 18 -6 30 0" fill="none" stroke="#2DD4BF" stroke-width="3" class="org" data-o="golgi"/>`;
+    // ribosomes
+    for(const [x,y] of [[170,120],[230,130],[300,180],[150,150],[260,190]]) s+=`<circle cx="${x}" cy="${y}" r="4" fill="#EAF0FF" class="org" data-o="ribo"/>`;
+    if(plant){ // chloroplasts
+      for(const [x,y] of [[280,230],[300,150],[150,250]]) s+=`<ellipse cx="${x}" cy="${y}" rx="20" ry="11" fill="#2f7a4a" stroke="#5BE49B" stroke-width="2" class="org" data-o="chloro"/>`;
+    }
+    document.getElementById('svg').innerHTML=s;
+    document.getElementById('svg').querySelectorAll('.org').forEach(e=>e.addEventListener('click',()=>show(e.dataset.o)));
+    // list
+    const keys = plant? ['wall','membrane','cytoplasm','nucleus','mito','chloro','vacuole','er','ribo','golgi'] : ['membrane','cytoplasm','nucleus','mito','er','ribo','golgi'];
+    document.getElementById('list').innerHTML=keys.map(k=>`<span class="pl" data-o="${k}">${ORG[k].ic} ${ORG[k].n}</span>`).join('');
+    document.getElementById('list').querySelectorAll('.pl').forEach(e=>e.onclick=()=>show(e.dataset.o));
+    show('nucleus');
+  }
+  document.getElementById('animalBtn').onclick=()=>{mode='animal';document.getElementById('animalBtn').classList.add('on');document.getElementById('plantBtn').classList.remove('on');build();};
+  document.getElementById('plantBtn').onclick=()=>{mode='plant';document.getElementById('plantBtn').classList.add('on');document.getElementById('animalBtn').classList.remove('on');build();};
+  build();
+</script>
+</body>
+</html>

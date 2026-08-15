@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chemical Reactions · DeepManthan Juniors (SSC Class 10)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b1020;--bg2:#0f1630;--panel:#151d38;--line:#26315a;--ink:#EAF0FF;--dim:#93a2c8;--cyan:#38E1FF;--teal:#2DD4BF;--amber:#FFB454;--green:#5BE49B;--pink:#FF7BC0;--violet:#A78BFA;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(900px 500px at 80% -10%,#12402f,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:var(--green);padding:4px 12px;border-radius:20px}
+  .wrap{max-width:900px;margin:0 auto;padding:22px 18px 50px}
+  .hero{text-align:center;margin-bottom:16px}.hero h1{font-size:clamp(1.7rem,5vw,2.3rem);color:var(--green)}.hero p{color:var(--dim);font-weight:700;max-width:640px;margin:4px auto 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px}
+  .pick{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+  .pbtn{font-family:'Baloo 2';font-weight:700;font-size:.85rem;border:2px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:12px;padding:8px 13px;cursor:pointer}.pbtn.on{background:linear-gradient(135deg,rgba(91,228,155,.22),rgba(56,225,255,.14));border-color:var(--green);color:#fff}
+  .eq{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;font-family:'Baloo 2';font-size:1.5rem;margin:18px 0}
+  .term{display:flex;align-items:center;gap:3px}
+  .coef{display:flex;flex-direction:column;gap:2px}
+  .coef button{width:22px;height:18px;border:none;border-radius:5px;background:#33406e;color:#fff;cursor:pointer;font-weight:800;line-height:1;font-size:.7rem}.coef button:hover{background:var(--cyan);color:#05121c}
+  .cval{min-width:20px;text-align:center;color:var(--amber)}
+  .formula sub{font-size:.65em}
+  .plus,.arrow{color:var(--dim)}
+  .counts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+  .side{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:10px}
+  .side h4{font-family:'Baloo 2';text-align:center;color:var(--dim);font-size:.9rem;margin-bottom:6px}
+  .atomrow{display:flex;justify-content:space-between;padding:3px 8px;font-weight:700}
+  .atomrow.bad{color:var(--pink)}.atomrow.ok{color:var(--green)}
+  .status{text-align:center;font-family:'Baloo 2';font-size:1.3rem;margin-top:14px;min-height:30px}
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:16px}
+  .ty{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--green);border-radius:10px;padding:10px 12px}.ty b{font-family:'Baloo 2';color:var(--green)}.ty span{font-size:.82rem;color:var(--dim);font-weight:600}
+  .idea{background:linear-gradient(120deg,rgba(91,228,155,.12),rgba(56,225,255,.1));border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:16px}
+  .idea h2{color:var(--green);font-size:1.15rem;margin-bottom:6px}.idea li{margin:7px 0;font-weight:700;padding-left:22px;position:relative;list-style:none}.idea li::before{content:"🧪";position:absolute;left:0}.idea b{color:var(--cyan)}
+  .foot{text-align:center;color:#6f7c9e;font-size:.78rem;margin-top:22px;font-weight:600}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html" class="back" onclick="if(history.length>1){history.back();return false;}location.href='index.html';return false;">← Back</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span><span class="tag">SSC · Class 10 · Chemistry</span>
+  </div>
+  <div class="wrap">
+    <div class="hero"><h1>🧪 Chemical Reactions</h1><p>Balance the equation! Use the <b style="color:var(--amber)">▲▼</b> buttons so both sides have the <b style="color:var(--green)">same number of every atom</b>.</p></div>
+    <div class="card">
+      <div class="pick" id="pick"></div>
+      <div class="eq" id="eq"></div>
+      <div class="counts"><div class="side"><h4>◀ Reactants (left)</h4><div id="leftC"></div></div><div class="side"><h4>Products (right) ▶</h4><div id="rightC"></div></div></div>
+      <div class="status" id="status"></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3 style="color:var(--green);text-align:center;margin-bottom:4px">Types of Reactions</h3>
+      <div class="types">
+        <div class="ty"><b>Combination</b><br><span>A + B → AB &nbsp;(2H₂ + O₂ → 2H₂O)</span></div>
+        <div class="ty"><b>Decomposition</b><br><span>AB → A + B &nbsp;(splits apart, often by heat)</span></div>
+        <div class="ty"><b>Displacement</b><br><span>A + BC → AC + B &nbsp;(a more reactive metal kicks one out)</span></div>
+        <div class="ty"><b>Double Displacement</b><br><span>AB + CD → AD + CB &nbsp;(partners swap)</span></div>
+      </div>
+      <div style="text-align:center;color:var(--dim);font-weight:700;margin-top:10px;font-size:.84rem">Also: <b style="color:var(--amber)">oxidation</b> (gain oxygen) &amp; <b style="color:var(--amber)">reduction</b> (loss of oxygen) · rusting = corrosion · food going stale = rancidity</div>
+    </div>
+    <div class="idea"><h2>🧠 The Big Idea</h2><ul>
+      <li><b>Law of conservation of mass:</b> atoms are never created or destroyed — so a balanced equation must have the <b>same count of each atom</b> on both sides.</li>
+      <li>You balance by changing <b>coefficients</b> (the big numbers in front), <i>never</i> the small subscripts.</li>
+    </ul></div>
+    <div class="foot">DeepManthan Juniors · learn by playing · © 2026 DeepManthan AI — All Rights Reserved.</div>
+  </div>
+<script>
+  // each reaction: reactants/products = [{coef, atoms:{El:count}, label(html)}], answer coefs
+  const R=[
+    {name:'H₂ + O₂ → H₂O', L:[{a:{H:2},f:'H<sub>2</sub>'},{a:{O:2},f:'O<sub>2</sub>'}], Rt:[{a:{H:2,O:1},f:'H<sub>2</sub>O'}], ans:[2,1,2]},
+    {name:'Fe + O₂ → Fe₂O₃', L:[{a:{Fe:1},f:'Fe'},{a:{O:2},f:'O<sub>2</sub>'}], Rt:[{a:{Fe:2,O:3},f:'Fe<sub>2</sub>O<sub>3</sub>'}], ans:[4,3,2]},
+    {name:'N₂ + H₂ → NH₃', L:[{a:{N:2},f:'N<sub>2</sub>'},{a:{H:2},f:'H<sub>2</sub>'}], Rt:[{a:{N:1,H:3},f:'NH<sub>3</sub>'}], ans:[1,3,2]},
+    {name:'CH₄ + O₂ → CO₂ + H₂O', L:[{a:{C:1,H:4},f:'CH<sub>4</sub>'},{a:{O:2},f:'O<sub>2</sub>'}], Rt:[{a:{C:1,O:2},f:'CO<sub>2</sub>'},{a:{H:2,O:1},f:'H<sub>2</sub>O'}], ans:[1,2,1,2]}
+  ];
+  let cur=0, coefs=[];
+  const pick=document.getElementById('pick');
+  R.forEach((r,i)=>{ const b=document.createElement('button'); b.className='pbtn'+(i===0?' on':''); b.textContent=r.name; b.onclick=()=>{cur=i;[...pick.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');load();}; pick.appendChild(b); });
+
+  function load(){ const r=R[cur]; coefs=r.L.map(()=>1).concat(r.Rt.map(()=>1)); render(); }
+  function render(){ const r=R[cur]; const all=r.L.concat(r.Rt); let idx=0; let html='';
+    r.L.forEach((t,i)=>{ html+=term(idx); idx++; if(i<r.L.length-1) html+='<span class="plus">+</span>'; });
+    html+='<span class="arrow">→</span>';
+    r.Rt.forEach((t,i)=>{ html+=term(idx); idx++; if(i<r.Rt.length-1) html+='<span class="plus">+</span>'; });
+    document.getElementById('eq').innerHTML=html;
+    document.getElementById('eq').querySelectorAll('[data-inc]').forEach(b=>b.onclick=()=>{ coefs[+b.dataset.i]=Math.min(9,coefs[+b.dataset.i]+1); render(); });
+    document.getElementById('eq').querySelectorAll('[data-dec]').forEach(b=>b.onclick=()=>{ coefs[+b.dataset.i]=Math.max(1,coefs[+b.dataset.i]-1); render(); });
+    counts();
+  }
+  function term(i){ const r=R[cur]; const all=r.L.concat(r.Rt); const f=all[i].f;
+    return `<span class="term"><span class="coef"><button data-inc data-i="${i}">▲</button><span class="cval">${coefs[i]}</span><button data-dec data-i="${i}">▼</button></span><span class="formula">${f}</span></span>`; }
+  function tally(list,offset){ const t={}; list.forEach((term,i)=>{ const c=coefs[offset+i]; for(const el in term.a){ t[el]=(t[el]||0)+term.a[el]*c; } }); return t; }
+  function counts(){ const r=R[cur]; const L=tally(r.L,0), Rt=tally(r.Rt,r.L.length);
+    const els=[...new Set([...Object.keys(L),...Object.keys(Rt)])];
+    const row=(t,other)=>els.map(e=>`<div class="atomrow ${ (t[e]||0)===(other[e]||0)?'ok':'bad'}"><span>${e}</span><span>${t[e]||0}</span></div>`).join('');
+    document.getElementById('leftC').innerHTML=row(L,Rt); document.getElementById('rightC').innerHTML=row(Rt,L);
+    const balanced=els.every(e=>(L[e]||0)===(Rt[e]||0));
+    document.getElementById('status').innerHTML = balanced ? '<span style="color:var(--green)">✅ Balanced! Atoms match on both sides. 🎉</span>' : '<span style="color:var(--pink)">Not balanced yet — make every atom count equal.</span>';
+  }
+  load();
+</script>
+</body>
+</html>

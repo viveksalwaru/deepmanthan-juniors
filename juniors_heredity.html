@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heredity & Evolution · DeepManthan Juniors (SSC Class 10)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b1020;--bg2:#0f1630;--panel:#151d38;--line:#26315a;--ink:#EAF0FF;--dim:#93a2c8;--cyan:#38E1FF;--teal:#2DD4BF;--amber:#FFB454;--green:#5BE49B;--pink:#FF7BC0;--violet:#A78BFA;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(900px 500px at 20% -10%,#3a1c46,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:var(--pink);padding:4px 12px;border-radius:20px}
+  .wrap{max-width:820px;margin:0 auto;padding:22px 18px 50px}
+  .hero{text-align:center;margin-bottom:16px}.hero h1{font-size:clamp(1.6rem,5vw,2.3rem);color:var(--pink)}.hero p{color:var(--dim);font-weight:700;max-width:640px;margin:4px auto 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px}
+  .trait{text-align:center;margin-bottom:12px;font-weight:700;color:var(--dim)}.trait b{color:var(--green);font-family:'Baloo 2'}
+  .parents{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+  .parent{text-align:center}.parent .lbl{font-family:'Baloo 2';color:var(--amber);margin-bottom:5px}
+  .parent select{font-family:'Baloo 2';font-weight:700;font-size:1rem;background:var(--bg2);color:var(--ink);border:2px solid var(--line);border-radius:10px;padding:8px 12px;cursor:pointer}
+  .square{display:grid;grid-template-columns:auto auto auto;gap:6px;justify-content:center;margin:16px 0}
+  .cell{width:64px;height:64px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';font-size:1.3rem;font-weight:800}
+  .hdr{background:transparent;color:var(--amber)}
+  .off{border:2px solid var(--line);background:var(--bg2)}.off.dom{background:linear-gradient(135deg,rgba(91,228,155,.25),rgba(56,225,255,.12));border-color:var(--green);color:#dfffe9}.off.rec{background:linear-gradient(135deg,rgba(255,123,192,.22),rgba(167,139,250,.12));border-color:var(--pink);color:#ffe1ef}
+  .ratios{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+  .rb{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:10px 16px;text-align:center}.rb .k{font-size:.66rem;color:var(--dim);text-transform:uppercase;font-weight:800}.rb .v{font-family:'Baloo 2';font-size:1.3rem}.rb.pheno .v{color:var(--green)}.rb.geno .v{color:var(--cyan)}
+  .idea{background:linear-gradient(120deg,rgba(255,123,192,.12),rgba(167,139,250,.1));border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:16px}
+  .idea h2{color:var(--pink);font-size:1.15rem;margin-bottom:6px}.idea li{margin:7px 0;font-weight:700;padding-left:22px;position:relative;list-style:none}.idea li::before{content:"🧬";position:absolute;left:0}.idea b{color:var(--cyan)}
+  .foot{text-align:center;color:#6f7c9e;font-size:.78rem;margin-top:22px;font-weight:600}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html" class="back" onclick="if(history.length>1){history.back();return false;}location.href='index.html';return false;">← Back</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span><span class="tag">SSC · Class 10 · Biology</span>
+  </div>
+  <div class="wrap">
+    <div class="hero"><h1>🧬 Heredity — Punnett Square</h1><p>Cross two pea plants and predict their babies! <b style="color:var(--green)">T</b> = Tall (dominant), <b style="color:var(--pink)">t</b> = short (recessive).</p></div>
+    <div class="card">
+      <div class="trait">Trait: <b>Plant height</b> &nbsp;·&nbsp; T (Tall) is dominant over t (short)</div>
+      <div class="parents">
+        <div class="parent"><div class="lbl">🌱 Parent 1</div><select id="p1"><option>TT</option><option selected>Tt</option><option>tt</option></select></div>
+        <div class="parent"><div class="lbl">🌱 Parent 2</div><select id="p2"><option>TT</option><option selected>Tt</option><option>tt</option></select></div>
+      </div>
+      <div class="square" id="square"></div>
+      <div class="ratios">
+        <div class="rb pheno"><div class="k">Phenotype ratio</div><div class="v" id="pheno">—</div></div>
+        <div class="rb geno"><div class="k">Genotype ratio</div><div class="v" id="geno">—</div></div>
+      </div>
+      <div style="text-align:center;color:var(--dim);font-weight:700;margin-top:10px;font-size:.86rem" id="summary"></div>
+    </div>
+    <div class="idea"><h2>🧠 The Big Idea</h2><ul>
+      <li><b>Genes</b> come in pairs (alleles) — one from each parent. A <b>dominant</b> allele (T) shows even if only one copy is present; a <b>recessive</b> one (t) shows only as <b>tt</b>.</li>
+      <li>Mendel's classic <b>Tt × Tt</b> cross gives the famous <b>3 : 1</b> phenotype ratio (3 Tall : 1 short).</li>
+      <li>Variations like these, over many generations, are the raw material of <b>evolution</b>.</li>
+    </ul></div>
+    <div class="foot">DeepManthan Juniors · learn by playing · © 2026 DeepManthan AI — All Rights Reserved.</div>
+  </div>
+<script>
+  function cross(){
+    const a=document.getElementById('p1').value.split(''), b=document.getElementById('p2').value.split('');
+    const cells=[]; for(const x of a) for(const y of b){ let g=[x,y].sort((m,n)=>(m>n?1:-1)).join(''); cells.push(g); }
+    // build square
+    let html=`<div class="cell hdr"></div><div class="cell hdr">${b[0]}</div><div class="cell hdr">${b[1]}</div>`;
+    for(let i=0;i<2;i++){ html+=`<div class="cell hdr">${a[i]}</div>`; for(let j=0;j<2;j++){ let g=[a[i],b[j]].sort((m,n)=>(m>n?1:-1)).join(''); const dom=g.includes('T'); html+=`<div class="cell off ${dom?'dom':'rec'}">${g}</div>`; } }
+    document.getElementById('square').innerHTML=html;
+    // ratios
+    const tall=cells.filter(g=>g.includes('T')).length, short=4-tall;
+    const geno={}; cells.forEach(g=>geno[g]=(geno[g]||0)+1);
+    const gstr=Object.keys(geno).sort().map(k=>`${geno[k]} ${k}`).join(' : ');
+    let pstr = (tall&&short)?`${tall} Tall : ${short} short`:(tall?'All Tall':'All short');
+    document.getElementById('pheno').textContent=pstr;
+    document.getElementById('geno').textContent=gstr;
+    document.getElementById('summary').textContent = (tall&&short)? `Out of 4 offspring, ${tall} will be Tall and ${short} short.` : (tall?'Every offspring is Tall 🌱':'Every offspring is short 🌱');
+  }
+  document.getElementById('p1').onchange=cross; document.getElementById('p2').onchange=cross; cross();
+</script>
+</body>
+</html>

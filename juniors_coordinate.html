@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coordinate Geometry · DeepManthan Juniors (SSC Maths)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b1020;--bg2:#0f1630;--panel:#151d38;--line:#26315a;--ink:#EAF0FF;--dim:#93a2c8;--cyan:#38E1FF;--teal:#2DD4BF;--amber:#FFB454;--green:#5BE49B;--pink:#FF7BC0;--violet:#A78BFA;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(900px 500px at 20% -10%,#2a2450,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:var(--violet);padding:4px 12px;border-radius:20px}
+  .wrap{max-width:900px;margin:0 auto;padding:22px 18px 50px}
+  .hero{text-align:center;margin-bottom:14px}.hero h1{font-size:clamp(1.5rem,5vw,2.2rem);color:var(--violet)}.hero p{color:var(--dim);font-weight:700;max-width:660px;margin:4px auto 0}
+  .layout{display:grid;grid-template-columns:1fr .72fr;gap:16px;align-items:start}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}
+  svg.graph{width:100%;height:auto;display:block;background:#0a1024;border-radius:12px;touch-action:none}
+  .ob{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px}
+  .ob .k{font-size:.68rem;color:var(--dim);text-transform:uppercase;font-weight:800}.ob .f{font-family:'Baloo 2';font-size:.92rem;color:var(--dim);margin:2px 0}.ob .v{font-family:'Baloo 2';font-size:1.25rem}
+  .ob.dist .v{color:var(--green)}.ob.mid .v{color:var(--amber)}.ob.pts .p1{color:var(--cyan)}.ob.pts .p2{color:var(--pink)}
+  .idea{background:linear-gradient(120deg,rgba(167,139,250,.12),rgba(56,225,255,.1));border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:16px}
+  .idea h2{color:var(--violet);font-size:1.15rem;margin-bottom:6px}.idea li{margin:7px 0;font-weight:700;padding-left:22px;position:relative;list-style:none}.idea li::before{content:"📍";position:absolute;left:0}.idea b{color:var(--cyan)}
+  .foot{text-align:center;color:#6f7c9e;font-size:.78rem;margin-top:22px;font-weight:600}
+  @media(max-width:760px){.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html" class="back" onclick="if(history.length>1){history.back();return false;}location.href='index.html';return false;">← Back</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span><span class="tag">SSC · Maths</span>
+  </div>
+  <div class="wrap">
+    <div class="hero"><h1>📍 Coordinate Geometry</h1><p><b style="color:var(--green)">Drag the two points</b> and watch the distance &amp; midpoint update — see the formulas come alive!</p></div>
+    <div class="layout">
+      <div class="card"><svg class="graph" id="svg" viewBox="0 0 360 360"></svg></div>
+      <div class="card">
+        <div class="ob pts"><div class="k">Points</div><div class="v"><span class="p1">A(<span id="ax">-4</span>, <span id="ay">-2</span>)</span> &nbsp; <span class="p2">B(<span id="bx">3</span>, <span id="by">4</span>)</span></div></div>
+        <div class="ob dist"><div class="k">Distance AB</div><div class="f">√[(x₂−x₁)² + (y₂−y₁)²]</div><div class="v" id="dist">—</div></div>
+        <div class="ob mid"><div class="k">Midpoint</div><div class="f">( (x₁+x₂)/2 , (y₁+y₂)/2 )</div><div class="v" id="mid">—</div></div>
+      </div>
+    </div>
+    <div class="idea"><h2>🧠 The Big Idea</h2><ul>
+      <li>Every point on the plane has an address <b>(x, y)</b>. Geometry becomes algebra!</li>
+      <li><b>Distance formula:</b> AB = √[(x₂−x₁)² + (y₂−y₁)²] — it's just Pythagoras in disguise. 📐</li>
+      <li><b>Midpoint</b> is the average of the coordinates. The <b>section formula</b> extends this to any ratio.</li>
+    </ul></div>
+    <div class="foot">DeepManthan Juniors · learn by playing · © 2026 DeepManthan AI — All Rights Reserved.</div>
+  </div>
+<script>
+  const svg=document.getElementById('svg'), S=180, U=17, X=x=>S+x*U, Y=y=>S-y*U;
+  let A={x:-4,y:-2}, B={x:3,y:4}, drag=null;
+  function grid(){ let g=''; for(let i=-10;i<=10;i++){ const c=i===0?'#3a4a78':'#1a2340'; g+=`<line x1="${X(i)}" y1="0" x2="${X(i)}" y2="360" stroke="${c}" stroke-width="${i===0?1.5:1}"/><line x1="0" y1="${Y(i)}" x2="360" y2="${Y(i)}" stroke="${c}" stroke-width="${i===0?1.5:1}"/>`; } return g; }
+  function draw(){ const d=Math.hypot(B.x-A.x,B.y-A.y); const m={x:(A.x+B.x)/2,y:(A.y+B.y)/2};
+    svg.innerHTML=grid()
+      +`<line x1="${X(A.x)}" y1="${Y(A.y)}" x2="${X(B.x)}" y2="${Y(B.y)}" stroke="#5BE49B" stroke-width="2.5"/>`
+      +`<line x1="${X(A.x)}" y1="${Y(A.y)}" x2="${X(B.x)}" y2="${Y(A.y)}" stroke="#5b6a95" stroke-dasharray="4 4" stroke-width="1.5"/>`
+      +`<line x1="${X(B.x)}" y1="${Y(A.y)}" x2="${X(B.x)}" y2="${Y(B.y)}" stroke="#5b6a95" stroke-dasharray="4 4" stroke-width="1.5"/>`
+      +`<circle cx="${X(m.x)}" cy="${Y(m.y)}" r="5" fill="#FFB454"/>`
+      +`<circle cx="${X(A.x)}" cy="${Y(A.y)}" r="9" fill="#38E1FF" data-p="A" style="cursor:grab"/><text x="${X(A.x)}" y="${Y(A.y)-13}" fill="#38E1FF" font-size="12" text-anchor="middle" font-weight="bold">A</text>`
+      +`<circle cx="${X(B.x)}" cy="${Y(B.y)}" r="9" fill="#FF7BC0" data-p="B" style="cursor:grab"/><text x="${X(B.x)}" y="${Y(B.y)-13}" fill="#FF7BC0" font-size="12" text-anchor="middle" font-weight="bold">B</text>`;
+    document.getElementById('ax').textContent=A.x;document.getElementById('ay').textContent=A.y;document.getElementById('bx').textContent=B.x;document.getElementById('by').textContent=B.y;
+    document.getElementById('dist').textContent=(+d.toFixed(2))+' units';
+    document.getElementById('mid').textContent=`(${m.x}, ${m.y})`;
+    svg.querySelectorAll('circle[data-p]').forEach(c=>c.addEventListener('pointerdown',e=>{drag=c.dataset.p;svg.setPointerCapture(e.pointerId);e.preventDefault();}));
+  }
+  svg.addEventListener('pointermove',e=>{ if(!drag)return; const r=svg.getBoundingClientRect(); let gx=Math.round(((e.clientX-r.left)/r.width*360-S)/U); let gy=Math.round(-(((e.clientY-r.top)/r.height*360)-S)/U); gx=Math.max(-10,Math.min(10,gx)); gy=Math.max(-10,Math.min(10,gy)); if(drag==='A')A={x:gx,y:gy};else B={x:gx,y:gy}; draw(); });
+  window.addEventListener('pointerup',()=>drag=null);
+  draw();
+</script>
+</body>
+</html>

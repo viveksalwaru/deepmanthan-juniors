@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Disaster Management · DeepManthan Juniors (SSC Class 10)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b1020;--bg2:#0f1630;--panel:#151d38;--line:#26315a;--ink:#EAF0FF;--dim:#93a2c8;--cyan:#38E1FF;--teal:#2DD4BF;--amber:#FFB454;--green:#5BE49B;--pink:#FF7BC0;--violet:#A78BFA;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(900px 500px at 20% -10%,#3a2a1a,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:var(--amber);padding:4px 12px;border-radius:20px}
+  .wrap{max-width:900px;margin:0 auto;padding:22px 18px 50px}
+  .hero{text-align:center;margin-bottom:14px}.hero h1{font-size:clamp(1.6rem,5vw,2.3rem);color:var(--amber)}.hero p{color:var(--dim);font-weight:700;max-width:660px;margin:4px auto 0}
+  .pick{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+  .pb{font-family:'Baloo 2';font-weight:700;font-size:.9rem;border:2px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:12px;padding:9px 15px;cursor:pointer}.pb.on{background:linear-gradient(135deg,rgba(255,180,84,.24),rgba(248,113,113,.14));border-color:var(--amber);color:#fff}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}
+  .head{text-align:center;font-family:'Baloo 2';font-size:1.5rem;margin-bottom:10px}
+  .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .col{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:12px}
+  .col h4{font-family:'Baloo 2';text-align:center;margin-bottom:8px;font-size:1rem}
+  .before h4{color:var(--cyan)}.during h4{color:var(--pink)}.after h4{color:var(--green)}
+  .col li{list-style:none;padding-left:20px;position:relative;margin:7px 0;font-weight:600;font-size:.86rem;color:#c7cfe6}.col li::before{content:"✔";position:absolute;left:0;color:var(--green)}
+  .idea{background:linear-gradient(120deg,rgba(255,180,84,.12),rgba(248,113,113,.1));border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:16px}
+  .idea h2{color:var(--amber);font-size:1.15rem;margin-bottom:6px}.idea li{margin:7px 0;font-weight:700;padding-left:22px;position:relative;list-style:none}.idea li::before{content:"🚨";position:absolute;left:0}.idea b{color:var(--cyan)}
+  .foot{text-align:center;color:#6f7c9e;font-size:.78rem;margin-top:22px;font-weight:600}
+  @media(max-width:700px){.cols{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html" class="back" onclick="if(history.length>1){history.back();return false;}location.href='index.html';return false;">← Back</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span><span class="tag">SSC · Class 10 · Health</span>
+  </div>
+  <div class="wrap">
+    <div class="hero"><h1>🚨 Disaster Management</h1><p>Being <b style="color:var(--amber)">prepared</b> saves lives. Pick a disaster and learn what to do <b>before</b>, <b>during</b> and <b>after</b>.</p></div>
+    <div class="pick" id="pick"></div>
+    <div class="card">
+      <div class="head" id="head"></div>
+      <div class="cols">
+        <div class="col before"><h4>🛡️ Before</h4><ul id="before"></ul></div>
+        <div class="col during"><h4>⚡ During</h4><ul id="during"></ul></div>
+        <div class="col after"><h4>🩹 After</h4><ul id="after"></ul></div>
+      </div>
+    </div>
+    <div class="idea"><h2>🧠 The Big Idea</h2><ul>
+      <li>Disasters can be <b>natural</b> (earthquake, flood, cyclone) or <b>man-made</b> (fire, accidents).</li>
+      <li><b>Preparedness</b> &amp; <b>mitigation</b> (reducing risk beforehand) matter as much as rescue afterwards.</li>
+      <li>Know your emergency numbers, keep an emergency kit, and stay calm — <b>a clear head is the best tool</b>. 📞</li>
+    </ul></div>
+    <div class="foot">DeepManthan Juniors · learn by playing · © 2026 DeepManthan AI — All Rights Reserved.</div>
+  </div>
+<script>
+  const D={
+    quake:{h:'🌎 Earthquake', before:['Fix heavy furniture to walls','Know safe spots (under a strong table)','Keep an emergency kit ready'],
+      during:['Drop, Cover &amp; Hold under a sturdy table','Stay away from windows &amp; heavy objects','If outside, move to open ground'],
+      after:['Check yourself &amp; others for injuries','Watch for aftershocks','Don\u2019t use lifts; leave calmly']},
+    flood:{h:'🌊 Flood', before:['Know your area\u2019s flood risk','Store drinking water &amp; dry food','Keep documents in a waterproof bag'],
+      during:['Move to higher ground quickly','Never walk or swim through flood water','Switch off electricity mains'],
+      after:['Drink only safe/boiled water','Avoid damaged buildings','Clean &amp; dry everything to stop disease']},
+    fire:{h:'🔥 Fire', before:['Know the exits &amp; fire extinguisher','Never overload electric sockets','Practise a fire escape plan'],
+      during:['Get out fast — stay low under smoke','Never use lifts; use stairs','Stop-Drop-Roll if clothes catch fire'],
+      after:['Call the fire brigade (101)','Don\u2019t re-enter until it\u2019s declared safe','Get medical help for burns/smoke']},
+    cyclone:{h:'🌀 Cyclone', before:['Follow weather warnings','Secure loose objects outside','Stock water, food &amp; a torch'],
+      during:['Stay indoors, away from windows','Listen to official radio updates','Move to a shelter if told to'],
+      after:['Beware of fallen power lines','Avoid flooded &amp; damaged areas','Help neighbours &amp; report damage']}
+  };
+  const order=[['quake','🌎 Earthquake'],['flood','🌊 Flood'],['fire','🔥 Fire'],['cyclone','🌀 Cyclone']];
+  const pick=document.getElementById('pick');
+  order.forEach(([k,l],i)=>{ const b=document.createElement('button'); b.className='pb'+(i===0?' on':''); b.textContent=l; b.onclick=()=>{document.querySelectorAll('.pb').forEach(x=>x.classList.remove('on'));b.classList.add('on');show(k);}; pick.appendChild(b); });
+  function show(k){ const d=D[k]; document.getElementById('head').textContent=d.h;
+    document.getElementById('before').innerHTML=d.before.map(x=>`<li>${x}</li>`).join('');
+    document.getElementById('during').innerHTML=d.during.map(x=>`<li>${x}</li>`).join('');
+    document.getElementById('after').innerHTML=d.after.map(x=>`<li>${x}</li>`).join('');
+  }
+  show('quake');
+</script>
+</body>
+</html>

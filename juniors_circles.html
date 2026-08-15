@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circles · DeepManthan Juniors (SSC Maths)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b1020;--bg2:#0f1630;--panel:#151d38;--line:#26315a;--ink:#EAF0FF;--dim:#93a2c8;--cyan:#38E1FF;--teal:#2DD4BF;--amber:#FFB454;--green:#5BE49B;--pink:#FF7BC0;--violet:#A78BFA;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(900px 500px at 80% -10%,#2a2450,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:var(--violet);padding:4px 12px;border-radius:20px}
+  .wrap{max-width:900px;margin:0 auto;padding:22px 18px 50px}
+  .hero{text-align:center;margin-bottom:14px}.hero h1{font-size:clamp(1.6rem,5vw,2.3rem);color:var(--violet)}.hero p{color:var(--dim);font-weight:700;max-width:660px;margin:4px auto 0}
+  .modes{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+  .mode{font-family:'Baloo 2';font-weight:700;font-size:.84rem;border:2px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:12px;padding:8px 13px;cursor:pointer}.mode.on{background:linear-gradient(135deg,rgba(167,139,250,.24),rgba(56,225,255,.14));border-color:var(--violet);color:#fff}
+  .layout{display:grid;grid-template-columns:1fr .72fr;gap:16px;align-items:start}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}
+  svg.circ{width:100%;height:auto;display:block;background:#0a1024;border-radius:12px;touch-action:none}
+  .readout{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
+  .readout .r{font-family:'Baloo 2';font-size:1.1rem;margin:6px 0}.readout .center{color:var(--amber)}.readout .circ2{color:var(--cyan)}.readout .rel{color:var(--green);margin-top:8px}
+  .hint{color:var(--dim);font-weight:700;font-size:.82rem;text-align:center;margin-top:8px}
+  .idea{background:linear-gradient(120deg,rgba(167,139,250,.12),rgba(56,225,255,.1));border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:16px}
+  .idea h2{color:var(--violet);font-size:1.15rem;margin-bottom:6px}.idea li{margin:7px 0;font-weight:700;padding-left:22px;position:relative;list-style:none}.idea li::before{content:"⭕";position:absolute;left:0}.idea b{color:var(--cyan)}
+  .foot{text-align:center;color:#6f7c9e;font-size:.78rem;margin-top:22px;font-weight:600}
+  @media(max-width:760px){.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html" class="back" onclick="if(history.length>1){history.back();return false;}location.href='index.html';return false;">← Back</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span><span class="tag">SSC · Maths</span>
+  </div>
+  <div class="wrap">
+    <div class="hero"><h1>⭕ Circles</h1><p>Circles hide beautiful angle rules. <b style="color:var(--green)">Drag the points</b> and watch the angles stay in step!</p></div>
+    <div class="modes" id="modes">
+      <button class="mode on" data-m="center">Angle: centre = 2 × circumference</button>
+      <button class="mode" data-m="semi">Angle in a semicircle = 90°</button>
+    </div>
+    <div class="layout">
+      <div class="card"><svg class="circ" id="svg" viewBox="0 0 320 320"></svg><div class="hint" id="hint"></div></div>
+      <div class="card"><div class="readout" id="readout"></div></div>
+    </div>
+    <div class="idea"><h2>🧠 The Big Idea</h2><ul>
+      <li>The angle an arc makes at the <b>centre</b> is <b>twice</b> the angle it makes at any point on the circle.</li>
+      <li>An angle in a <b>semicircle</b> (subtended by a diameter) is always <b>90°</b> — a right angle, wherever you put the point!</li>
+      <li>Angles in the <b>same segment</b> are equal. These rules power geometry proofs &amp; constructions.</li>
+    </ul></div>
+    <div class="foot">DeepManthan Juniors · learn by playing · © 2026 DeepManthan AI — All Rights Reserved.</div>
+  </div>
+<script>
+  const svg=document.getElementById('svg'), O={x:160,y:160}, R=115;
+  let mode='center'; let A=40, B=160, P=270; // angles (deg) of points on circle
+  let drag=null;
+  const ptAt=a=>({x:O.x+R*Math.cos(a*Math.PI/180), y:O.y-R*Math.sin(a*Math.PI/180)});
+  function angleBetween(V, p1, p2){ const a1=Math.atan2(p1.y-V.y,p1.x-V.x), a2=Math.atan2(p2.y-V.y,p2.x-V.x); let d=Math.abs(a1-a2)*180/Math.PI; if(d>180)d=360-d; return d; }
+  function draw(){ const pa=ptAt(A), pb=ptAt(B), pp=ptAt(P);
+    let extra='', read='';
+    if(mode==='center'){
+      const angC=angleBetween(O,pa,pb); const angP=angleBetween(pp,pa,pb);
+      extra=`<polygon points="${O.x},${O.y} ${pa.x},${pa.y} ${pb.x},${pb.y}" fill="rgba(255,180,84,.14)" stroke="#FFB454" stroke-width="1.5"/>
+        <polygon points="${pp.x},${pp.y} ${pa.x},${pa.y} ${pb.x},${pb.y}" fill="rgba(56,225,255,.12)" stroke="#38E1FF" stroke-width="1.5"/>
+        <circle cx="${O.x}" cy="${O.y}" r="4" fill="#FFB454"/>
+        ${dot(pp,'#5BE49B','P')}${dot(pa,'#A78BFA','A')}${dot(pb,'#A78BFA','B')}`;
+      read=`<div class="r center">Angle at centre (AOB) = ${angC.toFixed(0)}°</div><div class="r circ2">Angle at point P = ${angP.toFixed(0)}°</div><div class="r rel">centre ÷ circumference ≈ ${(angC/Math.max(1,angP)).toFixed(1)} × 🎯</div>`;
+      document.getElementById('hint').textContent='Drag P (green) or A, B (purple).';
+    } else {
+      // semicircle: A and B are ends of a diameter (B = A+180). P draggable.
+      B=(A+180)%360; const pb2=ptAt(B); const angP=angleBetween(pp,pa,pb2);
+      extra=`<line x1="${pa.x}" y1="${pa.y}" x2="${pb2.x}" y2="${pb2.y}" stroke="#FFB454" stroke-width="2.5"/>
+        <polygon points="${pp.x},${pp.y} ${pa.x},${pa.y} ${pb2.x},${pb2.y}" fill="rgba(91,228,155,.14)" stroke="#5BE49B" stroke-width="1.5"/>
+        ${dot(pp,'#5BE49B','P')}${dot(pa,'#A78BFA','A')}${dot(pb2,'#A78BFA','B')}`;
+      read=`<div class="r center">AB is a diameter</div><div class="r rel">Angle APB = ${angP.toFixed(0)}° ✓ (always 90°)</div>`;
+      document.getElementById('hint').textContent='Drag P around — the angle stays 90°!';
+    }
+    svg.innerHTML=`<circle cx="${O.x}" cy="${O.y}" r="${R}" fill="none" stroke="#2b3660" stroke-width="2"/>`+extra;
+    document.getElementById('readout').innerHTML=read;
+    attach();
+  }
+  function dot(p,col,lbl){ return `<circle cx="${p.x}" cy="${p.y}" r="8" fill="${col}" style="cursor:grab" data-lbl="${lbl}"/><text x="${p.x}" y="${p.y-12}" fill="${col}" font-size="12" text-anchor="middle" font-weight="bold">${lbl}</text>`; }
+  function attach(){ svg.querySelectorAll('circle[data-lbl]').forEach(c=>c.addEventListener('pointerdown',e=>{ drag=c.dataset.lbl; svg.setPointerCapture(e.pointerId); e.preventDefault(); })); }
+  function angOf(e){ const r=svg.getBoundingClientRect(); const x=(e.clientX-r.left)/r.width*320-O.x, y=-((e.clientY-r.top)/r.height*320-O.y); let a=Math.atan2(y,x)*180/Math.PI; if(a<0)a+=360; return a; }
+  svg.addEventListener('pointermove',e=>{ if(!drag)return; const a=angOf(e); if(drag==='P')P=a; else if(drag==='A')A=a; else if(drag==='B')B=a; draw(); });
+  window.addEventListener('pointerup',()=>drag=null);
+  document.getElementById('modes').addEventListener('click',e=>{ const b=e.target.closest('.mode'); if(!b)return; mode=b.dataset.m; document.querySelectorAll('.mode').forEach(x=>x.classList.toggle('on',x===b)); draw(); });
+  draw();
+</script>
+</body>
+</html>

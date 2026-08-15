@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Similarity & Pythagoras · DeepManthan Juniors (SSC Maths)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b1020;--bg2:#0f1630;--panel:#151d38;--line:#26315a;--ink:#EAF0FF;--dim:#93a2c8;--cyan:#38E1FF;--teal:#2DD4BF;--amber:#FFB454;--green:#5BE49B;--pink:#FF7BC0;--violet:#A78BFA;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(900px 500px at 20% -10%,#2a2450,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:var(--violet);padding:4px 12px;border-radius:20px}
+  .wrap{max-width:900px;margin:0 auto;padding:22px 18px 50px}
+  .hero{text-align:center;margin-bottom:14px}.hero h1{font-size:clamp(1.5rem,5vw,2.2rem);color:var(--violet)}.hero p{color:var(--dim);font-weight:700;max-width:660px;margin:4px auto 0}
+  .layout{display:grid;grid-template-columns:1fr .78fr;gap:16px;align-items:start}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}
+  svg.tri{width:100%;height:auto;display:block;background:#0a1024;border-radius:12px}
+  .ctl{margin:8px 0}.ctl label{display:flex;justify-content:space-between;font-weight:800;font-size:.82rem;margin-bottom:3px}.ctl label b{font-family:'Baloo 2'}
+  input[type=range]{width:100%;accent-color:var(--violet)}
+  .eqbox{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center;margin-top:10px;font-family:'Baloo 2';font-size:1.05rem}
+  .eqbox .big{font-size:1.3rem;color:var(--green);margin-top:4px}
+  .idea{background:linear-gradient(120deg,rgba(167,139,250,.12),rgba(56,225,255,.1));border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:16px}
+  .idea h2{color:var(--violet);font-size:1.15rem;margin-bottom:6px}.idea li{margin:7px 0;font-weight:700;padding-left:22px;position:relative;list-style:none}.idea li::before{content:"🔺";position:absolute;left:0}.idea b{color:var(--cyan)}
+  .foot{text-align:center;color:#6f7c9e;font-size:.78rem;margin-top:22px;font-weight:600}
+  @media(max-width:760px){.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html" class="back" onclick="if(history.length>1){history.back();return false;}location.href='index.html';return false;">← Back</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span><span class="tag">SSC · Maths</span>
+  </div>
+  <div class="wrap">
+    <div class="hero"><h1>🔺 Similarity &amp; Pythagoras</h1><p>The square on the longest side equals the two smaller squares <b style="color:var(--green)">added together</b>. See it live!</p></div>
+    <div class="layout">
+      <div class="card"><svg class="tri" id="svg" viewBox="0 0 380 380"></svg></div>
+      <div class="card">
+        <div class="ctl"><label>side a <b style="color:var(--cyan)"><span id="al">3</span></b></label><input type="range" id="a" min="2" max="6" step="1" value="3"></div>
+        <div class="ctl"><label>side b <b style="color:var(--pink)"><span id="bl">4</span></b></label><input type="range" id="b" min="2" max="6" step="1" value="4"></div>
+        <div class="eqbox">a² + b² = c²<div class="big" id="eq">9 + 16 = 25</div><div style="color:var(--dim);font-size:.85rem;font-weight:700" id="chyp">so c = 5</div></div>
+        <div style="color:var(--dim);font-weight:700;font-size:.84rem;margin-top:10px;text-align:center">🔎 <b style="color:var(--amber)">Similarity:</b> shapes with equal angles &amp; proportional sides are <i>similar</i> — same shape, different size.</div>
+      </div>
+    </div>
+    <div class="idea"><h2>🧠 The Big Idea</h2><ul>
+      <li><b>Pythagoras theorem:</b> in a right-angled triangle, <b>a² + b² = c²</b> (c is the hypotenuse, the longest side).</li>
+      <li><b>Similar triangles</b> have the same angles and sides in the same ratio — enlargements of each other.</li>
+      <li>These ideas let us measure the unreachable: heights of towers, widths of rivers, distances in maps. 🗺️</li>
+    </ul></div>
+    <div class="foot">DeepManthan Juniors · learn by playing · © 2026 DeepManthan AI — All Rights Reserved.</div>
+  </div>
+<script>
+  const svg=document.getElementById('svg');
+  function v(id){return +document.getElementById(id).value;}
+  function draw(){ const a=v('a'),b=v('b'); document.getElementById('al').textContent=a;document.getElementById('bl').textContent=b;
+    const c=Math.sqrt(a*a+b*b); const sc=20; const C={x:150,y:250}; const A={x:C.x+a*sc,y:C.y}; const B={x:C.x,y:C.y-b*sc};
+    // square on a (below CA)
+    const sqA=`${C.x},${C.y} ${A.x},${A.y} ${A.x},${A.y+a*sc} ${C.x},${C.y+a*sc}`;
+    // square on b (left of CB)
+    const sqB=`${C.x},${C.y} ${B.x},${B.y} ${B.x-b*sc},${B.y} ${C.x-b*sc},${C.y}`;
+    // square on hypotenuse AB, outward (away from C)
+    const d={x:B.x-A.x,y:B.y-A.y}; let n={x:d.y,y:-d.x}; // length c*sc
+    const mid={x:(A.x+B.x)/2,y:(A.y+B.y)/2};
+    const test={x:mid.x+n.x*0.1,y:mid.y+n.y*0.1};
+    if(Math.hypot(test.x-C.x,test.y-C.y)<Math.hypot(mid.x-C.x,mid.y-C.y)){ n={x:-d.y,y:d.x}; }
+    const P1={x:A.x+n.x,y:A.y+n.y}, P2={x:B.x+n.x,y:B.y+n.y};
+    const sqC=`${A.x},${A.y} ${B.x},${B.y} ${P2.x},${P2.y} ${P1.x},${P1.y}`;
+    const ctr=(pts)=>{ const a=pts.split(' ').map(p=>p.split(',').map(Number)); const x=a.reduce((s,p)=>s+p[0],0)/a.length,y=a.reduce((s,p)=>s+p[1],0)/a.length; return {x,y}; };
+    const cA=ctr(sqA),cB=ctr(sqB),cC=ctr(sqC);
+    svg.innerHTML=`
+      <polygon points="${sqA}" fill="rgba(56,225,255,.18)" stroke="#38E1FF" stroke-width="1.5"/>
+      <polygon points="${sqB}" fill="rgba(255,123,192,.18)" stroke="#FF7BC0" stroke-width="1.5"/>
+      <polygon points="${sqC}" fill="rgba(91,228,155,.18)" stroke="#5BE49B" stroke-width="1.5"/>
+      <polygon points="${C.x},${C.y} ${A.x},${A.y} ${B.x},${B.y}" fill="rgba(167,139,250,.35)" stroke="#A78BFA" stroke-width="2.5"/>
+      <rect x="${C.x}" y="${C.y-12}" width="12" height="12" fill="none" stroke="#EAF0FF" stroke-width="1.2"/>
+      <text x="${cA.x}" y="${cA.y+4}" fill="#38E1FF" font-size="13" text-anchor="middle" font-weight="bold">a²=${a*a}</text>
+      <text x="${cB.x}" y="${cB.y+4}" fill="#FF7BC0" font-size="13" text-anchor="middle" font-weight="bold">b²=${b*b}</text>
+      <text x="${cC.x}" y="${cC.y+4}" fill="#5BE49B" font-size="13" text-anchor="middle" font-weight="bold">c²=${a*a+b*b}</text>`;
+    document.getElementById('eq').textContent=`${a*a} + ${b*b} = ${a*a+b*b}`;
+    document.getElementById('chyp').textContent=`so c = √${a*a+b*b} = ${(+c.toFixed(2))}`;
+  }
+  ['a','b'].forEach(id=>document.getElementById(id).addEventListener('input',draw)); draw();
+</script>
+</body>
+</html>

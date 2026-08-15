@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carbon Compounds · DeepManthan Juniors (SSC Class 10)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b1020;--bg2:#0f1630;--panel:#151d38;--line:#26315a;--ink:#EAF0FF;--dim:#93a2c8;--cyan:#38E1FF;--teal:#2DD4BF;--amber:#FFB454;--green:#5BE49B;--pink:#FF7BC0;--violet:#A78BFA;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(900px 500px at 80% -10%,#12402f,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:var(--green);padding:4px 12px;border-radius:20px}
+  .wrap{max-width:920px;margin:0 auto;padding:22px 18px 50px}
+  .hero{text-align:center;margin-bottom:14px}.hero h1{font-size:clamp(1.6rem,5vw,2.3rem);color:var(--green)}.hero p{color:var(--dim);font-weight:700;max-width:660px;margin:4px auto 0}
+  .pick{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+  .pb{font-family:'Baloo 2';font-weight:700;font-size:.85rem;border:2px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:12px;padding:8px 13px;cursor:pointer}.pb.on{background:linear-gradient(135deg,rgba(91,228,155,.22),rgba(56,225,255,.14));border-color:var(--green);color:#fff}
+  .layout{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;align-items:start}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}
+  svg.mol{width:100%;height:auto;display:block;background:#0c1330;border-radius:12px}
+  .nm{font-family:'Baloo 2';font-size:1.5rem;color:var(--green)}.formula{font-family:'Baloo 2';color:var(--amber);font-size:1.1rem;margin:2px 0 8px}.formula sub{font-size:.7em}
+  .fg{display:inline-block;background:rgba(255,180,84,.15);border:1px solid var(--amber);color:var(--amber);border-radius:20px;padding:3px 10px;font-weight:800;font-size:.82rem;margin-bottom:8px}
+  .desc{color:#aeb8dd;font-weight:600;font-size:.92rem;line-height:1.5}
+  .legend{display:flex;gap:14px;justify-content:center;margin-top:8px;font-size:.76rem;font-weight:700;color:var(--dim)}.legend i{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:middle;margin-right:4px}
+  .idea{background:linear-gradient(120deg,rgba(91,228,155,.12),rgba(56,225,255,.1));border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:16px}
+  .idea h2{color:var(--green);font-size:1.15rem;margin-bottom:6px}.idea li{margin:7px 0;font-weight:700;padding-left:22px;position:relative;list-style:none}.idea li::before{content:"⛓️";position:absolute;left:0}.idea b{color:var(--cyan)}
+  .foot{text-align:center;color:#6f7c9e;font-size:.78rem;margin-top:22px;font-weight:600}
+  @media(max-width:760px){.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html" class="back" onclick="if(history.length>1){history.back();return false;}location.href='index.html';return false;">← Back</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span><span class="tag">SSC · Class 10 · Chemistry</span>
+  </div>
+  <div class="wrap">
+    <div class="hero"><h1>⛓️ Carbon Compounds</h1><p>Carbon shares electrons to form <b style="color:var(--green)">covalent bonds</b> — and builds millions of molecules. Pick one to see its structure!</p></div>
+    <div class="pick" id="pick"></div>
+    <div class="layout">
+      <div class="card"><svg class="mol" id="svg" viewBox="0 0 360 240"></svg>
+        <div class="legend"><span><i style="background:#4a5578"></i>C (carbon)</span><span><i style="background:#38E1FF"></i>H (hydrogen)</span><span><i style="background:#F87171"></i>O (oxygen)</span></div>
+      </div>
+      <div class="card" id="info"></div>
+    </div>
+    <div class="idea"><h2>🧠 The Big Idea</h2><ul>
+      <li>Carbon has <b>4 outer electrons</b>, so it forms <b>4 covalent bonds</b> — chains, rings, single/double/triple bonds.</li>
+      <li>A <b>functional group</b> (like –OH or –COOH) gives a molecule its special properties.</li>
+      <li>Alcohols end in <b>–OH</b> (ethanol 🍾), acids in <b>–COOH</b> (ethanoic acid = vinegar 🧴). Small units join into giant <b>polymers</b> (plastics).</li>
+    </ul></div>
+    <div class="foot">DeepManthan Juniors · learn by playing · © 2026 DeepManthan AI — All Rights Reserved.</div>
+  </div>
+<script>
+  const C='#4a5578', Hc='#38E1FF', O='#F87171';
+  function atom(x,y,el){ const col=el==='C'?C:el==='H'?Hc:O; const r=el==='C'?15:el==='O'?14:11; return `<circle cx="${x}" cy="${y}" r="${r}" fill="${col}" stroke="rgba(255,255,255,.25)"/><text x="${x}" y="${y+4}" fill="${el==='H'?'#05121c':'#fff'}" font-size="${el==='H'?11:13}" text-anchor="middle" font-weight="bold">${el}</text>`; }
+  function bond(x1,y1,x2,y2,dbl){ if(dbl){ const dx=(y2-y1), dy=-(x2-x1), L=Math.hypot(dx,dy),ox=dx/L*3,oy=dy/L*3; return `<line x1="${x1+ox}" y1="${y1+oy}" x2="${x2+ox}" y2="${y2+oy}" stroke="#9fb0d0" stroke-width="2.5"/><line x1="${x1-ox}" y1="${y1-oy}" x2="${x2-ox}" y2="${y2-oy}" stroke="#9fb0d0" stroke-width="2.5"/>`; } return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#9fb0d0" stroke-width="3"/>`; }
+  const MOL={
+    methane:{nm:'Methane',f:'CH<sub>4</sub>',fg:'Hydrocarbon (alkane)',d:'The simplest carbon compound — one carbon sharing bonds with four hydrogens. It\u2019s the main gas in CNG &amp; biogas. 🔥',
+      draw:()=>atom(180,120,'C')+atom(180,60,'H')+atom(180,180,'H')+atom(120,120,'H')+atom(240,120,'H'), bonds:[[180,120,180,60],[180,120,180,180],[180,120,120,120],[180,120,240,120]]},
+    ethane:{nm:'Ethane',f:'C<sub>2</sub>H<sub>6</sub>',fg:'Hydrocarbon (alkane)',d:'Two carbons joined by a single bond, each holding three hydrogens. A saturated hydrocarbon.',
+      draw:()=>atom(140,120,'C')+atom(220,120,'C')+atom(100,70,'H')+atom(100,170,'H')+atom(140,180,'H')+atom(260,70,'H')+atom(260,170,'H')+atom(220,60,'H'), bonds:[[140,120,220,120],[140,120,100,70],[140,120,100,170],[140,120,140,180],[220,120,260,70],[220,120,260,170],[220,120,220,60]]},
+    ethene:{nm:'Ethene',f:'C<sub>2</sub>H<sub>4</sub>',fg:'Unsaturated (double bond)',d:'Two carbons joined by a <b>double bond</b> (unsaturated). Ethene ripens fruit and makes polythene plastic!',
+      draw:()=>atom(140,120,'C')+atom(220,120,'C')+atom(95,80,'H')+atom(95,160,'H')+atom(265,80,'H')+atom(265,160,'H'), bonds:[[140,120,220,120,1],[140,120,95,80],[140,120,95,160],[220,120,265,80],[220,120,265,160]]},
+    ethanol:{nm:'Ethanol',f:'C<sub>2</sub>H<sub>5</sub>OH',fg:'Alcohol (–OH group)',d:'The alcohol in sanitisers &amp; fuels. The <b style="color:#F87171">–OH</b> group makes it an alcohol. 🧴',
+      draw:()=>atom(120,130,'C')+atom(195,130,'C')+atom(255,90,'O')+atom(300,110,'H')+atom(85,90,'H')+atom(85,170,'H')+atom(120,185,'H')+atom(195,185,'H')+atom(195,75,'H'), bonds:[[120,130,195,130],[195,130,255,90],[255,90,300,110],[120,130,85,90],[120,130,85,170],[120,130,120,185],[195,130,195,185],[195,130,195,75]]},
+    acid:{nm:'Ethanoic Acid',f:'CH<sub>3</sub>COOH',fg:'Carboxylic acid (–COOH)',d:'The acid in <b>vinegar</b>! Its <b style="color:#F87171">–COOH</b> group makes it a carboxylic acid. 🥗',
+      draw:()=>atom(110,140,'C')+atom(190,140,'C')+atom(230,90,'O')+atom(240,185,'O')+atom(300,205,'H')+atom(75,105,'H')+atom(75,180,'H')+atom(110,190,'H'), bonds:[[110,140,190,140],[190,140,230,90,1],[190,140,240,185],[240,185,300,205],[110,140,75,105],[110,140,75,180],[110,140,110,190]]}
+  };
+  const order=[['methane','Methane'],['ethane','Ethane'],['ethene','Ethene'],['ethanol','Ethanol'],['acid','Ethanoic Acid']];
+  const pick=document.getElementById('pick');
+  order.forEach(([k,label],i)=>{ const b=document.createElement('button'); b.className='pb'+(i===0?' on':''); b.textContent=label; b.onclick=()=>{ document.querySelectorAll('.pb').forEach(x=>x.classList.remove('on')); b.classList.add('on'); show(k); }; pick.appendChild(b); });
+  function show(k){ const m=MOL[k]; let b=''; m.bonds.forEach(bd=>b+=bond(bd[0],bd[1],bd[2],bd[3],bd[4])); document.getElementById('svg').innerHTML=b+m.draw();
+    document.getElementById('info').innerHTML=`<div class="nm">${m.nm}</div><div class="formula">${m.f}</div><span class="fg">${m.fg}</span><p class="desc">${m.d}</p>`; }
+  show('methane');
+</script>
+</body>
+</html>

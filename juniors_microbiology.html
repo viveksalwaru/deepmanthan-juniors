@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Microbiology · DeepManthan Juniors (SSC Class 9-10)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b1020;--bg2:#0f1630;--panel:#151d38;--line:#26315a;--ink:#EAF0FF;--dim:#93a2c8;--cyan:#38E1FF;--teal:#2DD4BF;--amber:#FFB454;--green:#5BE49B;--pink:#FF7BC0;--violet:#A78BFA;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(900px 500px at 80% -10%,#123a2e,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:var(--pink);padding:4px 12px;border-radius:20px}
+  .wrap{max-width:900px;margin:0 auto;padding:22px 18px 50px}
+  .hero{text-align:center;margin-bottom:14px}.hero h1{font-size:clamp(1.6rem,5vw,2.3rem);color:var(--pink)}.hero p{color:var(--dim);font-weight:700;max-width:660px;margin:4px auto 0}
+  .layout{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}
+  .scope{position:relative;width:230px;height:230px;margin:0 auto;border-radius:50%;background:radial-gradient(circle at 40% 35%,#12314a,#081422);border:10px solid #1c2740;box-shadow:inset 0 0 40px rgba(0,0,0,.6),0 0 0 3px #2b3a5a;overflow:hidden}
+  .scope svg{width:100%;height:100%}
+  .picker{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+  .pb{font-family:'Baloo 2';font-weight:700;font-size:.8rem;border:2px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:11px;padding:7px 10px;cursor:pointer}.pb.on{background:linear-gradient(135deg,rgba(255,123,192,.22),rgba(56,225,255,.14));border-color:var(--pink);color:#fff}
+  .mi .nm{font-family:'Baloo 2';font-size:1.4rem;color:var(--green)}.mi .type{color:var(--amber);font-weight:800;font-size:.85rem}.mi p{color:#aeb8dd;font-weight:600;font-size:.9rem;margin-top:8px;line-height:1.5}
+  .badge{display:inline-block;border-radius:20px;padding:3px 10px;font-weight:800;font-size:.78rem;margin-top:8px}.good{background:rgba(91,228,155,.16);border:1px solid var(--green);color:var(--green)}.bad{background:rgba(255,123,192,.16);border:1px solid var(--pink);color:var(--pink)}
+  .idea{background:linear-gradient(120deg,rgba(255,123,192,.12),rgba(56,225,255,.1));border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:16px}
+  .idea h2{color:var(--pink);font-size:1.15rem;margin-bottom:6px}.idea li{margin:7px 0;font-weight:700;padding-left:22px;position:relative;list-style:none}.idea li::before{content:"🦠";position:absolute;left:0}.idea b{color:var(--cyan)}
+  .foot{text-align:center;color:#6f7c9e;font-size:.78rem;margin-top:22px;font-weight:600}
+  @media(max-width:760px){.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html" class="back" onclick="if(history.length>1){history.back();return false;}location.href='index.html';return false;">← Back</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span><span class="tag">SSC · Class 9-10 · Biology</span>
+  </div>
+  <div class="wrap">
+    <div class="hero"><h1>🦠 Introduction to Microbiology</h1><p>Meet the tiny living things all around us! Put each microbe under the <b style="color:var(--pink)">microscope</b> and find out if it's a friend or foe.</p></div>
+    <div class="layout">
+      <div class="card">
+        <div class="scope"><svg id="scope" viewBox="0 0 200 200"></svg></div>
+        <div class="picker" id="picker"></div>
+      </div>
+      <div class="card"><div class="mi" id="mi"></div></div>
+    </div>
+    <div class="idea"><h2>🧠 The Big Idea</h2><ul>
+      <li><b>Microorganisms</b> are living things too small to see without a microscope — bacteria, viruses, fungi, protozoa &amp; algae.</li>
+      <li>Many are <b>helpful</b>: they make curd &amp; bread, medicines, and recycle waste. Some are <b>harmful</b> and cause disease.</li>
+      <li>Viruses are special — they can only multiply inside a living cell.</li>
+    </ul></div>
+    <div class="foot">DeepManthan Juniors · learn by playing · © 2026 DeepManthan AI — All Rights Reserved.</div>
+  </div>
+<script>
+  const MIC={
+    bacteria:{nm:'Bacteria',type:'Single-celled microbe',good:true,d:'Tiny single cells shaped like rods, spheres or spirals. Friendly ones make <b>curd</b> from milk and live in our gut; some cause illness.',draw:`<ellipse cx="60" cy="70" rx="22" ry="9" fill="#5BE49B" transform="rotate(20 60 70)"/><ellipse cx="120" cy="120" rx="20" ry="8" fill="#5BE49B" transform="rotate(-30 120 120)"/><circle cx="140" cy="55" r="9" fill="#5BE49B"/><ellipse cx="80" cy="140" rx="18" ry="7" fill="#5BE49B" transform="rotate(10 80 140)"/>`},
+    virus:{nm:'Virus',type:'Not fully "alive" on its own',good:false,d:'Much smaller than bacteria. A virus can only multiply <b>inside</b> a living cell. Causes colds, flu &amp; COVID.',draw:`<g fill="none" stroke="#FF7BC0" stroke-width="3"><circle cx="100" cy="100" r="26" fill="rgba(255,123,192,.25)"/>${Array.from({length:12},(_,i)=>{const a=i/12*6.28;return `<line x1="${100+Math.cos(a)*26}" y1="${100+Math.sin(a)*26}" x2="${100+Math.cos(a)*40}" y2="${100+Math.sin(a)*40}"/><circle cx="${100+Math.cos(a)*42}" cy="${100+Math.sin(a)*42}" r="4" fill="#FF7BC0"/>`}).join('')}</g>`},
+    fungi:{nm:'Fungi',type:'Mould / yeast',good:true,d:'Includes <b>yeast</b> (makes bread rise!) and moulds. Penicillin — the first antibiotic — comes from a fungus. Some cause skin infections.',draw:`<g fill="#FFB454"><circle cx="80" cy="90" r="16"/><circle cx="110" cy="110" r="13"/><circle cx="95" cy="130" r="11"/><circle cx="130" cy="80" r="10"/><line x1="80" y1="106" x2="80" y2="150" stroke="#FFB454" stroke-width="4"/></g>`},
+    protozoa:{nm:'Protozoa',type:'Single-celled, animal-like',good:false,d:'Larger single-celled microbes like Amoeba &amp; Paramecium. Some (like the malaria parasite) cause disease.',draw:`<path d="M 70 90 q 30 -30 60 0 q 30 30 0 60 q -30 30 -60 0 q -25 -30 0 -60 Z" fill="rgba(56,225,255,.35)" stroke="#38E1FF" stroke-width="2"/><circle cx="100" cy="115" r="10" fill="#38E1FF"/>`},
+    alga:{nm:'Algae',type:'Plant-like microbe',good:true,d:'Green microbes that make their own food by photosynthesis, like plants. They release oxygen and feed water life.',draw:`<g fill="#5BE49B"><circle cx="90" cy="90" r="12"/><circle cx="115" cy="105" r="12"/><circle cx="95" cy="120" r="12"/><circle cx="125" cy="130" r="10"/></g>`}
+  };
+  const order=[['bacteria','Bacteria'],['virus','Virus'],['fungi','Fungi'],['protozoa','Protozoa'],['alga','Algae']];
+  const picker=document.getElementById('picker');
+  order.forEach(([k,l],i)=>{ const b=document.createElement('button'); b.className='pb'+(i===0?' on':''); b.textContent=l; b.onclick=()=>{document.querySelectorAll('.pb').forEach(x=>x.classList.remove('on'));b.classList.add('on');show(k);}; picker.appendChild(b); });
+  function show(k){ const m=MIC[k]; document.getElementById('scope').innerHTML=m.draw;
+    document.getElementById('mi').innerHTML=`<div class="nm">${m.nm}</div><div class="type">${m.type}</div><p>${m.d}</p><span class="badge ${m.good?'good':'bad'}">${m.good?'✅ Often useful':'⚠️ Can be harmful'}</span>`; }
+  show('bacteria');
+</script>
+</body>
+</html>

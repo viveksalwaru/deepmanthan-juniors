@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear Equations · DeepManthan Juniors (SSC Maths)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b1020;--bg2:#0f1630;--panel:#151d38;--line:#26315a;--ink:#EAF0FF;--dim:#93a2c8;--cyan:#38E1FF;--teal:#2DD4BF;--amber:#FFB454;--green:#5BE49B;--pink:#FF7BC0;--violet:#A78BFA;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(900px 500px at 20% -10%,#2a2450,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:var(--violet);padding:4px 12px;border-radius:20px}
+  .wrap{max-width:900px;margin:0 auto;padding:22px 18px 50px}
+  .hero{text-align:center;margin-bottom:14px}.hero h1{font-size:clamp(1.6rem,5vw,2.3rem);color:var(--violet)}.hero p{color:var(--dim);font-weight:700;max-width:640px;margin:4px auto 0}
+  .layout{display:grid;grid-template-columns:1fr .82fr;gap:16px;align-items:start}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}
+  svg.graph{width:100%;height:auto;display:block;background:#0a1024;border-radius:12px}
+  .eq{font-family:'Baloo 2';font-size:1.05rem;margin-bottom:6px}.eq.l1{color:var(--cyan)}.eq.l2{color:var(--pink)}
+  .ctl{margin:8px 0}.ctl label{display:flex;justify-content:space-between;font-weight:800;font-size:.82rem;margin-bottom:3px}.ctl label b{font-family:'Baloo 2'}
+  input[type=range]{width:100%;accent-color:var(--violet)}
+  .sol{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px;text-align:center}.sol .v{font-family:'Baloo 2';font-size:1.3rem;color:var(--green)}.sol .t{font-size:.82rem;color:var(--dim);font-weight:700}
+  .idea{background:linear-gradient(120deg,rgba(167,139,250,.12),rgba(56,225,255,.1));border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:16px}
+  .idea h2{color:var(--violet);font-size:1.15rem;margin-bottom:6px}.idea li{margin:7px 0;font-weight:700;padding-left:22px;position:relative;list-style:none}.idea li::before{content:"📈";position:absolute;left:0}.idea b{color:var(--cyan)}
+  .foot{text-align:center;color:#6f7c9e;font-size:.78rem;margin-top:22px;font-weight:600}
+  @media(max-width:760px){.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html" class="back" onclick="if(history.length>1){history.back();return false;}location.href='index.html';return false;">← Back</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span><span class="tag">SSC · Maths</span>
+  </div>
+  <div class="wrap">
+    <div class="hero"><h1>📈 Linear Equations</h1><p>Two straight lines, two equations. Where they <b style="color:var(--green)">cross</b> is the solution! Slide the numbers and watch.</p></div>
+    <div class="layout">
+      <div class="card"><svg class="graph" id="svg" viewBox="0 0 360 360"></svg></div>
+      <div class="card">
+        <div class="eq l1">Line 1:&nbsp; y = <span id="m1v">1</span>x + <span id="c1v">2</span></div>
+        <div class="ctl"><label>slope m₁ <b style="color:var(--cyan)"><span id="m1l">1</span></b></label><input type="range" id="m1" min="-4" max="4" step="0.5" value="1"></div>
+        <div class="ctl"><label>intercept c₁ <b style="color:var(--cyan)"><span id="c1l">2</span></b></label><input type="range" id="c1" min="-8" max="8" step="1" value="2"></div>
+        <div class="eq l2" style="margin-top:10px">Line 2:&nbsp; y = <span id="m2v">-1</span>x + <span id="c2v">-2</span></div>
+        <div class="ctl"><label>slope m₂ <b style="color:var(--pink)"><span id="m2l">-1</span></b></label><input type="range" id="m2" min="-4" max="4" step="0.5" value="-1"></div>
+        <div class="ctl"><label>intercept c₂ <b style="color:var(--pink)"><span id="c2l">-2</span></b></label><input type="range" id="c2" min="-8" max="8" step="1" value="-2"></div>
+        <div class="sol"><div class="t">Solution (where they meet)</div><div class="v" id="sol">—</div><div class="t" id="cls"></div></div>
+      </div>
+    </div>
+    <div class="idea"><h2>🧠 The Big Idea</h2><ul>
+      <li>Each linear equation is a <b>straight line</b>. Solving two together means finding the point <b>(x, y)</b> that lies on <i>both</i>.</li>
+      <li><b>One crossing</b> → one unique solution. <b>Parallel lines</b> → no solution. <b>Same line</b> → infinitely many solutions.</li>
+      <li>You can solve them by graphing, substitution or elimination — the graph shows <i>why</i> the answer works.</li>
+    </ul></div>
+    <div class="foot">DeepManthan Juniors · learn by playing · © 2026 DeepManthan AI — All Rights Reserved.</div>
+  </div>
+<script>
+  const S=180, U=15; // origin, px per unit
+  const X=x=>S+x*U, Y=y=>S-y*U;
+  function grid(){ let g=''; for(let i=-11;i<=11;i++){ const c=i===0?'#3a4a78':'#1a2340'; g+=`<line x1="${X(i)}" y1="0" x2="${X(i)}" y2="360" stroke="${c}" stroke-width="${i===0?1.5:1}"/>`; g+=`<line x1="0" y1="${Y(i)}" x2="360" y2="${Y(i)}" stroke="${c}" stroke-width="${i===0?1.5:1}"/>`; }
+    g+=`<text x="352" y="174" fill="#93a2c8" font-size="10" font-family="monospace">x</text><text x="186" y="12" fill="#93a2c8" font-size="10" font-family="monospace">y</text>`; return g; }
+  function lineSeg(m,c,col){ const x1=-12,x2=12,y1=m*x1+c,y2=m*x2+c; return `<line x1="${X(x1)}" y1="${Y(y1)}" x2="${X(x2)}" y2="${Y(y2)}" stroke="${col}" stroke-width="3"/>`; }
+  function val(id){return +document.getElementById(id).value;}
+  function draw(){ const m1=val('m1'),c1=val('c1'),m2=val('m2'),c2=val('c2');
+    ['m1','c1','m2','c2'].forEach(id=>{document.getElementById(id+'l').textContent=val(id);});
+    document.getElementById('m1v').textContent=m1;document.getElementById('c1v').textContent=(c1<0?c1:'+ '+c1);
+    document.getElementById('m2v').textContent=m2;document.getElementById('c2v').textContent=(c2<0?c2:'+ '+c2);
+    let extra='', sol='—', cls='';
+    if(Math.abs(m1-m2)<1e-9){ if(Math.abs(c1-c2)<1e-9){ sol='∞ many'; cls='Same line → infinitely many solutions'; } else { sol='none'; cls='Parallel lines → no solution'; } }
+    else { const x=(c2-c1)/(m1-m2), y=m1*x+c1; sol=`(${(+x.toFixed(2))}, ${(+y.toFixed(2))})`; cls='Lines cross once → unique solution ✓';
+      extra=`<circle cx="${X(x)}" cy="${Y(y)}" r="6" fill="#5BE49B"/><circle cx="${X(x)}" cy="${Y(y)}" r="11" fill="none" stroke="#5BE49B" stroke-width="1.5"/>`; }
+    document.getElementById('svg').innerHTML=grid()+lineSeg(m1,c1,'#38E1FF')+lineSeg(m2,c2,'#FF7BC0')+extra;
+    document.getElementById('sol').textContent=sol; document.getElementById('cls').textContent=cls;
+  }
+  ['m1','c1','m2','c2'].forEach(id=>document.getElementById(id).addEventListener('input',draw)); draw();
+</script>
+</body>
+</html>

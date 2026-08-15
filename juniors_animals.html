@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animal Classification · DeepManthan Juniors (SSC Class 9-10)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b1020;--bg2:#0f1630;--panel:#151d38;--line:#26315a;--ink:#EAF0FF;--dim:#93a2c8;--cyan:#38E1FF;--teal:#2DD4BF;--amber:#FFB454;--green:#5BE49B;--pink:#FF7BC0;--violet:#A78BFA;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(900px 500px at 20% -10%,#3a1c2a,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:var(--pink);padding:4px 12px;border-radius:20px}
+  .wrap{max-width:840px;margin:0 auto;padding:22px 18px 50px}
+  .hero{text-align:center;margin-bottom:14px}.hero h1{font-size:clamp(1.6rem,5vw,2.3rem);color:var(--pink)}.hero p{color:var(--dim);font-weight:700;max-width:660px;margin:4px auto 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;text-align:center}
+  .score{font-family:'Baloo 2';color:var(--amber);margin-bottom:8px}
+  .animal{font-size:4rem;line-height:1}.aname{font-family:'Baloo 2';font-size:1.5rem;margin:4px 0 14px}
+  .opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:520px;margin:0 auto}
+  .opt{font-family:'Baloo 2';font-weight:700;font-size:.9rem;border:2px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:12px;padding:11px 8px;cursor:pointer;transition:.12s}.opt:hover{border-color:var(--pink)}
+  .opt.right{background:rgba(91,228,155,.25);border-color:var(--green);color:#dfffe9}.opt.wrong{background:rgba(255,123,192,.22);border-color:var(--pink)}
+  .fb{min-height:52px;margin-top:12px;font-weight:700;color:#aeb8dd}.fb b{color:var(--green)}
+  .next{font-family:'Baloo 2';font-weight:700;border:none;border-radius:12px;padding:10px 20px;cursor:pointer;background:var(--cyan);color:#05121c;margin-top:8px;box-shadow:0 5px 0 rgba(0,0,0,.25)}.next:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.25)}
+  .ref{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:16px}
+  .rc{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--pink);border-radius:10px;padding:9px 11px;text-align:left}.rc b{font-family:'Baloo 2';color:var(--pink)}.rc span{font-size:.78rem;color:var(--dim);font-weight:600}
+  .idea{background:linear-gradient(120deg,rgba(255,123,192,.12),rgba(56,225,255,.1));border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:16px}
+  .idea h2{color:var(--pink);font-size:1.15rem;margin-bottom:6px}.idea li{margin:7px 0;font-weight:700;padding-left:22px;position:relative;list-style:none}.idea li::before{content:"🐾";position:absolute;left:0}.idea b{color:var(--cyan)}
+  .foot{text-align:center;color:#6f7c9e;font-size:.78rem;margin-top:22px;font-weight:600}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html" class="back" onclick="if(history.length>1){history.back();return false;}location.href='index.html';return false;">← Back</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span><span class="tag">SSC · Class 9-10 · Biology</span>
+  </div>
+  <div class="wrap">
+    <div class="hero"><h1>🐾 Animal Classification</h1><p>Which group does each animal belong to? Tap your answer and learn what makes each group special!</p></div>
+    <div class="card">
+      <div class="score" id="score">Score: 0 / 0</div>
+      <div class="animal" id="animal">🐸</div>
+      <div class="aname" id="aname">Frog</div>
+      <div class="opts" id="opts"></div>
+      <div class="fb" id="fb"></div>
+      <button class="next" id="next" style="display:none">Next animal →</button>
+    </div>
+    <div class="card" style="margin-top:16px;text-align:left">
+      <h3 style="color:var(--pink);text-align:center;margin-bottom:6px">The 5 vertebrate groups</h3>
+      <div class="ref">
+        <div class="rc"><b>🐟 Fish</b><br><span>Gills, fins, scales, live in water</span></div>
+        <div class="rc"><b>🐸 Amphibians</b><br><span>Live in water &amp; land, moist skin</span></div>
+        <div class="rc"><b>🦎 Reptiles</b><br><span>Dry scaly skin, lay eggs on land</span></div>
+        <div class="rc"><b>🐦 Birds</b><br><span>Feathers, beaks, most can fly</span></div>
+        <div class="rc"><b>🦁 Mammals</b><br><span>Hair, feed young milk, warm-blooded</span></div>
+      </div>
+    </div>
+    <div class="idea"><h2>🧠 The Big Idea</h2><ul>
+      <li>Scientists group animals by shared features. The big split: <b>vertebrates</b> (with a backbone) vs <b>invertebrates</b> (without).</li>
+      <li>Vertebrates split into 5 classes: fish, amphibians, reptiles, birds &amp; mammals.</li>
+      <li>Classification helps us study millions of species in an organised way. 🗂️</li>
+    </ul></div>
+    <div class="foot">DeepManthan Juniors · learn by playing · © 2026 DeepManthan AI — All Rights Reserved.</div>
+  </div>
+<script>
+  const GROUPS=['Fish','Amphibian','Reptile','Bird','Mammal','Invertebrate'];
+  const CHAR={Fish:'have gills, fins & scales and live in water',Amphibian:'live both in water & on land with moist skin',Reptile:'have dry scaly skin and lay eggs on land',Bird:'have feathers & beaks and most can fly',Mammal:'have hair, are warm-blooded and feed young with milk',Invertebrate:'have no backbone'};
+  const Q=[['🐸','Frog','Amphibian'],['🦁','Lion','Mammal'],['🐟','Fish','Fish'],['🦅','Eagle','Bird'],['🐍','Snake','Reptile'],['🦋','Butterfly','Invertebrate'],['🐬','Dolphin','Mammal'],['🐢','Turtle','Reptile'],['🦆','Duck','Bird'],['🦎','Lizard','Reptile'],['🐙','Octopus','Invertebrate'],['🦈','Shark','Fish']];
+  let i=0, score=0, answered=0;
+  function load(){ const q=Q[i]; document.getElementById('animal').textContent=q[0]; document.getElementById('aname').textContent=q[1];
+    document.getElementById('fb').textContent=''; document.getElementById('next').style.display='none';
+    const opts=document.getElementById('opts'); opts.innerHTML='';
+    GROUPS.forEach(g=>{ const b=document.createElement('button'); b.className='opt'; b.textContent=g; b.onclick=()=>choose(g,b); opts.appendChild(b); });
+  }
+  function choose(g,btn){ const correct=Q[i][2]; answered++;
+    document.querySelectorAll('.opt').forEach(o=>{ o.style.pointerEvents='none'; if(o.textContent===correct)o.classList.add('right'); });
+    if(g===correct){ score++; document.getElementById('fb').innerHTML=`✅ <b>Correct!</b> A ${Q[i][1]} is a ${correct.toLowerCase()} — they ${CHAR[correct]}.`; }
+    else { btn.classList.add('wrong'); document.getElementById('fb').innerHTML=`❌ It's a <b>${correct}</b> — they ${CHAR[correct]}.`; }
+    document.getElementById('score').textContent=`Score: ${score} / ${answered}`;
+    document.getElementById('next').style.display='inline-block';
+  }
+  document.getElementById('next').onclick=()=>{ i=(i+1)%Q.length; load(); };
+  load();
+</script>
+</body>
+</html>

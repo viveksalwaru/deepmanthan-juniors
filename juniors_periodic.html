@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Periodic Classification · DeepManthan Juniors (SSC Class 10)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b1020;--bg2:#0f1630;--panel:#151d38;--line:#26315a;--ink:#EAF0FF;--dim:#93a2c8;--cyan:#38E1FF;--teal:#2DD4BF;--amber:#FFB454;--green:#5BE49B;--pink:#FF7BC0;--violet:#A78BFA;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(900px 500px at 20% -10%,#12402f,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:var(--green);padding:4px 12px;border-radius:20px}
+  .wrap{max-width:960px;margin:0 auto;padding:22px 18px 50px}
+  .hero{text-align:center;margin-bottom:14px}.hero h1{font-size:clamp(1.6rem,5vw,2.3rem);color:var(--green)}.hero p{color:var(--dim);font-weight:700;max-width:640px;margin:4px auto 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px}
+  .ptable{display:grid;grid-template-columns:repeat(18,1fr);gap:4px}
+  .el{aspect-ratio:1;border-radius:7px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;border:1px solid rgba(255,255,255,.12);transition:.12s;padding:1px}
+  .el:hover{transform:scale(1.12);z-index:2;box-shadow:0 4px 14px rgba(0,0,0,.5)}
+  .el .z{font-size:.5rem;opacity:.8;font-weight:800}.el .s{font-family:'Baloo 2';font-weight:800;font-size:.9rem;line-height:1}
+  .metal{background:linear-gradient(135deg,#3b6ea5,#274b78)}.nonmetal{background:linear-gradient(135deg,#4a8f5f,#2f6640)}.metalloid{background:linear-gradient(135deg,#9a7b3f,#6e5a2f)}.noble{background:linear-gradient(135deg,#8a5a9e,#5e3e6e)}
+  .legend{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px;font-size:.74rem;font-weight:700;color:var(--dim)}
+  .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:middle;margin-right:5px}
+  .info{margin-top:14px;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .bigel{width:92px;height:92px;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff}
+  .bigel .s{font-family:'Baloo 2';font-size:2.2rem;line-height:1}.bigel .z{font-size:.8rem;font-weight:800}
+  .idet .nm{font-family:'Baloo 2';font-size:1.4rem}.idet .rows{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+  .chip{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:6px 10px;font-weight:700;font-size:.82rem}.chip b{color:var(--green);font-family:'Baloo 2'}
+  .shells{display:flex;gap:6px;align-items:center;margin-top:8px;flex-wrap:wrap}.shell{background:var(--panel);border:1px solid var(--cyan);border-radius:8px;padding:5px 10px;font-family:'Baloo 2';color:var(--cyan);font-weight:800}
+  .idea{background:linear-gradient(120deg,rgba(91,228,155,.12),rgba(56,225,255,.1));border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:16px}
+  .idea h2{color:var(--green);font-size:1.15rem;margin-bottom:6px}.idea li{margin:7px 0;font-weight:700;padding-left:22px;position:relative;list-style:none}.idea li::before{content:"⚛️";position:absolute;left:0}.idea b{color:var(--cyan)}
+  .foot{text-align:center;color:#6f7c9e;font-size:.78rem;margin-top:22px;font-weight:600}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html" class="back" onclick="if(history.length>1){history.back();return false;}location.href='index.html';return false;">← Back</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span><span class="tag">SSC · Class 10 · Chemistry</span>
+  </div>
+  <div class="wrap">
+    <div class="hero"><h1>⚛️ Periodic Classification</h1><p>Tap any element to see its <b style="color:var(--green)">electronic configuration</b>, group &amp; period. Notice the neat pattern down each column!</p></div>
+    <div class="card">
+      <div class="ptable" id="ptable"></div>
+      <div class="legend"><span><i class="metal" style="background:#3b6ea5"></i>Metals</span><span><i style="background:#4a8f5f"></i>Non-metals</span><span><i style="background:#9a7b3f"></i>Metalloids</span><span><i style="background:#8a5a9e"></i>Noble gases</span></div>
+      <div class="info" id="info"></div>
+    </div>
+    <div class="idea"><h2>🧠 The Big Idea</h2><ul>
+      <li><b>Groups</b> (columns) share the <b>same number of outer electrons</b> → similar chemistry. <b>Periods</b> (rows) = number of electron shells.</li>
+      <li>Mendeleev arranged elements by properties; the <b>modern table</b> orders them by <b>atomic number</b>.</li>
+      <li>Left → metals, right → non-metals, far right → un-reactive noble gases (full outer shell).</li>
+    </ul></div>
+    <div class="foot">DeepManthan Juniors · learn by playing · © 2026 DeepManthan AI — All Rights Reserved.</div>
+  </div>
+<script>
+  const E=[
+    {z:1,s:'H',n:'Hydrogen',g:1,p:1,t:'nonmetal',c:[1]},{z:2,s:'He',n:'Helium',g:18,p:1,t:'noble',c:[2]},
+    {z:3,s:'Li',n:'Lithium',g:1,p:2,t:'metal',c:[2,1]},{z:4,s:'Be',n:'Beryllium',g:2,p:2,t:'metal',c:[2,2]},
+    {z:5,s:'B',n:'Boron',g:13,p:2,t:'metalloid',c:[2,3]},{z:6,s:'C',n:'Carbon',g:14,p:2,t:'nonmetal',c:[2,4]},
+    {z:7,s:'N',n:'Nitrogen',g:15,p:2,t:'nonmetal',c:[2,5]},{z:8,s:'O',n:'Oxygen',g:16,p:2,t:'nonmetal',c:[2,6]},
+    {z:9,s:'F',n:'Fluorine',g:17,p:2,t:'nonmetal',c:[2,7]},{z:10,s:'Ne',n:'Neon',g:18,p:2,t:'noble',c:[2,8]},
+    {z:11,s:'Na',n:'Sodium',g:1,p:3,t:'metal',c:[2,8,1]},{z:12,s:'Mg',n:'Magnesium',g:2,p:3,t:'metal',c:[2,8,2]},
+    {z:13,s:'Al',n:'Aluminium',g:13,p:3,t:'metal',c:[2,8,3]},{z:14,s:'Si',n:'Silicon',g:14,p:3,t:'metalloid',c:[2,8,4]},
+    {z:15,s:'P',n:'Phosphorus',g:15,p:3,t:'nonmetal',c:[2,8,5]},{z:16,s:'S',n:'Sulfur',g:16,p:3,t:'nonmetal',c:[2,8,6]},
+    {z:17,s:'Cl',n:'Chlorine',g:17,p:3,t:'nonmetal',c:[2,8,7]},{z:18,s:'Ar',n:'Argon',g:18,p:3,t:'noble',c:[2,8,8]},
+    {z:19,s:'K',n:'Potassium',g:1,p:4,t:'metal',c:[2,8,8,1]},{z:20,s:'Ca',n:'Calcium',g:2,p:4,t:'metal',c:[2,8,8,2]}
+  ];
+  const cols={metal:'#3b6ea5',nonmetal:'#4a8f5f',metalloid:'#9a7b3f',noble:'#8a5a9e'};
+  const pt=document.getElementById('ptable');
+  E.forEach(e=>{ const d=document.createElement('div'); d.className='el '+e.t; d.style.gridColumn=e.g; d.style.gridRow=e.p; d.innerHTML=`<span class="z">${e.z}</span><span class="s">${e.s}</span>`; d.onclick=()=>show(e); pt.appendChild(d); });
+  function show(e){ const shells=['K','L','M','N']; document.getElementById('info').innerHTML=
+    `<div class="bigel ${e.t}" style="background:${cols[e.t]}"><span class="s">${e.s}</span><span class="z">${e.z}</span></div>
+     <div class="idet"><div class="nm">${e.n}</div>
+       <div class="rows"><span class="chip">Group <b>${e.g}</b></span><span class="chip">Period <b>${e.p}</b></span><span class="chip">Atomic no. <b>${e.z}</b></span><span class="chip">${e.t.replace('nonmetal','non-metal')}</span></div>
+       <div class="shells">Electronic config: ${e.c.map((n,i)=>`<span class="shell">${shells[i]}=${n}</span>`).join('')}</div>
+     </div>`; }
+  show(E[10]); // Sodium by default
+</script>
+</body>
+</html>

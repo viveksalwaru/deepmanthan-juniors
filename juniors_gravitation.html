@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gravitation · DeepManthan Juniors (SSC Class 10)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b1020;--bg2:#0f1630;--panel:#151d38;--line:#26315a;--ink:#EAF0FF;--dim:#93a2c8;--cyan:#38E1FF;--teal:#2DD4BF;--amber:#FFB454;--green:#5BE49B;--pink:#FF7BC0;--violet:#A78BFA;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(900px 500px at 20% -10%,#1a2450,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:var(--cyan);padding:4px 12px;border-radius:20px}
+  .wrap{max-width:920px;margin:0 auto;padding:22px 18px 50px}
+  .hero{text-align:center;margin-bottom:16px}.hero h1{font-size:clamp(1.7rem,5vw,2.4rem);color:var(--cyan)}.hero p{color:var(--dim);font-weight:700;max-width:640px;margin:4px auto 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}
+  .fall{position:relative;height:340px;background:linear-gradient(180deg,#0d1836,#0a1226);border-radius:14px;overflow:hidden}
+  .lane{position:absolute;top:0;bottom:34px;width:2px;background:repeating-linear-gradient(180deg,#2b3660 0 8px,transparent 8px 16px)}
+  .l1{left:34%}.l2{left:66%}
+  .drop{position:absolute;font-size:2rem;top:14px;transform:translateX(-50%)}
+  .ground{position:absolute;left:0;right:0;bottom:0;height:34px;background:#182446;border-top:2px solid #3a4a78;display:flex;align-items:center;justify-content:center;color:var(--dim);font-weight:800;font-size:.8rem;font-family:'Baloo 2'}
+  .lbl{position:absolute;top:4px;transform:translateX(-50%);font-size:.72rem;font-weight:800;color:var(--dim);font-family:'Baloo 2'}
+  .controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+  .btn{font-family:'Baloo 2';font-weight:700;border:none;border-radius:12px;padding:10px 18px;cursor:pointer;color:#05121c;box-shadow:0 5px 0 rgba(0,0,0,.25)}.btn:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.25)}
+  .btn.go{background:var(--green)}.btn.reset{background:#33406e;color:#fff}
+  .toggle{font-family:'Baloo 2';font-weight:700;border:2px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:12px;padding:9px 15px;cursor:pointer}
+  .toggle.on{background:linear-gradient(135deg,rgba(56,225,255,.2),rgba(45,212,191,.14));border-color:var(--cyan);color:#fff}
+  .result{text-align:center;margin-top:10px;font-family:'Baloo 2';font-size:1.05rem;min-height:26px;color:var(--amber)}
+  .mw{display:grid;grid-template-columns:1fr;gap:12px;margin-top:16px}
+  .mw .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .mw label{font-weight:800}.mw input{flex:1;accent-color:var(--cyan);min-width:160px}
+  .wbox{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+  .wcell{flex:1;min-width:120px;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:9px;text-align:center}
+  .wcell .k{font-size:.66rem;color:var(--dim);text-transform:uppercase;font-weight:800}.wcell .v{font-family:'Baloo 2';font-size:1.25rem}
+  .wcell.mass .v{color:var(--green)}.wcell.earth .v{color:var(--cyan)}.wcell.moon .v{color:var(--violet)}
+  .idea{background:linear-gradient(120deg,rgba(56,225,255,.1),rgba(167,139,250,.1));border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:16px}
+  .idea h2{color:var(--cyan);font-size:1.15rem;margin-bottom:6px}.idea li{margin:7px 0;font-weight:700;padding-left:22px;position:relative;list-style:none}.idea li::before{content:"🍎";position:absolute;left:0}.idea b{color:var(--amber)}
+  .foot{text-align:center;color:#6f7c9e;font-size:.78rem;margin-top:22px;font-weight:600}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html" class="back" onclick="if(history.length>1){history.back();return false;}location.href='index.html';return false;">← Back</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span><span class="tag">SSC · Class 10 · Physics</span>
+  </div>
+  <div class="wrap">
+    <div class="hero"><h1>🍎 Gravitation</h1><p>Do heavy things fall faster? Toggle the <b style="color:var(--cyan)">air</b> and find out the surprising truth!</p></div>
+    <div class="card">
+      <div class="fall" id="fall">
+        <div class="lane l1"></div><div class="lane l2"></div>
+        <div class="lbl" style="left:34%">🔨 Hammer (heavy)</div><div class="lbl" style="left:66%">🪶 Feather (light)</div>
+        <div class="drop" id="d1" style="left:34%">🔨</div>
+        <div class="drop" id="d2" style="left:66%">🪶</div>
+        <div class="ground">GROUND</div>
+      </div>
+      <div class="controls">
+        <button class="toggle on" id="airBtn">🌬️ Air: ON</button>
+        <button class="btn go" id="dropBtn">⬇️ Drop!</button>
+        <button class="btn reset" id="resetBtn">↺ Reset</button>
+      </div>
+      <div class="result" id="result">Tip: Drop with air ON, then turn air OFF (vacuum) and drop again!</div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h3 style="color:var(--amber);margin-bottom:8px">⚖️ Mass vs Weight</h3>
+      <div class="mw"><div class="row"><label>Your mass:</label><input type="range" id="massSl" min="10" max="90" step="1" value="40"><b style="font-family:'Baloo 2';color:var(--green)"><span id="massV">40</span> kg</b></div></div>
+      <div class="wbox">
+        <div class="wcell mass"><div class="k">Mass (never changes)</div><div class="v"><span id="oMass">40</span> kg</div></div>
+        <div class="wcell earth"><div class="k">Weight on Earth (g=9.8)</div><div class="v"><span id="wEarth">392</span> N</div></div>
+        <div class="wcell moon"><div class="k">Weight on Moon (g=1.6)</div><div class="v"><span id="wMoon">64</span> N</div></div>
+      </div>
+      <div style="text-align:center;color:var(--dim);font-weight:700;margin-top:8px;font-size:.86rem">On the Moon you'd weigh ~6× less — but your <b style="color:var(--green)">mass stays the same!</b></div>
+    </div>
+
+    <div class="idea"><h2>🧠 The Big Idea</h2><ul>
+      <li>In a <b>vacuum</b> (no air), <b>everything falls at the same rate</b> — the feather and hammer land together! (Astronauts proved this on the Moon. 🌙)</li>
+      <li>On Earth, air resistance slows light, fluffy things — that's the <i>only</i> reason a feather drifts down.</li>
+      <li>Acceleration due to gravity <b>g ≈ 9.8 m/s²</b>. Free fall: <b>v = gt</b>, <b>h = ½gt²</b>.</li>
+      <li><b>Mass</b> = how much matter (kg, unchanging). <b>Weight</b> = pull of gravity = <b>m × g</b> (newtons, changes with g).</li>
+    </ul></div>
+    <div class="foot">DeepManthan Juniors · learn by playing · © 2026 DeepManthan AI — All Rights Reserved.</div>
+  </div>
+<script>
+  let air=true, raf=null;
+  const d1=document.getElementById('d1'), d2=document.getElementById('d2'), fall=document.getElementById('fall');
+  function reset(){ if(raf)cancelAnimationFrame(raf); d1.style.top='14px'; d2.style.top='14px'; document.getElementById('result').textContent=air?'Air is ON — watch the feather drift slowly behind the hammer.':'Vacuum (no air) — watch them land TOGETHER!'; }
+  document.getElementById('airBtn').onclick=()=>{ air=!air; const b=document.getElementById('airBtn'); b.textContent=air?'🌬️ Air: ON':'🌑 Air: OFF (vacuum)'; b.classList.toggle('on',air); reset(); };
+  document.getElementById('resetBtn').onclick=reset;
+  document.getElementById('dropBtn').onclick=()=>{
+    if(raf)cancelAnimationFrame(raf);
+    const H=fall.clientHeight-34-46; let t=0, done1=false, done2=false, start=performance.now();
+    const a1=900; // hammer px/s^2 (scaled g)
+    const a2=air?150:900; // feather: slow with air, same as hammer in vacuum
+    function loop(now){ t=(now-start)/1000;
+      let y1=Math.min(H,0.5*a1*t*t), y2=Math.min(H,0.5*a2*t*t);
+      d1.style.top=(14+y1)+'px'; d2.style.top=(14+y2)+'px';
+      if(y1>=H)done1=true; if(y2>=H)done2=true;
+      if(done1&&done2){ document.getElementById('result').textContent=air?'🔨 landed first! Air slowed the feather. 🪶':'🎉 They landed TOGETHER! Gravity pulls everything equally.'; return; }
+      raf=requestAnimationFrame(loop);
+    } raf=requestAnimationFrame(loop);
+  };
+  function mw(){ const m=+document.getElementById('massSl').value; document.getElementById('massV').textContent=m; document.getElementById('oMass').textContent=m; document.getElementById('wEarth').textContent=(m*9.8).toFixed(0); document.getElementById('wMoon').textContent=(m*1.6).toFixed(0); }
+  document.getElementById('massSl').addEventListener('input',mw); mw(); reset();
+</script>
+</body>
+</html>

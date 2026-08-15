@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trigonometry · DeepManthan Juniors (SSC Maths)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b1020;--bg2:#0f1630;--panel:#151d38;--line:#26315a;--ink:#EAF0FF;--dim:#93a2c8;--cyan:#38E1FF;--teal:#2DD4BF;--amber:#FFB454;--green:#5BE49B;--pink:#FF7BC0;--violet:#A78BFA;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(900px 500px at 80% -10%,#2a2450,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:var(--violet);padding:4px 12px;border-radius:20px}
+  .wrap{max-width:900px;margin:0 auto;padding:22px 18px 50px}
+  .hero{text-align:center;margin-bottom:14px}.hero h1{font-size:clamp(1.6rem,5vw,2.3rem);color:var(--violet)}.hero p{color:var(--dim);font-weight:700;max-width:660px;margin:4px auto 0}
+  .layout{display:grid;grid-template-columns:1fr .8fr;gap:16px;align-items:start}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}
+  svg.circle{width:100%;height:auto;display:block;background:#0a1024;border-radius:12px;touch-action:none}
+  .ang{text-align:center;font-family:'Baloo 2';font-size:1.5rem;color:var(--amber)}
+  input[type=range]{width:100%;accent-color:var(--violet);margin:10px 0}
+  .quick{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:8px}
+  .qb{font-family:'Baloo 2';font-weight:700;font-size:.8rem;border:1px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:9px;padding:5px 9px;cursor:pointer}.qb:hover{border-color:var(--violet)}
+  .vals{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+  .val{display:flex;justify-content:space-between;align-items:center;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:10px 14px}.val .k{font-weight:800}.val .v{font-family:'Baloo 2';font-size:1.2rem}
+  .val.sin{border-left:3px solid var(--pink)}.val.sin .v{color:var(--pink)}.val.cos{border-left:3px solid var(--cyan)}.val.cos .v{color:var(--cyan)}.val.tan{border-left:3px solid var(--green)}.val.tan .v{color:var(--green)}
+  .idea{background:linear-gradient(120deg,rgba(167,139,250,.12),rgba(56,225,255,.1));border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:16px}
+  .idea h2{color:var(--violet);font-size:1.15rem;margin-bottom:6px}.idea li{margin:7px 0;font-weight:700;padding-left:22px;position:relative;list-style:none}.idea li::before{content:"📐";position:absolute;left:0}.idea b{color:var(--cyan)}
+  .foot{text-align:center;color:#6f7c9e;font-size:.78rem;margin-top:22px;font-weight:600}
+  @media(max-width:760px){.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html" class="back" onclick="if(history.length>1){history.back();return false;}location.href='index.html';return false;">← Back</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span><span class="tag">SSC · Maths</span>
+  </div>
+  <div class="wrap">
+    <div class="hero"><h1>📐 Trigonometry</h1><p>Spin the angle around the circle — the <b style="color:var(--pink)">height</b> is sin, the <b style="color:var(--cyan)">width</b> is cos. Drag the dot!</p></div>
+    <div class="layout">
+      <div class="card"><svg class="circle" id="svg" viewBox="0 0 320 320"></svg></div>
+      <div class="card">
+        <div class="ang">θ = <span id="angV">30</span>°</div>
+        <input type="range" id="ang" min="0" max="360" step="1" value="30">
+        <div class="quick" id="quick"></div>
+        <div class="vals">
+          <div class="val sin"><span class="k">sin θ (height)</span><span class="v" id="sin">0.50</span></div>
+          <div class="val cos"><span class="k">cos θ (width)</span><span class="v" id="cos">0.87</span></div>
+          <div class="val tan"><span class="k">tan θ = sin/cos</span><span class="v" id="tan">0.58</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="idea"><h2>🧠 The Big Idea</h2><ul>
+      <li>On a circle of radius 1, a point at angle θ sits at <b>(cos θ, sin θ)</b> — cosine is the across-distance, sine is the up-distance.</li>
+      <li>In a right triangle: <b>sin = opposite/hypotenuse</b>, <b>cos = adjacent/hypotenuse</b>, <b>tan = opposite/adjacent</b>.</li>
+      <li>These let us find <b>heights &amp; distances</b> we can't measure directly — like a tower's height from its shadow's angle. 🗼</li>
+    </ul></div>
+    <div class="foot">DeepManthan Juniors · learn by playing · © 2026 DeepManthan AI — All Rights Reserved.</div>
+  </div>
+<script>
+  const svg=document.getElementById('svg'), cx=160, cy=160, R=120;
+  let ang=30, dragging=false;
+  function draw(){ const t=ang*Math.PI/180; const px=cx+R*Math.cos(t), py=cy-R*Math.sin(t);
+    const s=Math.sin(t), c=Math.cos(t);
+    // arc for angle
+    const arcR=34; const ax=cx+arcR*Math.cos(0), ay=cy; const bx=cx+arcR*Math.cos(t), by=cy-arcR*Math.sin(t);
+    const large=ang>180?1:0;
+    svg.innerHTML=`
+      <line x1="10" y1="${cy}" x2="310" y2="${cy}" stroke="#3a4a78" stroke-width="1.2"/>
+      <line x1="${cx}" y1="10" x2="${cx}" y2="310" stroke="#3a4a78" stroke-width="1.2"/>
+      <circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="#2b3660" stroke-width="1.6"/>
+      <path d="M ${ax} ${ay} A ${arcR} ${arcR} 0 ${large} 0 ${bx} ${by}" fill="none" stroke="#FFB454" stroke-width="2.5"/>
+      <line x1="${px}" y1="${py}" x2="${px}" y2="${cy}" stroke="#FF7BC0" stroke-width="3"/>
+      <line x1="${cx}" y1="${cy}" x2="${px}" y2="${cy}" stroke="#38E1FF" stroke-width="3"/>
+      <line x1="${cx}" y1="${cy}" x2="${px}" y2="${py}" stroke="#A78BFA" stroke-width="3"/>
+      <circle cx="${px}" cy="${py}" r="8" fill="#5BE49B" style="cursor:grab"/>
+      <text x="${px+ (c>=0?10:-22)}" y="${py-10}" fill="#5BE49B" font-size="11" font-weight="bold" font-family="monospace">(${c.toFixed(2)}, ${s.toFixed(2)})</text>`;
+    document.getElementById('angV').textContent=ang;
+    document.getElementById('sin').textContent=s.toFixed(3);
+    document.getElementById('cos').textContent=c.toFixed(3);
+    document.getElementById('tan').textContent=(Math.abs(c)<1e-6?'∞ (undefined)':(s/c).toFixed(3));
+  }
+  function setFromPointer(e){ const r=svg.getBoundingClientRect(); const x=(e.clientX-r.left)/r.width*320-cx; const y=-((e.clientY-r.top)/r.height*320-cy); let a=Math.atan2(y,x)*180/Math.PI; if(a<0)a+=360; ang=Math.round(a); document.getElementById('ang').value=ang; draw(); }
+  svg.addEventListener('pointerdown',e=>{dragging=true;svg.setPointerCapture(e.pointerId);setFromPointer(e);});
+  svg.addEventListener('pointermove',e=>{if(dragging)setFromPointer(e);});
+  window.addEventListener('pointerup',()=>dragging=false);
+  document.getElementById('ang').addEventListener('input',e=>{ang=+e.target.value;draw();});
+  const quick=document.getElementById('quick'); [0,30,45,60,90,120,180,270].forEach(a=>{ const b=document.createElement('button'); b.className='qb'; b.textContent=a+'°'; b.onclick=()=>{ang=a;document.getElementById('ang').value=a;draw();}; quick.appendChild(b); });
+  draw();
+</script>
+</body>
+</html>

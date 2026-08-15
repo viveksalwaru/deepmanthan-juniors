@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arithmetic Progression · DeepManthan Juniors (SSC Maths)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b1020;--bg2:#0f1630;--panel:#151d38;--line:#26315a;--ink:#EAF0FF;--dim:#93a2c8;--cyan:#38E1FF;--teal:#2DD4BF;--amber:#FFB454;--green:#5BE49B;--pink:#FF7BC0;--violet:#A78BFA;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(900px 500px at 20% -10%,#2a2450,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:var(--violet);padding:4px 12px;border-radius:20px}
+  .wrap{max-width:900px;margin:0 auto;padding:22px 18px 50px}
+  .hero{text-align:center;margin-bottom:14px}.hero h1{font-size:clamp(1.6rem,5vw,2.3rem);color:var(--violet)}.hero p{color:var(--dim);font-weight:700;max-width:660px;margin:4px auto 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}
+  .ctls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
+  .ctl label{display:flex;justify-content:space-between;font-weight:800;font-size:.82rem;margin-bottom:3px}.ctl label b{font-family:'Baloo 2';color:var(--violet)}
+  input[type=range]{width:100%;accent-color:var(--violet)}
+  .seq{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:10px 0}
+  .term{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:8px 10px;text-align:center;min-width:44px}.term.nth{border-color:var(--green);background:rgba(91,228,155,.15)}.term .i{font-size:.6rem;color:var(--dim);font-weight:800}.term .val{font-family:'Baloo 2';font-size:1.05rem}
+  svg.bars{width:100%;height:auto;display:block;margin-top:6px}
+  .out{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+  .ob{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}.ob .k{font-size:.68rem;color:var(--dim);text-transform:uppercase;font-weight:800}.ob .v{font-family:'Baloo 2';font-size:1.2rem}.ob.nth .v{color:var(--green)}.ob.sum .v{color:var(--amber)}
+  .idea{background:linear-gradient(120deg,rgba(167,139,250,.12),rgba(56,225,255,.1));border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:16px}
+  .idea h2{color:var(--violet);font-size:1.15rem;margin-bottom:6px}.idea li{margin:7px 0;font-weight:700;padding-left:22px;position:relative;list-style:none}.idea li::before{content:"🔢";position:absolute;left:0}.idea b{color:var(--cyan)}
+  .foot{text-align:center;color:#6f7c9e;font-size:.78rem;margin-top:22px;font-weight:600}
+  @media(max-width:640px){.ctls{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html" class="back" onclick="if(history.length>1){history.back();return false;}location.href='index.html';return false;">← Back</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span><span class="tag">SSC · Maths</span>
+  </div>
+  <div class="wrap">
+    <div class="hero"><h1>🔢 Arithmetic Progression</h1><p>A sequence that jumps by the <b style="color:var(--violet)">same step</b> every time. Change the start and the step and watch the pattern!</p></div>
+    <div class="card">
+      <div class="ctls">
+        <div class="ctl"><label>first term a <b><span id="al">2</span></b></label><input type="range" id="a" min="-10" max="10" step="1" value="2"></div>
+        <div class="ctl"><label>common difference d <b><span id="dl">3</span></b></label><input type="range" id="d" min="-6" max="6" step="1" value="3"></div>
+        <div class="ctl"><label>which term n <b><span id="nl">6</span></b></label><input type="range" id="n" min="1" max="10" step="1" value="6"></div>
+      </div>
+      <div class="seq" id="seq"></div>
+      <svg class="bars" id="bars" viewBox="0 0 360 130"></svg>
+      <div class="out">
+        <div class="ob nth"><div class="k">nth term: aₙ = a + (n−1)d</div><div class="v" id="nth">17</div></div>
+        <div class="ob sum"><div class="k">Sum of first n: Sₙ = n/2 [2a+(n−1)d]</div><div class="v" id="sum">57</div></div>
+      </div>
+    </div>
+    <div class="idea"><h2>🧠 The Big Idea</h2><ul>
+      <li>An <b>AP</b> adds a fixed <b>common difference d</b> each step: a, a+d, a+2d, …</li>
+      <li><b>nth term:</b> aₙ = a + (n−1)d. <b>Sum of n terms:</b> Sₙ = n/2 × [2a + (n−1)d] = n/2 × (first + last).</li>
+      <li>APs are everywhere — saving a fixed amount monthly, stacking rows of seats, ticking seconds. ⏱️</li>
+    </ul></div>
+    <div class="foot">DeepManthan Juniors · learn by playing · © 2026 DeepManthan AI — All Rights Reserved.</div>
+  </div>
+<script>
+  function v(id){return +document.getElementById(id).value;}
+  function draw(){ const a=v('a'),d=v('d'),n=v('n'); ['a','d','n'].forEach(id=>document.getElementById(id+'l').textContent=v(id));
+    const terms=[]; for(let i=1;i<=10;i++) terms.push(a+(i-1)*d);
+    document.getElementById('seq').innerHTML=terms.map((t,i)=>`<div class="term${i+1===n?' nth':''}"><div class="i">a${i+1}</div><div class="val">${t}</div></div>`).join('');
+    // bars
+    const mx=Math.max(1,...terms.map(Math.abs)); const bw=30, gap=6, base=110;
+    let bars=`<line x1="0" y1="${base}" x2="360" y2="${base}" stroke="#3a4a78"/>`;
+    terms.forEach((t,i)=>{ const h=Math.abs(t)/mx*95; const x=6+i*(bw+gap); const y=t>=0?base-h:base; const col=(i+1===n)?'#5BE49B':'#A78BFA';
+      bars+=`<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="3" fill="${col}" opacity="${t>=0?0.9:0.55}"/>`; });
+    document.getElementById('bars').innerHTML=bars;
+    const nth=a+(n-1)*d, sum=n/2*(2*a+(n-1)*d);
+    document.getElementById('nth').textContent=`a${n} = ${nth}`;
+    document.getElementById('sum').textContent=`S${n} = ${sum}`;
+  }
+  ['a','d','n'].forEach(id=>document.getElementById(id).addEventListener('input',draw)); draw();
+</script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metallurgy · DeepManthan Juniors (SSC Class 10)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b1020;--bg2:#0f1630;--panel:#151d38;--line:#26315a;--ink:#EAF0FF;--dim:#93a2c8;--cyan:#38E1FF;--teal:#2DD4BF;--amber:#FFB454;--green:#5BE49B;--pink:#FF7BC0;--violet:#A78BFA;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(900px 500px at 20% -10%,#12402f,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:var(--green);padding:4px 12px;border-radius:20px}
+  .wrap{max-width:940px;margin:0 auto;padding:22px 18px 50px}
+  .hero{text-align:center;margin-bottom:14px}.hero h1{font-size:clamp(1.6rem,5vw,2.3rem);color:var(--green)}.hero p{color:var(--dim);font-weight:700;max-width:660px;margin:4px auto 0}
+  .layout{display:grid;grid-template-columns:.9fr 1.1fr;gap:16px;align-items:start}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}
+  .card h3{color:var(--green);margin-bottom:8px;font-size:1.05rem}
+  .series{display:flex;flex-direction:column;gap:4px}
+  .metal{display:flex;justify-content:space-between;align-items:center;padding:7px 12px;border-radius:9px;cursor:pointer;font-weight:700;border:1px solid var(--line)}
+  .metal:hover{border-color:var(--green)}.metal.sel{background:linear-gradient(90deg,rgba(91,228,155,.2),transparent);border-color:var(--green)}
+  .zoneA{border-left:3px solid var(--pink)}.zoneB{border-left:3px solid var(--amber)}.zoneC{border-left:3px solid var(--cyan)}
+  .method{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:14px;min-height:80px}.method .m{font-family:'Baloo 2';font-size:1.15rem;color:var(--amber)}.method p{color:#aeb8dd;font-weight:600;font-size:.9rem;margin-top:4px}
+  .flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:12px}
+  .fs{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:8px 10px;cursor:pointer;font-weight:700;font-size:.82rem}.fs:hover{border-color:var(--green)}.fs.on{background:linear-gradient(135deg,rgba(91,228,155,.22),rgba(56,225,255,.14));border-color:var(--green);color:#fff}
+  .far{color:var(--dim);font-weight:800}
+  .fdesc{margin-top:8px;color:#aeb8dd;font-weight:600;font-size:.88rem;min-height:40px}
+  .alloy{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
+  select{font-family:'Baloo 2';font-weight:700;background:var(--bg2);color:var(--ink);border:2px solid var(--line);border-radius:10px;padding:7px 10px;cursor:pointer}
+  .alloyOut{margin-top:10px;text-align:center;font-family:'Baloo 2';font-size:1.15rem;color:var(--cyan);min-height:26px}
+  .idea{background:linear-gradient(120deg,rgba(91,228,155,.12),rgba(56,225,255,.1));border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:16px}
+  .idea h2{color:var(--green);font-size:1.15rem;margin-bottom:6px}.idea li{margin:7px 0;font-weight:700;padding-left:22px;position:relative;list-style:none}.idea li::before{content:"⛏️";position:absolute;left:0}.idea b{color:var(--cyan)}
+  .foot{text-align:center;color:#6f7c9e;font-size:.78rem;margin-top:22px;font-weight:600}
+  @media(max-width:760px){.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html" class="back" onclick="if(history.length>1){history.back();return false;}location.href='index.html';return false;">← Back</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span><span class="tag">SSC · Class 10 · Chemistry</span>
+  </div>
+  <div class="wrap">
+    <div class="hero"><h1>⛏️ Metallurgy</h1><p>How do we get pure metal out of rock? A metal's <b style="color:var(--green)">reactivity</b> decides the method. Tap a metal to find out!</p></div>
+    <div class="layout">
+      <div class="card">
+        <h3>Reactivity Series (high → low)</h3>
+        <div class="series" id="series"></div>
+        <div style="font-size:.72rem;color:var(--dim);font-weight:700;margin-top:8px">🔴 very reactive · 🟡 medium · 🔵 least reactive</div>
+      </div>
+      <div class="card">
+        <h3>Extraction method</h3>
+        <div class="method" id="method"></div>
+        <h3 style="margin-top:14px">The extraction journey</h3>
+        <div class="flow" id="flow"></div>
+        <div class="fdesc" id="fdesc"></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>🔩 Alloy Maker — mix metals for super-materials</h3>
+      <div class="alloy">
+        <select id="a1"><option>Copper</option><option>Iron</option><option>Tin</option><option>Zinc</option></select>
+        <span style="font-family:'Baloo 2';font-size:1.2rem">+</span>
+        <select id="a2"><option>Zinc</option><option>Carbon</option><option>Tin</option><option>Copper</option></select>
+        <button class="fs on" id="mix">Mix →</button>
+      </div>
+      <div class="alloyOut" id="alloyOut"></div>
+    </div>
+    <div class="idea"><h2>🧠 The Big Idea</h2><ul>
+      <li>A <b>mineral</b> is any natural compound of a metal; an <b>ore</b> is a mineral worth mining for metal.</li>
+      <li><b>More reactive</b> metals hold their compounds tightly → need powerful <b>electrolysis</b>. <b>Less reactive</b> ones come out easily by heating/reduction.</li>
+      <li>An <b>alloy</b> mixes metals to get better properties — e.g. steel (iron + carbon) is far stronger than pure iron.</li>
+    </ul></div>
+    <div class="foot">DeepManthan Juniors · learn by playing · © 2026 DeepManthan AI — All Rights Reserved.</div>
+  </div>
+<script>
+  const M=[
+    {s:'K',n:'Potassium',z:'A'},{s:'Na',n:'Sodium',z:'A'},{s:'Ca',n:'Calcium',z:'A'},{s:'Mg',n:'Magnesium',z:'A'},{s:'Al',n:'Aluminium',z:'A'},
+    {s:'Zn',n:'Zinc',z:'B'},{s:'Fe',n:'Iron',z:'B'},{s:'Pb',n:'Lead',z:'B'},{s:'Cu',n:'Copper',z:'B'},
+    {s:'Ag',n:'Silver',z:'C'},{s:'Au',n:'Gold',z:'C'}
+  ];
+  const METHOD={A:['⚡ Electrolysis','These very reactive metals cling tightly to their ores, so we split the molten ore using electricity (electrolytic reduction).'],
+    B:['🔥 Reduction (roasting + carbon/heat)','Medium-reactive metals: the concentrated ore is roasted to oxide, then reduced (often with carbon) to the metal.'],
+    C:['✨ Found native / gentle heating','So un-reactive they often occur as the free metal in nature, or need only mild heating.']};
+  const series=document.getElementById('series');
+  M.forEach((m,i)=>{ const d=document.createElement('div'); d.className='metal zone'+m.z; const dot=m.z==='A'?'🔴':m.z==='B'?'🟡':'🔵'; d.innerHTML=`<span>${dot} ${m.n}</span><b style="color:var(--dim)">${m.s}</b>`; d.onclick=()=>sel(i,d); series.appendChild(d); });
+  function sel(i,d){ document.querySelectorAll('.metal').forEach(x=>x.classList.remove('sel')); d.classList.add('sel'); const me=METHOD[M[i].z]; document.getElementById('method').innerHTML=`<div class="m">${me[0]}</div><p>For <b style="color:#fff">${M[i].n}</b>: ${me[1]}</p>`; }
+  // flow
+  const STEPS=[['1 · Ore','We dig out the ore — a rock rich in the metal compound.'],['2 · Concentration','Remove waste rock (gangue) to concentrate the ore.'],['3 · Roasting / Calcination','Heat the ore to turn it into the metal oxide.'],['4 · Reduction','Remove oxygen — get the raw metal (electrolysis or carbon).'],['5 · Refining','Purify the metal (e.g. electrolytic refining).'],['6 · Pure Metal ✨','Ready to use — or turn into an alloy!']];
+  const flow=document.getElementById('flow');
+  STEPS.forEach((st,i)=>{ const b=document.createElement('button'); b.className='fs'+(i===0?' on':''); b.textContent=st[0]; b.onclick=()=>{ document.querySelectorAll('.fs').forEach(x=>x.classList.remove('on')); b.classList.add('on'); document.getElementById('fdesc').textContent=st[1]; }; flow.appendChild(b); if(i<STEPS.length-1){ const a=document.createElement('span'); a.className='far'; a.textContent='→'; flow.appendChild(a);} });
+  document.getElementById('fdesc').textContent=STEPS[0][1];
+  // alloys
+  const ALLOY={ 'Copper+Zinc':'Brass 🟡 (Copper + Zinc) — used in taps, instruments','Copper+Tin':'Bronze 🟤 (Copper + Tin) — statues, medals','Iron+Carbon':'Steel 🔩 (Iron + Carbon) — buildings, tools','Copper+Copper':'That\u2019s just copper! Pick two different metals.','Iron+Iron':'That\u2019s just iron! Try mixing different metals.' };
+  function mix(){ const a=document.getElementById('a1').value, b=document.getElementById('a2').value; const key=[a,b].sort().join('+'); const out=ALLOY[key]||ALLOY[a+'+'+b]||ALLOY[b+'+'+a]||`${a} + ${b} → an alloy with blended properties!`; document.getElementById('alloyOut').innerHTML='= '+out; }
+  document.getElementById('mix').onclick=mix; sel(6,document.querySelectorAll('.metal')[6]); mix();
+</script>
+</body>
+</html>

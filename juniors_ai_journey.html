@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. Contact: vivek@deepmanthan.ai -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The AI Journey · DeepManthan Juniors</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#0b1020; --bg2:#0f1630; --panel:#151d38; --line:#26315a; --ink:#EAF0FF; --dim:#93a2c8;
+    --cyan:#38E1FF; --teal:#2DD4BF; --amber:#FFB454; --green:#5BE49B; --pink:#FF7BC0; --violet:#A78BFA; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(1000px 560px at 15% -8%,#2a2160,transparent),radial-gradient(900px 520px at 92% 4%,#0f3a57,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);position:sticky;top:0;z-index:5;backdrop-filter:blur(6px);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:linear-gradient(135deg,var(--cyan),var(--violet));padding:4px 12px;border-radius:20px}
+  .wrap{max-width:820px;margin:0 auto;padding:26px 18px 60px}
+
+  .hero{text-align:center;padding:22px 6px 8px}
+  .eyebrow{font-family:'Baloo 2';font-weight:800;letter-spacing:.16em;font-size:.78rem;color:var(--violet);text-transform:uppercase}
+  .hero h1{font-size:clamp(2rem,7vw,3.2rem);line-height:1.05;margin:8px 0;background:linear-gradient(90deg,var(--cyan),var(--violet),var(--amber));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .hero p{color:#cdd3ff;font-weight:700;max-width:600px;margin:0 auto;font-size:1.05rem}
+  .scrollhint{margin-top:18px;color:var(--dim);font-weight:700;font-size:.82rem;animation:bobv 1.8s ease-in-out infinite}
+  @keyframes bobv{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+  .step{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px;margin-top:22px;position:relative;overflow:hidden}
+  .num{font-family:'Baloo 2';font-weight:800;font-size:.72rem;color:#05121c;background:var(--cyan);border-radius:20px;padding:3px 11px;display:inline-block;margin-bottom:8px}
+  .step h2{font-size:1.4rem;margin-bottom:6px}
+  .step .lede{color:#c3cbe8;font-weight:700;line-height:1.55}
+  .step .lede b{color:var(--amber)}
+  .kicker{color:var(--violet);font-weight:800}
+
+  /* photo brain + animated overlay */
+  .brainfig{position:relative;margin-top:12px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#0a1024;line-height:0}
+  .brainfig img{width:100%;display:block}
+  .ovl{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+  .lfill{fill:#8affc9;opacity:.9;mix-blend-mode:screen;filter:drop-shadow(0 0 7px #5BE49B)}
+  .lfill.flash{opacity:1;filter:drop-shadow(0 0 18px #aaffdd)}
+  .teacher{position:absolute;left:3%;top:26%;width:34%;max-width:240px;text-align:center;z-index:3;transition:opacity .4s}
+  .teacher.dim{opacity:.3}
+  .teacher .person{font-size:clamp(30px,5.4vw,58px);line-height:1;animation:tbob 3s ease-in-out infinite}
+  @keyframes tbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+  .bubble{position:relative;display:inline-block;background:var(--panel);border:1.5px solid var(--cyan);border-radius:16px;padding:8px 14px;font-family:'Baloo 2';font-weight:700;font-size:clamp(12px,1.7vw,18px);color:var(--ink);margin-bottom:12px;box-shadow:0 8px 20px -8px #000}
+  .bubble b{color:var(--cyan)}
+  .bubble::after{content:"";position:absolute;left:50%;bottom:-9px;transform:translateX(-50%);border:8px solid transparent;border-top-color:var(--cyan)}
+  .bubble.say{animation:pop .45s ease}
+  @keyframes pop{0%{transform:scale(1)}30%{transform:scale(1.15)}60%{transform:scale(.97)}100%{transform:scale(1)}}
+  .brainbubble{position:absolute;left:54%;top:1.5%;z-index:4;opacity:0;transform:scale(.5);transform-origin:bottom left;pointer-events:none}
+  .brainbubble.show{animation:brainpop .6s cubic-bezier(.2,1.3,.4,1) forwards, bfloat 2.4s ease-in-out .6s infinite}
+  @keyframes brainpop{0%{opacity:0;transform:scale(.4) translateY(10px)}60%{opacity:1;transform:scale(1.1) translateY(0)}100%{opacity:1;transform:scale(1)}}
+  @keyframes bfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+  .brainbubble .bb{position:relative;display:inline-block;background:var(--panel);border:1.6px solid var(--green);border-radius:16px;padding:8px 14px;font-family:'Baloo 2';font-weight:800;font-size:clamp(12px,1.7vw,18px);color:var(--ink);box-shadow:0 8px 22px -8px #000}
+  .brainbubble .bb b{color:var(--green)}
+  .brainbubble .bb::after{content:"";position:absolute;left:26%;bottom:-9px;border:8px solid transparent;border-top-color:var(--green)}
+  .counter{text-align:center;font-family:'Baloo 2';font-weight:800;color:var(--amber);margin-top:10px}
+  .caption{text-align:center;font-family:'Baloo 2';font-size:1.05rem;color:var(--cyan);min-height:28px;margin-top:10px}
+  .pbtns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+  .pbtn{font-family:'Baloo 2';font-weight:700;border:none;border-radius:12px;padding:10px 16px;cursor:pointer;color:#05121c;box-shadow:0 5px 0 rgba(0,0,0,.25)}.pbtn:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.25)}
+  .pbtn.cat{background:var(--green)}.pbtn.dog{background:var(--amber)}
+  .aha{background:linear-gradient(120deg,rgba(167,139,250,.16),rgba(56,225,255,.12));border:1px dashed var(--violet);border-radius:14px;padding:13px 15px;margin-top:12px;font-weight:700;color:#e7ecff}
+  .aha b{color:var(--violet)}
+
+  /* training vs inference */
+  .seg{display:flex;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:4px;margin:12px 0}
+  .seg button{flex:1;font-family:'Baloo 2';font-weight:700;font-size:.92rem;color:var(--dim);background:none;border:none;border-radius:10px;padding:10px;cursor:pointer;transition:.15s}
+  .seg button.on{color:#05121c;background:linear-gradient(135deg,var(--cyan),var(--violet))}
+  .phase{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:16px;text-align:center}
+  .phase .big{font-size:2.2rem;line-height:1;margin-bottom:6px}
+  .phase p{color:#c3cbe8;font-weight:700;line-height:1.55}
+  .phase .demo{font-family:'Baloo 2';font-size:1.1rem;color:var(--green);min-height:28px;margin-top:10px}
+  .minibtn{font-family:'Baloo 2';font-weight:700;border:none;border-radius:11px;padding:9px 15px;cursor:pointer;color:#05121c;background:var(--cyan);margin-top:8px;box-shadow:0 4px 0 rgba(0,0,0,.25)}.minibtn:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(0,0,0,.25)}
+
+  /* school */
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+  .col{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center}
+  .col .ic{font-size:1.8rem}.col h4{font-family:'Baloo 2';margin:4px 0}.col.train h4{color:var(--cyan)}.col.exam h4{color:var(--amber)}.col p{font-size:.86rem;color:#aeb8dd;font-weight:600}
+  .meter label{display:flex;justify-content:space-between;font-weight:800;font-size:.84rem;margin:10px 0 4px}
+  .meter label b{color:var(--violet)}
+  input[type=range]{width:100%;accent-color:var(--violet)}
+  .bars{margin-top:12px}
+  .barrow{margin:8px 0}.barrow .t{font-weight:800;font-size:.82rem;margin-bottom:3px;display:flex;justify-content:space-between}
+  .track{height:16px;background:#0a1024;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .fill{height:100%;border-radius:10px;transition:width .3s}
+  .fill.tb{background:var(--green)}.fill.nq{background:linear-gradient(90deg,var(--amber),var(--pink))}
+  .verdict{text-align:center;font-weight:700;color:#e7ecff;margin-top:12px;min-height:24px}.verdict b{color:var(--amber)}
+
+  /* mapping table */
+  .map{margin-top:12px;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .map .r{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+  .map .r:first-child{border-top:none}
+  .map .c{padding:11px 14px;font-weight:700;font-size:.9rem}
+  .map .r .you{background:rgba(56,225,255,.06);color:#dbe6ff}
+  .map .r .ai{background:rgba(167,139,250,.08);color:#ece4ff;border-left:1px solid var(--line)}
+  .map .head .c{font-family:'Baloo 2';font-size:.95rem}.map .head .you{color:var(--cyan)}.map .head .ai{color:var(--violet)}
+  .map .c .lbl{font-size:.66rem;text-transform:uppercase;letter-spacing:.05em;color:var(--dim);display:block;font-weight:800;margin-bottom:1px}
+
+  .close{background:linear-gradient(135deg,rgba(167,139,250,.16),rgba(56,225,255,.12));border:2px solid rgba(255,255,255,.14);border-radius:22px;padding:24px;text-align:center;margin-top:24px}
+  .close h2{font-size:1.5rem;background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .close p{color:#e7ecff;font-weight:700;max-width:560px;margin:8px auto 0}
+  .cta{display:inline-block;margin-top:16px;font-family:'Baloo 2';font-weight:800;font-size:1.05rem;color:#05121c;text-decoration:none;background:linear-gradient(135deg,var(--amber),var(--pink));border-radius:14px;padding:13px 22px;box-shadow:0 10px 26px -12px var(--pink);transition:.14s}.cta:hover{transform:translateY(-2px)}
+  .foot{text-align:center;color:#6f7c9e;font-size:.78rem;margin-top:24px;font-weight:600}
+  @media(max-width:600px){.cols{grid-template-columns:1fr}}
+  @media(prefers-reduced-motion:reduce){.scrollhint{animation:none}}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html" class="back" onclick="if(history.length>1){history.back();return false;}location.href='index.html';return false;">← Back to lessons</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span>
+    <span class="tag">🧠 The AI Journey</span>
+  </div>
+
+  <div class="wrap">
+    <div class="hero">
+      <div class="eyebrow">The AI Journey</div>
+      <h1>You've been an AI all along.</h1>
+      <p>Long before your first textbook, you learned to see the world. It turns out that's <b style="color:var(--amber)">exactly</b> how we teach machines to think. Let's walk through it — with <i>you</i> as the example. 🧠</p>
+      <div class="scrollhint">↓ scroll to begin the journey</div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="step">
+      <span class="num">STEP 1</span>
+      <h2>👶 "This is a cat."</h2>
+      <p class="lede">When you were tiny, someone pointed and said <b>"This is a cat."</b> The picture of that cat entered your brain through your <span class="kicker">eyes</span>. Your eyes are <b>sensors</b> — the exact same job a <b>camera</b> does for a robot or an AI. Sound in? That's your ears — a microphone. Every AI starts here: a sensor lets the world in.</p>
+    </div>
+
+    <!-- STEP 2 : animated brain -->
+    <div class="step">
+      <span class="num">STEP 2</span>
+      <h2>🧠 Watch your brain learn — then predict</h2>
+      <p class="lede">A picture comes in through your <b>eye</b> and flows to the <b>back of your brain</b>, where it's kept as <b>features</b> in a few layers. First you <b>learn</b> from many examples (training). Then you can spot a brand-new one you've never seen before (prediction).</p>
+      <div class="brainfig">
+        <img src="brain_photo.jpg" alt="A human head in side profile: a picture enters the eye and travels the glowing optic nerve to the layers at the back of the brain (the visual cortex).">
+        <svg class="ovl" id="ovl" viewBox="0 0 1600 900"></svg>
+        <div class="teacher" id="teacher">
+          <div class="bubble" id="bubble">This is a <b>CAT!</b> 🐱</div>
+          <div class="person">🧑‍🏫</div>
+        </div>
+        <div class="brainbubble" id="brainBubble"><div class="bb">🧠 “This is a <b>CAT!</b>” 🐱</div></div>
+      </div>
+      <div class="counter" id="counter">Cats learned: 0 / 10</div>
+      <div class="caption" id="cap">Tap “Train with 10 cats” to begin.</div>
+      <div class="pbtns">
+        <button class="pbtn cat" id="btnTrain">🎓 Train with 10 cats</button>
+        <button class="pbtn" id="btnPredict" style="background:var(--cyan)">🔮 Show a new cat → predict</button>
+      </div>
+      <div class="aha" id="aha" style="display:none">💡 <b>The big surprise:</b> your brain never saved those 10 photos! It kept only their <b>features</b> in the layers — which is why it can still recognise a <i>new</i> cat it has never seen. A real AI learns in exactly the same way.</div>
+    </div>
+
+    <!-- STEP 3 : training vs inference -->
+    <div class="step">
+      <span class="num">STEP 3</span>
+      <h2>🎓 First you <em>learn</em> it… then you just <em>know</em> it</h2>
+      <p class="lede">Learning a cat happens in two phases. Tap each one:</p>
+      <div class="seg" role="tablist">
+        <button id="segTrain" class="on">🎓 Learning phase</button>
+        <button id="segInfer">⚡ Answering phase</button>
+      </div>
+      <div class="phase" id="phase"></div>
+    </div>
+
+    <!-- STEP 4 : school -->
+    <div class="step">
+      <span class="num">STEP 4</span>
+      <h2>🏫 You do this every single day at school</h2>
+      <p class="lede">This isn't just about cats. It's <b>literally</b> your school life:</p>
+      <div class="cols">
+        <div class="col train"><div class="ic">📚</div><h4>Classroom = Training</h4><p>Every lesson, you take in examples and tune your brain. This is the <b>learning phase</b>.</p></div>
+        <div class="col exam"><div class="ic">📝</div><h4>Exam = Inference</h4><p>In the test you answer questions using what you learned. This is the <b>answering phase</b>.</p></div>
+      </div>
+      <div class="meter">
+        <label>How many <i>different</i> things have you studied? <b><span id="varV">3</span></b></label>
+        <input type="range" id="variety" min="1" max="10" step="1" value="3">
+      </div>
+      <div class="bars">
+        <div class="barrow"><div class="t"><span>✅ Repeat textbook questions</span><span id="tbP">100%</span></div><div class="track"><div class="fill tb" id="tbBar" style="width:100%"></div></div></div>
+        <div class="barrow"><div class="t"><span>🌟 Answer brand-new questions</span><span id="nqP">30%</span></div><div class="track"><div class="fill nq" id="nqBar" style="width:30%"></div></div></div>
+      </div>
+      <div class="verdict" id="verdict"></div>
+    </div>
+
+    <!-- STEP 5 : mapping -->
+    <div class="step">
+      <span class="num">STEP 5</span>
+      <h2>🪞 So… you ↔ AI</h2>
+      <p class="lede">Line them up side by side and it's the same story:</p>
+      <div class="map">
+        <div class="r head"><div class="c you">🙂 You</div><div class="c ai">🤖 An AI</div></div>
+        <div class="r"><div class="c you"><span class="lbl">Way in</span>Eyes &amp; ears</div><div class="c ai"><span class="lbl">Way in</span>Sensors — camera, microphone</div></div>
+        <div class="r"><div class="c you"><span class="lbl">Thinking</span>Cortex, layer by layer</div><div class="c ai"><span class="lbl">Thinking</span>Neural network layers</div></div>
+        <div class="r"><div class="c you"><span class="lbl">Learning</span>Parents &amp; class teach you</div><div class="c ai"><span class="lbl">Learning</span>Training on lots of examples</div></div>
+        <div class="r"><div class="c you"><span class="lbl">What's kept</span>Features (not the photo)</div><div class="c ai"><span class="lbl">What's kept</span>Learned weights (not the data)</div></div>
+        <div class="r"><div class="c you"><span class="lbl">Answering</span>Spot a cat · sit an exam</div><div class="c ai"><span class="lbl">Answering</span>Inference · object detection</div></div>
+        <div class="r"><div class="c you"><span class="lbl">Getting smart</span>Study widely → new questions</div><div class="c ai"><span class="lbl">Getting smart</span>More varied data → generalization</div></div>
+      </div>
+    </div>
+
+    <div class="close">
+      <h2>Every lesson here is your training. 🚀</h2>
+      <p>When you play with the science &amp; maths lessons, you're not memorising — you're tuning your own layers, exactly like an AI in training. Go play, gather lots of varied examples, and you'll answer questions you've never even seen before. That's how <b>you</b> get smarter — and it's how <b>we</b> build AI at DeepManthan.</p>
+      <a class="cta" href="index.html">← Go play &amp; train your brain</a>
+    </div>
+
+    <div class="foot">DeepManthan Juniors · learn by playing · © 2026 DeepManthan AI — All Rights Reserved.</div>
+  </div>
+
+<script>
+  /* ---------- STEP 2: cats animated over the brain photo ---------- */
+  const svgNS='http://www.w3.org/2000/svg';
+  const ovl=document.getElementById('ovl');
+  const cap=document.getElementById('cap'), aha=document.getElementById('aha'), counter=document.getElementById('counter');
+  const teacher=document.getElementById('teacher'), bubble=document.getElementById('bubble');
+  function sayCat(){ if(!bubble)return; bubble.classList.remove('say'); void bubble.offsetWidth; bubble.classList.add('say'); }
+  const brainBubble=document.getElementById('brainBubble');
+  function brainSay(){ brainBubble.classList.remove('show'); void brainBubble.offsetWidth; brainBubble.classList.add('show'); }
+  const BARS=[{x:1298,top:300,h:132},{x:1324,top:296,h:134},{x:1350,top:293,h:134},{x:1376,top:294,h:132},{x:1402,top:298,h:128}], BW=12;
+  function build(){
+    let bars=''; BARS.forEach((b,i)=>{ bars+=`<rect class="lfill" id="lf${i}" x="${b.x}" y="${b.top+b.h}" width="${BW}" height="0" rx="3"/>`; });
+    ovl.innerHTML=`
+      <path id="pipe" fill="none" stroke="none" d="M 778 462 C 892 514 1004 518 1096 498 C 1170 482 1228 452 1276 410 C 1300 386 1318 372 1332 360"/>
+      ${bars}
+      <g id="travelers"></g>`;
+  }
+  build();
+  const pipe=document.getElementById('pipe'), plen=pipe.getTotalLength(), travelersG=document.getElementById('travelers');
+  function setBars(level){ BARS.forEach((b,i)=>{ const h=level*b.h, f=document.getElementById('lf'+i); f.setAttribute('y',(b.top+b.h-h).toFixed(1)); f.setAttribute('height',h.toFixed(1)); }); }
+  function flashBars(){ for(let i=0;i<5;i++){ const f=document.getElementById('lf'+i); f.classList.add('flash'); setTimeout(()=>f.classList.remove('flash'),800);} }
+  function makeCat(emoji,color){ const g=document.createElementNS(svgNS,'g');
+    g.innerHTML=`<rect x="-27" y="-27" width="54" height="54" rx="13" fill="#0d1430" stroke="${color}" stroke-width="3"/><text x="0" y="15" text-anchor="middle" font-size="40">${emoji}</text>`;
+    return g; }
+  let running=false, learned=0;
+  function train(){ if(running)return; running=true; learned=0; setBars(0); aha.style.display='none';
+    counter.textContent='Cats learned: 0 / 10'; cap.innerHTML='🎓 Learning: showing your brain lots of cats…';
+    teacher.classList.remove('dim'); brainBubble.classList.remove('show'); sayCat();
+    const travelers=[]; let spawned=0; const dur=1150;
+    const timer=setInterval(()=>{ if(spawned>=10){clearInterval(timer);return;} spawned++;
+      const g=makeCat('🐱','#5BE49B'); travelersG.appendChild(g); travelers.push({g,start:performance.now(),done:false}); sayCat();
+    },380);
+    function loop(now){ travelers.forEach(t=>{ if(t.done)return; const p=Math.min(1,(now-t.start)/dur), pt=pipe.getPointAtLength(p*plen);
+        t.g.setAttribute('transform',`translate(${pt.x.toFixed(1)},${pt.y.toFixed(1)})`);
+        if(p>=1){ t.done=true; t.g.remove(); learned++; setBars(learned/10); counter.textContent=`Cats learned: ${learned} / 10`; } });
+      if(spawned<10 || !travelers.every(t=>t.done)) requestAnimationFrame(loop);
+      else { running=false; cap.innerHTML='✅ Training done! The layers now hold the cat’s <b>features</b>.'; }
+    }
+    requestAnimationFrame(loop);
+  }
+  function predict(){ if(running)return; if(learned<10){ cap.innerHTML='🎓 Train first — tap “Train with 10 cats”.'; return; } running=true; aha.style.display='none'; teacher.classList.add('dim'); brainBubble.classList.remove('show');
+    cap.innerHTML='🔮 A brand-new cat your brain has NEVER seen…';
+    const g=makeCat('🐈','#38E1FF'); travelersG.appendChild(g); const start=performance.now(), dur=1350;
+    function loop(now){ const p=Math.min(1,(now-start)/dur), pt=pipe.getPointAtLength(p*plen);
+      g.setAttribute('transform',`translate(${pt.x.toFixed(1)},${pt.y.toFixed(1)})`);
+      if(p<1) requestAnimationFrame(loop); else { g.remove(); flashBars(); brainSay();
+        cap.innerHTML='🐱 “It’s a CAT!” — known from the features it learned, even though this exact cat is new.';
+        aha.style.display='block'; running=false; }
+    }
+    requestAnimationFrame(loop);
+  }
+  document.getElementById('btnTrain').onclick=train;
+  document.getElementById('btnPredict').onclick=predict;
+
+  /* ---------- STEP 3: training vs inference ---------- */
+  const phase=document.getElementById('phase');
+  let seen=3; const newCats=['a ginger cat on a wall','a fluffy white kitten','a sleepy black cat','a striped cat in a box','a tiny grey kitten'];
+  function showTrain(){ phase.innerHTML=`<div class="big">🐱🐱🐱</div>
+    <p>Someone shows you cat after cat and says <b>“cat… cat… cat.”</b> Each time, your brain gently <b>tweaks its layers</b> to notice what makes a cat a cat. You're not saving photos — you're <b>tuning your feature-detectors</b>. This slow tuning is called <span class="kicker">training</span>.</p>
+    <div class="demo" id="tdemo">Cats seen so far: <b>${seen}</b></div>
+    <button class="minibtn" id="another">Show me another cat 🐱</button>`;
+    document.getElementById('another').onclick=()=>{ seen++; const d=document.getElementById('tdemo'); d.innerHTML=`Cats seen so far: <b>${seen}</b> — layers tuning… ✨`; };
+  }
+  function showInfer(){ phase.innerHTML=`<div class="big">⚡</div>
+    <p>Now you meet a cat you've <b>never seen before</b> — a new colour, a new pose. Instantly your brain says <b>“Cat!”</b> No studying in that moment — you just <i>know</i>. That instant answer is <span class="kicker">inference</span>. When an AI does it with a camera, we call it <b>object detection</b>.</p>
+    <div class="demo" id="idemo">Tap below to meet a brand-new cat →</div>
+    <button class="minibtn" id="spot">Spot a new cat ⚡</button>`;
+    document.getElementById('spot').onclick=()=>{ const c=newCats[Math.floor(Math.random()*newCats.length)]; document.getElementById('idemo').innerHTML=`You see ${c}… <b>“Cat!” ✅</b> (never seen this exact one!)`; };
+  }
+  document.getElementById('segTrain').onclick=function(){ this.classList.add('on'); document.getElementById('segInfer').classList.remove('on'); showTrain(); };
+  document.getElementById('segInfer').onclick=function(){ this.classList.add('on'); document.getElementById('segTrain').classList.remove('on'); showInfer(); };
+  showTrain();
+
+  /* ---------- STEP 4: school generalization ---------- */
+  const variety=document.getElementById('variety');
+  function school(){ const v=+variety.value; document.getElementById('varV').textContent=v;
+    const nq=Math.round(15+v*8.5); // 1->~24, 10->100
+    document.getElementById('tbBar').style.width='100%'; document.getElementById('tbP').textContent='100%';
+    document.getElementById('nqBar').style.width=Math.min(100,nq)+'%'; document.getElementById('nqP').textContent=Math.min(100,nq)+'%';
+    let msg; if(v<=3) msg='You can repeat what you memorised — but <b>new</b> questions feel hard. 😅';
+    else if(v<=6) msg='Getting there! You spot patterns across topics now. 🙂';
+    else msg='You’ve seen so many patterns that even <b>unseen</b> questions feel familiar. That’s <b>generalization</b>! 🌟';
+    document.getElementById('verdict').innerHTML=msg;
+  }
+  variety.addEventListener('input',school); school();
+</script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Health · DeepManthan Juniors (SSC Class 10)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b1020;--bg2:#0f1630;--panel:#151d38;--line:#26315a;--ink:#EAF0FF;--dim:#93a2c8;--cyan:#38E1FF;--teal:#2DD4BF;--amber:#FFB454;--green:#5BE49B;--pink:#FF7BC0;--violet:#A78BFA;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(900px 500px at 80% -10%,#2a2450,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:var(--pink);padding:4px 12px;border-radius:20px}
+  .wrap{max-width:880px;margin:0 auto;padding:22px 18px 50px}
+  .hero{text-align:center;margin-bottom:14px}.hero h1{font-size:clamp(1.6rem,5vw,2.3rem);color:var(--pink)}.hero p{color:var(--dim);font-weight:700;max-width:660px;margin:4px auto 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}
+  .dims{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .dim{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center}.dim .e{font-size:2rem}.dim b{display:block;font-family:'Baloo 2';margin:4px 0}.dim.phys b{color:var(--green)}.dim.ment b{color:var(--cyan)}.dim.soc b{color:var(--amber)}.dim span{font-size:.82rem;color:#aeb8dd;font-weight:600}
+  h3{color:var(--pink);text-align:center;margin:18px 0 8px}
+  .habits{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+  .habit{font-weight:700;font-size:.86rem;border:2px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:20px;padding:8px 13px;cursor:pointer;transition:.12s}.habit.on{background:linear-gradient(135deg,rgba(91,228,155,.25),rgba(56,225,255,.14));border-color:var(--green);color:#fff}
+  .garden{text-align:center;font-size:1.8rem;min-height:44px;margin-top:10px;letter-spacing:4px}
+  .cheer{text-align:center;font-family:'Baloo 2';color:var(--green);margin-top:4px;min-height:24px}
+  .tips{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+  .tip{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--cyan);border-radius:10px;padding:10px 12px}.tip b{font-family:'Baloo 2';color:var(--cyan)}.tip span{font-size:.84rem;color:#aeb8dd;font-weight:600}
+  .idea{background:linear-gradient(120deg,rgba(255,123,192,.12),rgba(56,225,255,.1));border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:16px}
+  .idea h2{color:var(--pink);font-size:1.15rem;margin-bottom:6px}.idea li{margin:7px 0;font-weight:700;padding-left:22px;position:relative;list-style:none}.idea li::before{content:"🌈";position:absolute;left:0}.idea b{color:var(--cyan)}
+  .foot{text-align:center;color:#6f7c9e;font-size:.78rem;margin-top:22px;font-weight:600}
+  @media(max-width:640px){.dims{grid-template-columns:1fr}.tips{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html" class="back" onclick="if(history.length>1){history.back();return false;}location.href='index.html';return false;">← Back</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span><span class="tag">SSC · Class 10 · Health</span>
+  </div>
+  <div class="wrap">
+    <div class="hero"><h1>🌈 Social Health</h1><p>Good health is more than not being sick — it's feeling well in <b style="color:var(--pink)">body, mind and friendships</b>. Let's explore!</p></div>
+    <div class="card">
+      <div class="dims">
+        <div class="dim phys"><div class="e">💪</div><b>Physical</b><span>A body that's active, rested and cared for.</span></div>
+        <div class="dim ment"><div class="e">🧠</div><b>Mental</b><span>Feeling calm, confident and able to handle ups &amp; downs.</span></div>
+        <div class="dim soc"><div class="e">🤝</div><b>Social</b><span>Kind friendships and getting along with others.</span></div>
+      </div>
+
+      <h3>🌱 Tap the good habits you enjoy — grow your garden!</h3>
+      <div class="habits" id="habits"></div>
+      <div class="garden" id="garden"></div>
+      <div class="cheer" id="cheer">Every healthy habit counts. 💚</div>
+
+      <h3>🛟 Feeling stressed? Try these</h3>
+      <div class="tips">
+        <div class="tip"><b>Breathe slowly</b><br><span>A few deep breaths calm your mind quickly.</span></div>
+        <div class="tip"><b>Talk to someone</b><br><span>Share worries with a friend, parent or teacher.</span></div>
+        <div class="tip"><b>Take a break</b><br><span>Step away from screens, move around, play.</span></div>
+        <div class="tip"><b>Say a strong "no"</b><br><span>To tobacco, alcohol &amp; other addictions — they harm your health.</span></div>
+      </div>
+    </div>
+    <div class="idea"><h2>🧠 The Big Idea</h2><ul>
+      <li>Health has three sides: <b>physical</b>, <b>mental</b> and <b>social</b> — they support each other.</li>
+      <li>Small daily habits — rest, movement, kindness, hobbies — build lifelong wellbeing.</li>
+      <li>If you ever feel low or overwhelmed, <b>talking to a trusted adult</b> is a strong, healthy choice. 💬</li>
+    </ul></div>
+    <div class="foot">DeepManthan Juniors · learn by playing · © 2026 DeepManthan AI — All Rights Reserved.</div>
+  </div>
+<script>
+  const HAB=[['😴','Sleep well'],['🏃','Play & move'],['🥗','Eat a variety of foods'],['💧','Drink water'],['🤝','Time with friends'],['🎨','Enjoy a hobby'],['📵','Screen breaks'],['🙂','Help someone']];
+  const chosen=new Set();
+  const cheers=['You\u2019re taking great care of yourself! 🌟','Wonderful — keep it up! 💚','Your garden is blooming! 🌷','Healthy habits, happy you! 😊','Amazing self-care! 🌈'];
+  const hb=document.getElementById('habits');
+  HAB.forEach((h,i)=>{ const b=document.createElement('button'); b.className='habit'; b.textContent=h[0]+' '+h[1]; b.onclick=()=>{ if(chosen.has(i)){chosen.delete(i);b.classList.remove('on');} else {chosen.add(i);b.classList.add('on');} grow(); }; hb.appendChild(b); });
+  function grow(){ document.getElementById('garden').textContent='🌱'.repeat(0)+'🌸🌼🌷🌻🌹🌺💐🏵️'.slice(0,chosen.size*2); document.getElementById('cheer').textContent = chosen.size? cheers[Math.min(cheers.length-1,Math.floor(chosen.size/2))] : 'Every healthy habit counts. 💚'; }
+</script>
+</body>
+</html>

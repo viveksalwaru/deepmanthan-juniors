@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life Processes · DeepManthan Juniors (SSC Class 10)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b1020;--bg2:#0f1630;--panel:#151d38;--line:#26315a;--ink:#EAF0FF;--dim:#93a2c8;--cyan:#38E1FF;--teal:#2DD4BF;--amber:#FFB454;--green:#5BE49B;--pink:#FF7BC0;--violet:#A78BFA;--red:#F8717a;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(900px 500px at 20% -10%,#3a1c2a,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:var(--pink);padding:4px 12px;border-radius:20px}
+  .wrap{max-width:920px;margin:0 auto;padding:22px 18px 50px}
+  .hero{text-align:center;margin-bottom:14px}.hero h1{font-size:clamp(1.6rem,5vw,2.3rem);color:var(--pink)}.hero p{color:var(--dim);font-weight:700;max-width:660px;margin:4px auto 0}
+  .layout{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}
+  svg.circ{width:100%;height:auto;display:block;background:#0c1330;border-radius:12px}
+  .legend{display:flex;gap:16px;justify-content:center;margin-top:8px;font-size:.76rem;font-weight:700;color:var(--dim)}.legend i{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:middle;margin-right:5px}
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+  .tab{font-family:'Baloo 2';font-weight:700;font-size:.82rem;border:2px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:11px;padding:7px 11px;cursor:pointer}.tab.on{background:linear-gradient(135deg,rgba(255,123,192,.22),rgba(56,225,255,.14));border-color:var(--pink);color:#fff}
+  .pinfo{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:14px;min-height:120px}.pinfo .ic{font-size:1.8rem}.pinfo .t{font-family:'Baloo 2';font-size:1.2rem;color:var(--pink);margin-top:4px}.pinfo p{color:#aeb8dd;font-weight:600;font-size:.9rem;margin-top:6px}
+  .idea{background:linear-gradient(120deg,rgba(255,123,192,.12),rgba(56,225,255,.1));border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:16px}
+  .idea h2{color:var(--pink);font-size:1.15rem;margin-bottom:6px}.idea li{margin:7px 0;font-weight:700;padding-left:22px;position:relative;list-style:none}.idea li::before{content:"🫀";position:absolute;left:0}.idea b{color:var(--cyan)}
+  .foot{text-align:center;color:#6f7c9e;font-size:.78rem;margin-top:22px;font-weight:600}
+  @media(max-width:760px){.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html" class="back" onclick="if(history.length>1){history.back();return false;}location.href='index.html';return false;">← Back</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span><span class="tag">SSC · Class 10 · Biology</span>
+  </div>
+  <div class="wrap">
+    <div class="hero"><h1>🫀 Life Processes</h1><p>Watch blood loop through your body in <b style="color:var(--pink)">double circulation</b> — and explore the 4 processes that keep you alive!</p></div>
+    <div class="layout">
+      <div class="card">
+        <svg class="circ" id="svg" viewBox="0 0 320 300"></svg>
+        <div class="legend"><span><i style="background:#F8717a"></i>Oxygen-rich (red)</span><span><i style="background:#4a8fd6"></i>Oxygen-poor (blue)</span></div>
+      </div>
+      <div class="card">
+        <div class="tabs" id="tabs"></div>
+        <div class="pinfo" id="pinfo"></div>
+      </div>
+    </div>
+    <div class="idea"><h2>🧠 The Big Idea</h2><ul>
+      <li>Blood travels <b>twice</b> through the heart in one full round — once to the lungs, once to the body. That's <b>double circulation</b>.</li>
+      <li>Lungs turn blue (oxygen-poor) blood <b>red</b> (oxygen-rich); the body uses that oxygen and turns it blue again.</li>
+      <li>Nutrition, respiration, transportation &amp; excretion together keep every cell fed, powered and clean.</li>
+    </ul></div>
+    <div class="foot">DeepManthan Juniors · learn by playing · © 2026 DeepManthan AI — All Rights Reserved.</div>
+  </div>
+<script>
+  // paths: systemic (heart<->body, left) & pulmonary (heart<->lungs, right)
+  const svg=document.getElementById('svg');
+  svg.innerHTML=`
+    <text x="160" y="40" font-size="34" text-anchor="middle">🫁</text><text x="160" y="58" fill="#93a2c8" font-size="10" text-anchor="middle" font-family="monospace">lungs</text>
+    <text x="160" y="168" font-size="40" text-anchor="middle">❤️</text><text x="160" y="188" fill="#93a2c8" font-size="10" text-anchor="middle" font-family="monospace">heart</text>
+    <text x="160" y="270" font-size="34" text-anchor="middle">🧍</text><text x="160" y="288" fill="#93a2c8" font-size="10" text-anchor="middle" font-family="monospace">body</text>
+    <path id="pulm" d="M 150 150 C 90 130 90 60 150 45" fill="none" stroke="#26315a" stroke-width="2"/>
+    <path id="pulm2" d="M 170 45 C 230 60 230 130 170 150" fill="none" stroke="#26315a" stroke-width="2"/>
+    <path id="sys" d="M 150 175 C 90 195 90 250 150 262" fill="none" stroke="#26315a" stroke-width="2"/>
+    <path id="sys2" d="M 170 262 C 230 250 230 195 170 175" fill="none" stroke="#26315a" stroke-width="2"/>
+    <g id="dots"></g>`;
+  const paths={ pulm:svg.getElementById('pulm'), pulm2:svg.getElementById('pulm2'), sys:svg.getElementById('sys'), sys2:svg.getElementById('sys2') };
+  // dots: on pulm (blue up to lungs), pulm2 (red back), sys (red down to body), sys2 (blue back)
+  const D=[]; function seed(path,color,n){ const L=paths[path].getTotalLength(); for(let i=0;i<n;i++) D.push({path,color,t:i/n,L}); }
+  seed('pulm','#4a8fd6',4); seed('pulm2','#F8717a',4); seed('sys','#F8717a',4); seed('sys2','#4a8fd6',4);
+  const dotsG=svg.getElementById('dots');
+  function frame(){ let html=''; D.forEach(d=>{ d.t=(d.t+0.006)%1; const pt=paths[d.path].getPointAtLength(d.t*d.L); html+=`<circle cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}" r="4" fill="${d.color}"/>`; }); dotsG.innerHTML=html; requestAnimationFrame(frame); }
+  frame();
+  const PROC={
+    nutrition:{ic:'🍎',t:'Nutrition',d:'Getting &amp; digesting food for energy and building blocks. In us, the digestive system breaks food into simple nutrients the blood can carry.'},
+    respiration:{ic:'🫁',t:'Respiration',d:'Releasing energy from food using oxygen (in mitochondria). We breathe in O₂ and breathe out CO₂.'},
+    circulation:{ic:'🫀',t:'Transportation',d:'The heart pumps blood to carry oxygen, food &amp; waste around the body through arteries and veins.'},
+    excretion:{ic:'💧',t:'Excretion',d:'Removing waste products — the kidneys filter the blood and make urine to keep us clean inside.'}
+  };
+  const order=['nutrition','respiration','circulation','excretion']; const tabs=document.getElementById('tabs');
+  order.forEach((k,i)=>{ const b=document.createElement('button'); b.className='tab'+(i===2?' on':''); b.textContent=PROC[k].ic+' '+PROC[k].t; b.onclick=()=>{ document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on')); b.classList.add('on'); showP(k); }; tabs.appendChild(b); });
+  function showP(k){ const p=PROC[k]; document.getElementById('pinfo').innerHTML=`<div class="ic">${p.ic}</div><div class="t">${p.t}</div><p>${p.d}</p>`; }
+  showP('circulation');
+</script>
+</body>
+</html>

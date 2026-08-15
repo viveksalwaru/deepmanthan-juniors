@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mensuration · DeepManthan Juniors (SSC Maths)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b1020;--bg2:#0f1630;--panel:#151d38;--line:#26315a;--ink:#EAF0FF;--dim:#93a2c8;--cyan:#38E1FF;--teal:#2DD4BF;--amber:#FFB454;--green:#5BE49B;--pink:#FF7BC0;--violet:#A78BFA;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(900px 500px at 80% -10%,#2a2450,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:var(--violet);padding:4px 12px;border-radius:20px}
+  .wrap{max-width:900px;margin:0 auto;padding:22px 18px 50px}
+  .hero{text-align:center;margin-bottom:14px}.hero h1{font-size:clamp(1.6rem,5vw,2.3rem);color:var(--violet)}.hero p{color:var(--dim);font-weight:700;max-width:660px;margin:4px auto 0}
+  .pick{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+  .pb{font-family:'Baloo 2';font-weight:700;font-size:.85rem;border:2px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:12px;padding:8px 13px;cursor:pointer}.pb.on{background:linear-gradient(135deg,rgba(167,139,250,.24),rgba(56,225,255,.14));border-color:var(--violet);color:#fff}
+  .layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:16px;align-items:start}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}
+  svg.solid{width:100%;height:auto;display:block;background:#0a1024;border-radius:12px}
+  .ctl{margin:8px 0}.ctl label{display:flex;justify-content:space-between;font-weight:800;font-size:.82rem;margin-bottom:3px}.ctl label b{font-family:'Baloo 2';color:var(--violet)}
+  input[type=range]{width:100%;accent-color:var(--violet)}
+  .out{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+  .ob{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}.ob .k{font-size:.66rem;color:var(--dim);text-transform:uppercase;font-weight:800}.ob .f{font-family:'Baloo 2';font-size:.82rem;color:var(--dim);margin:3px 0}.ob .v{font-family:'Baloo 2';font-size:1.2rem}.ob.sa .v{color:var(--cyan)}.ob.vol .v{color:var(--green)}
+  .idea{background:linear-gradient(120deg,rgba(167,139,250,.12),rgba(56,225,255,.1));border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:16px}
+  .idea h2{color:var(--violet);font-size:1.15rem;margin-bottom:6px}.idea li{margin:7px 0;font-weight:700;padding-left:22px;position:relative;list-style:none}.idea li::before{content:"📦";position:absolute;left:0}.idea b{color:var(--cyan)}
+  .foot{text-align:center;color:#6f7c9e;font-size:.78rem;margin-top:22px;font-weight:600}
+  @media(max-width:760px){.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html" class="back" onclick="if(history.length>1){history.back();return false;}location.href='index.html';return false;">← Back</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span><span class="tag">SSC · Maths</span>
+  </div>
+  <div class="wrap">
+    <div class="hero"><h1>📦 Mensuration</h1><p>Pick a 3-D shape and change its size — watch its <b style="color:var(--cyan)">surface area</b> and <b style="color:var(--green)">volume</b> update instantly!</p></div>
+    <div class="pick" id="pick"></div>
+    <div class="layout">
+      <div class="card"><svg class="solid" id="svg" viewBox="0 0 260 220"></svg></div>
+      <div class="card">
+        <div id="ctls"></div>
+        <div class="out">
+          <div class="ob sa"><div class="k">Surface Area</div><div class="f" id="saf"></div><div class="v" id="sa"></div></div>
+          <div class="ob vol"><div class="k">Volume</div><div class="f" id="volf"></div><div class="v" id="vol"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="idea"><h2>🧠 The Big Idea</h2><ul>
+      <li><b>Surface area</b> is the total area of all faces/curved surfaces — the "wrapping paper". <b>Volume</b> is the space inside — the "filling".</li>
+      <li>Cube: SA = 6a², V = a³ · Cylinder: SA = 2πr(r+h), V = πr²h · Cone: V = ⅓πr²h · Sphere: SA = 4πr², V = 4/3πr³.</li>
+      <li>Mensuration answers real questions: paint for a wall, water in a tank, metal in a can. 🥫</li>
+    </ul></div>
+    <div class="foot">DeepManthan Juniors · learn by playing · © 2026 DeepManthan AI — All Rights Reserved.</div>
+  </div>
+<script>
+  const PI=Math.PI;
+  const SOLID={
+    cube:{name:'Cube',dims:[['a','Side a',2,8,4]], saf:'6a²', volf:'a³', sa:d=>6*d.a*d.a, vol:d=>d.a**3,
+      draw:d=>{const s=Math.min(90,d.a*11);const x=90,y=60;return cubeSVG(x,y,s,s);}},
+    cuboid:{name:'Cuboid',dims:[['l','Length',2,9,5],['w','Width',2,7,3],['h','Height',2,7,4]], saf:'2(lw+wh+hl)', volf:'l·w·h', sa:d=>2*(d.l*d.w+d.w*d.h+d.h*d.l), vol:d=>d.l*d.w*d.h,
+      draw:d=>cubeSVG(70,50,d.l*10,d.h*10,d.w*7)},
+    cylinder:{name:'Cylinder',dims:[['r','Radius r',1,6,3],['h','Height h',2,9,5]], saf:'2πr(r+h)', volf:'πr²h', sa:d=>2*PI*d.r*(d.r+d.h), vol:d=>PI*d.r*d.r*d.h,
+      draw:d=>cylSVG(d.r*10,d.h*13)},
+    cone:{name:'Cone',dims:[['r','Radius r',1,6,3],['h','Height h',2,9,5]], saf:'πr(r+l)', volf:'⅓πr²h', sa:d=>{const l=Math.sqrt(d.r*d.r+d.h*d.h);return PI*d.r*(d.r+l);}, vol:d=>PI*d.r*d.r*d.h/3,
+      draw:d=>coneSVG(d.r*11,d.h*13)},
+    sphere:{name:'Sphere',dims:[['r','Radius r',1,7,4]], saf:'4πr²', volf:'4/3 πr³', sa:d=>4*PI*d.r*d.r, vol:d=>4/3*PI*d.r**3,
+      draw:d=>sphSVG(d.r*11)}
+  };
+  function cubeSVG(x,y,w,h,dep=w*0.5){ const o=dep; return `
+    <polygon points="${x},${y+o} ${x+w},${y+o} ${x+w},${y+o+h} ${x},${y+o+h}" fill="rgba(56,225,255,.2)" stroke="#38E1FF" stroke-width="1.5"/>
+    <polygon points="${x},${y+o} ${x+o},${y} ${x+w+o},${y} ${x+w},${y+o}" fill="rgba(56,225,255,.32)" stroke="#38E1FF" stroke-width="1.5"/>
+    <polygon points="${x+w},${y+o} ${x+w+o},${y} ${x+w+o},${y+h} ${x+w},${y+o+h}" fill="rgba(56,225,255,.12)" stroke="#38E1FF" stroke-width="1.5"/>`; }
+  function cylSVG(r,h){ const cx=130,top=45; r=Math.min(60,r); h=Math.min(130,h); return `
+    <ellipse cx="${cx}" cy="${top+h}" rx="${r}" ry="${r*0.28}" fill="rgba(56,225,255,.2)" stroke="#38E1FF" stroke-width="1.5"/>
+    <path d="M ${cx-r} ${top} L ${cx-r} ${top+h} M ${cx+r} ${top} L ${cx+r} ${top+h}" stroke="#38E1FF" stroke-width="1.5"/>
+    <rect x="${cx-r}" y="${top}" width="${r*2}" height="${h}" fill="rgba(56,225,255,.12)"/>
+    <ellipse cx="${cx}" cy="${top}" rx="${r}" ry="${r*0.28}" fill="rgba(56,225,255,.32)" stroke="#38E1FF" stroke-width="1.5"/>`; }
+  function coneSVG(r,h){ const cx=130,base=175; r=Math.min(60,r); h=Math.min(130,h); return `
+    <ellipse cx="${cx}" cy="${base}" rx="${r}" ry="${r*0.28}" fill="rgba(56,225,255,.2)" stroke="#38E1FF" stroke-width="1.5"/>
+    <polygon points="${cx},${base-h} ${cx-r},${base} ${cx+r},${base}" fill="rgba(56,225,255,.2)" stroke="#38E1FF" stroke-width="1.5"/>`; }
+  function sphSVG(r){ r=Math.min(80,r); const cx=130,cy=110; return `
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="rgba(56,225,255,.18)" stroke="#38E1FF" stroke-width="1.5"/>
+    <ellipse cx="${cx}" cy="${cy}" rx="${r}" ry="${r*0.3}" fill="none" stroke="#38E1FF" stroke-width="1" opacity=".6"/>`; }
+
+  let cur='cube', dims={};
+  const pick=document.getElementById('pick');
+  Object.keys(SOLID).forEach((k,i)=>{ const b=document.createElement('button'); b.className='pb'+(i===0?' on':''); b.textContent=SOLID[k].name; b.onclick=()=>{cur=k;[...pick.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');load();}; pick.appendChild(b); });
+  function load(){ const s=SOLID[cur]; dims={}; let html='';
+    s.dims.forEach(([key,label,mn,mx,dv])=>{ dims[key]=dv; html+=`<div class="ctl"><label>${label} <b><span id="${key}l">${dv}</span></b></label><input type="range" id="${key}" min="${mn}" max="${mx}" step="1" value="${dv}"></div>`; });
+    document.getElementById('ctls').innerHTML=html;
+    s.dims.forEach(([key])=>document.getElementById(key).addEventListener('input',e=>{dims[key]=+e.target.value;document.getElementById(key+'l').textContent=dims[key];render();}));
+    document.getElementById('saf').textContent=s.saf; document.getElementById('volf').textContent=s.volf;
+    render();
+  }
+  function render(){ const s=SOLID[cur]; document.getElementById('svg').innerHTML=s.draw(dims);
+    document.getElementById('sa').textContent=(+s.sa(dims).toFixed(1))+' units²';
+    document.getElementById('vol').textContent=(+s.vol(dims).toFixed(1))+' units³'; }
+  load();
+</script>
+</body>
+</html>
