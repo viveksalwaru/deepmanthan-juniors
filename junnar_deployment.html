@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Junnar Forest Dept · Edge AI Deployment — Holistic View</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #070B12;
+  --panel: #0E1622;
+  --panel2: #121C2B;
+  --line: #1E2C3F;
+  --line-soft: #16212F;
+  --ink: #DCE6F2;
+  --ink-dim: #7C8CA3;
+  --ink-faint: #3D4F63;
+  --cyan: #38E1FF;
+  --teal: #2DD4BF;
+  --green: #4ADE80;
+  --amber: #FBBF24;
+  --violet: #A78BFA;
+  --magenta: #E879F9;
+  --rose: #FB5E6D;
+  --orange: #FB923C;
+  --radius: 12px;
+}
+
+html, body {
+  height: 100%;
+  font-family: "Sora", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  overflow: hidden;
+}
+
+/* ── HEADER ── */
+.top-header {
+  height: 58px;
+  background: linear-gradient(90deg, #08101E, #0A0F1A);
+  border-bottom: 1px solid var(--line);
+  display: flex; align-items: center;
+  padding: 0 22px 0 130px; gap: 16px;
+  position: relative; z-index: 100; flex-shrink: 0;
+}
+.top-header::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(500px 100% at 15% 50%, rgba(56,225,255,.05), transparent 60%),
+    radial-gradient(500px 100% at 85% 50%, rgba(167,139,250,.04), transparent 60%);
+  pointer-events: none;
+}
+.logo { display: flex; align-items: center; gap: 11px; }
+.logo-glyph {
+  width: 36px; height: 36px; border-radius: 9px;
+  background: linear-gradient(150deg, rgba(74,222,128,.18), rgba(56,225,255,.12));
+  border: 1px solid rgba(74,222,128,.4);
+  display: grid; place-items: center;
+  box-shadow: inset 0 0 12px rgba(74,222,128,.15), 0 4px 14px -6px rgba(74,222,128,.5);
+  font-size: 1.1rem;
+}
+.logo-txt b { font-family:"Space Grotesk"; font-weight:700; font-size:1.02rem; letter-spacing:.3px; }
+.logo-txt span { display:block; font-size:.66rem; color:var(--ink-dim); letter-spacing:1.4px; text-transform:uppercase; }
+.hdr-spacer { flex:1; }
+.hdr-chip {
+  font-family:"IBM Plex Mono"; font-size:.7rem; color:var(--ink-dim);
+  border:1px solid var(--line); border-radius:20px; padding:5px 13px;
+  display:flex; align-items:center; gap:7px; background:rgba(255,255,255,.02);
+}
+.hdr-chip b { color:var(--ink); font-weight:600; }
+.live-dot { width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green); animation:blink 1.6s ease infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.35} }
+
+/* ── LAYOUT ── */
+.stage {
+  height: calc(100% - 58px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 1px; background: var(--line);
+}
+.left-pane, .right-pane { background: var(--bg); overflow: hidden; position: relative; }
+.left-pane { display:flex; flex-direction:column; }
+.right-pane { overflow-y:auto; padding: 16px; }
+.right-pane::-webkit-scrollbar { width:8px; }
+.right-pane::-webkit-scrollbar-thumb { background:var(--line); border-radius:8px; }
+
+/* ── LEFT: TOPOLOGY ── */
+.pane-title {
+  display:flex; align-items:center; gap:10px;
+  padding: 12px 18px; border-bottom:1px solid var(--line-soft); flex-shrink:0;
+}
+.pane-title h2 { font-family:"Space Grotesk"; font-size:.92rem; font-weight:600; letter-spacing:.3px; }
+.pane-title .sub { font-size:.68rem; color:var(--ink-dim); }
+.badge {
+  font-family:"IBM Plex Mono"; font-size:.62rem; padding:3px 9px; border-radius:6px;
+  border:1px solid var(--line); color:var(--ink-dim);
+}
+.badge.net { color:var(--teal); border-color:rgba(45,212,191,.35); background:rgba(45,212,191,.06); }
+
+.topo-wrap { flex:1; position:relative; display:grid; place-items:center; min-height:0; }
+#topo { width:100%; height:100%; }
+
+/* topology legend */
+.legend {
+  position:absolute; left:14px; bottom:12px;
+  display:flex; flex-direction:column; gap:6px;
+  font-family:"IBM Plex Mono"; font-size:.62rem; color:var(--ink-dim);
+  background:rgba(8,14,24,.7); border:1px solid var(--line-soft);
+  border-radius:8px; padding:9px 11px; backdrop-filter: blur(4px);
+}
+.legend .lg { display:flex; align-items:center; gap:7px; }
+.legend .sw { width:16px; height:3px; border-radius:2px; }
+
+.topo-controls {
+  position:absolute; right:14px; top:12px; display:flex; gap:7px; align-items:center;
+  background:rgba(8,14,24,.7); border:1px solid var(--line-soft); border-radius:8px;
+  padding:6px 10px; backdrop-filter: blur(4px);
+}
+.topo-controls label { font-family:"IBM Plex Mono"; font-size:.62rem; color:var(--ink-dim); }
+.topo-controls input[type=range]{ width:90px; accent-color:var(--cyan); }
+.topo-controls .val { font-family:"IBM Plex Mono"; font-size:.66rem; color:var(--cyan); min-width:20px; }
+.tbtn {
+  font-family:"IBM Plex Mono"; font-size:.6rem; color:var(--rose);
+  border:1px solid rgba(251,94,109,.4); background:rgba(251,94,109,.08);
+  border-radius:6px; padding:4px 9px; cursor:pointer;
+}
+.tbtn:hover { background:rgba(251,94,109,.18); }
+
+/* ── RIGHT: DASHBOARD ── */
+.dash-section-title {
+  display:flex; align-items:center; gap:8px;
+  font-family:"Space Grotesk"; font-size:.74rem; font-weight:600;
+  text-transform:uppercase; letter-spacing:1.4px; color:var(--ink-dim);
+  margin: 4px 2px 10px;
+}
+.dash-section-title::after { content:""; flex:1; height:1px; background:var(--line-soft); }
+
+/* KPI grid */
+.kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:9px; margin-bottom:18px; }
+.kpi {
+  background:linear-gradient(160deg,var(--panel),var(--panel2));
+  border:1px solid var(--line); border-radius:var(--radius); padding:12px 12px 11px;
+  position:relative; overflow:hidden;
+}
+.kpi::before { content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--kc,var(--cyan)); }
+.kpi .k-val { font-family:"Space Grotesk"; font-size:1.5rem; font-weight:700; line-height:1; }
+.kpi .k-lab { font-size:.63rem; color:var(--ink-dim); margin-top:6px; letter-spacing:.4px; }
+.kpi .k-sub { font-family:"IBM Plex Mono"; font-size:.6rem; margin-top:3px; }
+
+/* device status cards */
+.dev-list { display:flex; flex-direction:column; gap:8px; margin-bottom:18px; }
+.dev {
+  background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:10px 12px;
+}
+.dev-top { display:flex; align-items:center; gap:9px; margin-bottom:9px; }
+.dev-dot { width:8px;height:8px;border-radius:50%; }
+.dev-name { font-family:"IBM Plex Mono"; font-size:.72rem; font-weight:500; }
+.dev-loc { font-size:.62rem; color:var(--ink-dim); }
+.dev-tag { margin-left:auto; font-family:"IBM Plex Mono"; font-size:.58rem; padding:2px 7px; border-radius:5px; }
+.dev-bars { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.mtr .mtr-top { display:flex; justify-content:space-between; font-family:"IBM Plex Mono"; font-size:.6rem; color:var(--ink-dim); margin-bottom:4px; }
+.mtr .mtr-top b { color:var(--ink); font-weight:600; }
+.bar { height:5px; border-radius:4px; background:var(--line-soft); overflow:hidden; }
+.bar > i { display:block; height:100%; border-radius:4px; transition:width .6s ease; }
+
+/* production aspects */
+.aspect-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:9px; margin-bottom:18px; }
+.aspect {
+  background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:11px 12px;
+  display:flex; gap:11px; align-items:flex-start;
+}
+.aspect .ic {
+  width:30px;height:30px;border-radius:8px; display:grid; place-items:center;
+  font-size:.95rem; flex-shrink:0; border:1px solid var(--line);
+}
+.aspect h4 { font-family:"Space Grotesk"; font-size:.76rem; font-weight:600; }
+.aspect .av { font-family:"Space Grotesk"; font-size:1.02rem; font-weight:700; margin:2px 0; }
+.aspect p { font-size:.62rem; color:var(--ink-dim); line-height:1.4; }
+
+/* security + remote */
+.split2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px; }
+.card {
+  background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:12px;
+}
+.card h3 { font-family:"Space Grotesk"; font-size:.78rem; font-weight:600; margin-bottom:9px; display:flex; align-items:center; gap:7px; }
+.sec-row { display:flex; align-items:center; gap:8px; font-size:.66rem; color:var(--ink-dim); padding:5px 0; border-bottom:1px solid var(--line-soft); }
+.sec-row:last-child { border-bottom:none; }
+.sec-row .ok { color:var(--green); font-family:"IBM Plex Mono"; font-size:.6rem; margin-left:auto; }
+.sec-ic { width:6px;height:6px;border-radius:50%;background:var(--teal); box-shadow:0 0 6px var(--teal); }
+
+/* terminal */
+.term {
+  background:#05090F; border:1px solid var(--line); border-radius:10px; overflow:hidden;
+  font-family:"IBM Plex Mono"; margin-bottom:16px;
+}
+.term-bar { display:flex; align-items:center; gap:7px; padding:8px 12px; border-bottom:1px solid var(--line-soft); background:#0A121D; }
+.term-bar .tdots { display:flex; gap:5px; }
+.term-bar .tdots i { width:9px;height:9px;border-radius:50%; display:block; }
+.term-title { font-size:.64rem; color:var(--ink-dim); margin-left:6px; }
+.term-tag { margin-left:auto; font-size:.58rem; color:var(--teal); }
+.term-body { padding:11px 13px; font-size:.66rem; line-height:1.7; min-height:150px; }
+.term-body .ln { white-space:pre-wrap; word-break:break-word; }
+.tp { color:var(--green); } .tc { color:var(--cyan); } .td { color:var(--ink-dim); }
+.tw { color:var(--amber); } .tr { color:var(--rose); } .tv{color:var(--violet);}
+.cursor { display:inline-block; width:7px; height:13px; background:var(--green); margin-left:2px; animation:blink .9s steps(1) infinite; vertical-align:middle; }
+
+.foot-note { font-size:.6rem; color:var(--ink-faint); text-align:center; padding:6px 0 14px; font-family:"IBM Plex Mono"; }
+
+/* ── LEOPARD DETECTION POPUP ── */
+.leopard-popup{ display:none; position:fixed; inset:0; z-index:99999; background:rgba(3,6,12,0.85); align-items:center; justify-content:center; padding:24px; }
+.leopard-popup.show{ display:flex; animation:lpFade .25s ease; }
+@keyframes lpFade{ from{opacity:0} to{opacity:1} }
+.lp-card{ background:#0B1420; border:1px solid rgba(251,94,109,.4); border-radius:16px; overflow:hidden; max-width:640px; width:100%; box-shadow:0 30px 80px -20px rgba(0,0,0,.8), 0 0 40px -12px rgba(251,94,109,.4); position:relative; }
+.lp-close{ position:absolute; top:12px; right:12px; z-index:2; background:rgba(8,14,24,.8); border:1px solid var(--line); color:var(--ink-dim); font-family:"IBM Plex Mono"; font-size:.66rem; padding:6px 11px; border-radius:8px; cursor:pointer; }
+.lp-close:hover{ color:var(--ink); border-color:var(--rose); }
+.lp-banner{ display:flex; align-items:center; gap:9px; padding:13px 18px; background:linear-gradient(90deg,rgba(251,94,109,.18),transparent); font-family:"Space Grotesk"; font-weight:600; font-size:.92rem; color:var(--rose); border-bottom:1px solid rgba(251,94,109,.25); }
+.lp-dot{ width:9px;height:9px;border-radius:50%;background:var(--rose);box-shadow:0 0 8px var(--rose); animation:blink 1s ease infinite; }
+.lp-img{ width:100%; display:block; max-height:58vh; object-fit:cover; }
+.lp-missing{ display:none; align-items:center; justify-content:center; text-align:center; min-height:220px; color:var(--ink-dim); font-family:"IBM Plex Mono"; font-size:.72rem; line-height:1.6; padding:24px; }
+.lp-cap{ padding:12px 18px; font-family:"IBM Plex Mono"; font-size:.66rem; color:var(--ink-dim); border-top:1px solid var(--line-soft); display:flex; align-items:center; gap:8px; }
+.lp-cap b{ color:var(--teal); }
+</style>
+</head>
+<body>
+<a href="training_live_project.html" class="dm-back" onclick="if(history.length>1){history.back();return false;} location.href='index.html'+(localStorage.getItem('dm_lastPath')?'#'+localStorage.getItem('dm_lastPath'):''); return false;">&#8592; Back</a>
+<style>
+.dm-back{ position:fixed; top:16px; left:18px; z-index:2000; display:inline-flex; align-items:center; gap:7px; font-family:"Space Grotesk","Sora",system-ui,sans-serif; font-weight:600; font-size:.85rem; color:#DCE6F2; text-decoration:none; background:rgba(14,22,34,0.85); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); border:1px solid #1E2C3F; border-radius:10px; padding:9px 14px; transition:.15s; box-shadow:0 16px 40px -18px rgba(0,0,0,.9); }
+.dm-back:hover{ border-color:#38E1FF; color:#fff; transform:translateX(-3px); }
+@media(max-width:600px){ .dm-back{ top:10px; left:10px; font-size:.8rem; padding:8px 12px; } .top-header{ padding-left:20px; } }
+</style>
+
+<div class="top-header">
+  <div class="logo">
+    <div class="logo-glyph">🌲</div>
+    <div class="logo-txt">
+      <b>Junnar Forest Dept · Edge AI Grid</b>
+      <span>Wildlife Detection &amp; Conflict Mitigation Network</span>
+    </div>
+  </div>
+  <div class="hdr-spacer"></div>
+  <div class="hdr-chip"><span class="live-dot"></span>LIVE · <b id="hdr-active">96</b>/<b id="hdr-total">100</b> nodes online</div>
+  <div class="hdr-chip">Region <b>Junnar · Pune Dist.</b></div>
+  <div class="hdr-chip">Build <b>v3.4.1</b></div>
+</div>
+
+<div class="stage">
+
+  <!-- ══════════ LEFT : TOPOLOGY ══════════ -->
+  <div class="left-pane">
+    <div class="pane-title">
+      <h2>Deployment Topology</h2>
+      <span class="sub">star / hub-and-spoke</span>
+      <span style="flex:1"></span>
+      <span class="badge net">🔒 Private Overlay · WireGuard VPN</span>
+    </div>
+    <div class="topo-wrap">
+      <svg id="topo" viewBox="0 0 820 820" preserveAspectRatio="xMidYMid meet"></svg>
+
+      <div class="topo-controls">
+        <label>Edge nodes</label>
+        <input id="nodeRange" type="range" min="6" max="24" value="14">
+        <span class="val" id="nodeCount">14</span>
+        <button class="tbtn" id="sirenBtn">⚠ Trigger Alert</button>
+      </div>
+
+      <div class="legend">
+        <div class="lg"><span class="sw" style="background:var(--cyan)"></span>Camera frames → edge</div>
+        <div class="lg"><span class="sw" style="background:var(--green)"></span>Heartbeat ⇄ cloud</div>
+        <div class="lg"><span class="sw" style="background:var(--violet)"></span>Mobile app / ranger push</div>
+        <div class="lg"><span class="sw" style="background:var(--rose)"></span>Siren / alert relay</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ RIGHT : DASHBOARD ══════════ -->
+  <div class="right-pane">
+
+    <div class="dash-section-title">Fleet Overview</div>
+    <div class="kpi-grid">
+      <div class="kpi" style="--kc:var(--cyan)">
+        <div class="k-val" id="kpi-total">100</div>
+        <div class="k-lab">Total Edge Units</div>
+        <div class="k-sub" style="color:var(--ink-dim)">deployed · Junnar</div>
+      </div>
+      <div class="kpi" style="--kc:var(--green)">
+        <div class="k-val" id="kpi-active" style="color:var(--green)">96</div>
+        <div class="k-lab">Active / Online</div>
+        <div class="k-sub" style="color:var(--green)">▲ streaming</div>
+      </div>
+      <div class="kpi" style="--kc:var(--amber)">
+        <div class="k-val" id="kpi-degraded" style="color:var(--amber)">3</div>
+        <div class="k-lab">Degraded</div>
+        <div class="k-sub" style="color:var(--amber)">thermal / net</div>
+      </div>
+      <div class="kpi" style="--kc:var(--rose)">
+        <div class="k-val" id="kpi-offline" style="color:var(--rose)">1</div>
+        <div class="k-lab">Offline</div>
+        <div class="k-sub" style="color:var(--rose)">▼ no heartbeat</div>
+      </div>
+    </div>
+
+    <div class="dash-section-title">Live Node Telemetry</div>
+    <div class="dev-list" id="devList"></div>
+
+    <div class="dash-section-title">Production Readiness</div>
+    <div class="aspect-grid">
+      <div class="aspect">
+        <div class="ic" style="color:var(--green);border-color:rgba(74,222,128,.35)">🎯</div>
+        <div><h4>Accuracy</h4><div class="av" style="color:var(--green)">98.7% mAP</div><p>YOLO-based detector, per-species validated on field dataset.</p></div>
+      </div>
+      <div class="aspect">
+        <div class="ic" style="color:var(--cyan);border-color:rgba(56,225,255,.35)">⚡</div>
+        <div><h4>Performance</h4><div class="av" style="color:var(--cyan)">28 FPS / edge</div><p>Real-time on-device inference, ~40 ms latency end-to-end.</p></div>
+      </div>
+      <div class="aspect">
+        <div class="ic" style="color:var(--violet);border-color:rgba(167,139,250,.35)">📈</div>
+        <div><h4>Scalability</h4><div class="av" style="color:var(--violet)">100 → 1000</div><p>Horizontally scalable; zero-touch provisioning of new nodes.</p></div>
+      </div>
+      <div class="aspect">
+        <div class="ic" style="color:var(--teal);border-color:rgba(45,212,191,.35)">🛡️</div>
+        <div><h4>High Availability</h4><div class="av" style="color:var(--teal)">99.95%</div><p>Edge autonomy + store-and-forward; survives cloud outage.</p></div>
+      </div>
+      <div class="aspect">
+        <div class="ic" style="color:var(--amber);border-color:rgba(251,191,36,.35)">📊</div>
+        <div><h4>Observability</h4><div class="av" style="color:var(--amber)">Full-stack</div><p>Metrics, logs &amp; traces per node; Grafana + alerting.</p></div>
+      </div>
+      <div class="aspect">
+        <div class="ic" style="color:var(--orange);border-color:rgba(251,146,60,.35)">🔧</div>
+        <div><h4>Maintainability</h4><div class="av" style="color:var(--orange)">OTA / GitOps</div><p>Signed OTA model &amp; firmware rollouts with staged canaries.</p></div>
+      </div>
+    </div>
+
+    <div class="dash-section-title">Security &amp; Remote Ops</div>
+    <div class="split2">
+      <div class="card">
+        <h3>🔒 Network Isolation</h3>
+        <div class="sec-row"><span class="sec-ic"></span>Private overlay (WireGuard)<span class="ok">ENFORCED</span></div>
+        <div class="sec-row"><span class="sec-ic"></span>No public inbound ports<span class="ok">0 EXPOSED</span></div>
+        <div class="sec-row"><span class="sec-ic"></span>mTLS device ⇄ cloud<span class="ok">ACTIVE</span></div>
+        <div class="sec-row"><span class="sec-ic"></span>Disk encryption (LUKS)<span class="ok">ON</span></div>
+        <div class="sec-row"><span class="sec-ic"></span>Cert rotation<span class="ok">AUTO 90d</span></div>
+      </div>
+      <div class="card">
+        <h3>🖥️ Remote Access</h3>
+        <div class="sec-row"><span class="sec-ic" style="background:var(--cyan);box-shadow:0 0 6px var(--cyan)"></span>SSH over VPN jump-host<span class="ok">READY</span></div>
+        <div class="sec-row"><span class="sec-ic" style="background:var(--cyan);box-shadow:0 0 6px var(--cyan)"></span>Reverse tunnel fallback<span class="ok">STANDBY</span></div>
+        <div class="sec-row"><span class="sec-ic" style="background:var(--cyan);box-shadow:0 0 6px var(--cyan)"></span>Role-based access (RBAC)<span class="ok">2 ADMINS</span></div>
+        <div class="sec-row"><span class="sec-ic" style="background:var(--cyan);box-shadow:0 0 6px var(--cyan)"></span>Session audit log<span class="ok">RECORDING</span></div>
+        <div class="sec-row"><span class="sec-ic" style="background:var(--cyan);box-shadow:0 0 6px var(--cyan)"></span>MFA on bastion<span class="ok">REQUIRED</span></div>
+      </div>
+    </div>
+
+    <div class="term">
+      <div class="term-bar">
+        <div class="tdots"><i style="background:#FF5F57"></i><i style="background:#FEBC2E"></i><i style="background:#28C840"></i></div>
+        <span class="term-title">ops@bastion — remote debug session</span>
+        <span class="term-tag">● connected via VPN</span>
+      </div>
+      <div class="term-body" id="term"></div>
+    </div>
+
+    <div class="foot-note">Holistic deployment view · auto-refresh 5s · data simulated for demonstration</div>
+  </div>
+</div>
+
+<!-- ── Leopard detection popup (dispatched to Ranger App) ── -->
+<div id="leopard-popup" class="leopard-popup">
+  <div class="lp-card">
+    <button class="lp-close" onclick="document.getElementById('leopard-popup').classList.remove('show')">✕ Close</button>
+    <div class="lp-banner"><span class="lp-dot"></span> Leopard Detected · 99.4% confidence</div>
+    <img class="lp-img" src="leopard_detection.jpg" alt="Leopard detection snapshot"
+         onerror="this.style.display='none';document.getElementById('lp-missing').style.display='flex';">
+    <div id="lp-missing" class="lp-missing">📷 leopard_detection.jpg not found.<br>Save the attached snapshot as <b style="color:var(--ink)">leopard_detection.jpg</b> next to this HTML file to show the live capture.</div>
+    <div class="lp-cap">📍 <b>junnar / dattanagar_1</b> · live camera snapshot · dispatched to Ranger App · siren armed</div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   TOPOLOGY — star / hub-and-spoke, SVG generated
+   ══════════════════════════════════════════════════════ */
+const SVGNS = "http://www.w3.org/2000/svg";
+const svg = document.getElementById('topo');
+const CX = 410, CY = 410, RING = 268;
+
+let N = 14;
+let edges = [];          // {angle, x, y, state, el, camEl, path}
+let mobile = null;
+const packets = [];      // active moving packets
+
+const COL = {
+  cyan:'#38E1FF', teal:'#2DD4BF', green:'#4ADE80', amber:'#FBBF24',
+  violet:'#A78BFA', rose:'#FB5E6D', orange:'#FB923C', dim:'#3D4F63', line:'#1E2C3F'
+};
+
+function el(tag, attrs){ const e=document.createElementNS(SVGNS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); return e; }
+
+function buildTopology(n){
+  N = n;
+  svg.innerHTML = '';
+  edges = []; packets.length = 0;
+
+  // defs — glows
+  const defs = el('defs',{});
+  defs.innerHTML = `
+    <radialGradient id="cloudGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(56,225,255,.28)"/>
+      <stop offset="100%" stop-color="rgba(56,225,255,0)"/>
+    </radialGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.2"/>
+    </filter>`;
+  svg.appendChild(defs);
+
+  // private-network boundary
+  const boundary = el('circle',{cx:CX, cy:CY, r:RING+70,
+    fill:'rgba(45,212,191,.03)', stroke:'rgba(45,212,191,.28)',
+    'stroke-width':1.4, 'stroke-dasharray':'7 7'});
+  svg.appendChild(boundary);
+  const bLabel = el('g',{});
+  const bl = el('text',{x:CX, y:CY-RING-78, 'text-anchor':'middle',
+    fill:COL.teal, 'font-family':'IBM Plex Mono', 'font-size':13, 'letter-spacing':1});
+  bl.textContent = '🔒 PRIVATE NETWORK · 10.42.0.0/16';
+  bLabel.appendChild(bl); svg.appendChild(bLabel);
+
+  // rotating dashed ring (subtle motion cue)
+  const spin = el('circle',{cx:CX, cy:CY, r:RING+70, fill:'none',
+    stroke:'rgba(45,212,191,.5)', 'stroke-width':1.2, 'stroke-dasharray':'2 26',
+    'stroke-linecap':'round'});
+  spin.style.transformOrigin = `${CX}px ${CY}px`;
+  spin.style.animation = 'spinRing 40s linear infinite';
+  svg.appendChild(spin);
+
+  // ── spokes (lines) first so nodes sit on top ──
+  const linkG = el('g',{});
+  svg.appendChild(linkG);
+
+  // ── edge nodes around the ring (each with its OWN camera placed outward) ──
+  // reserve one slot at bottom for the mobile app
+  const total = n + 1;
+  const camR = RING + 46;
+  for(let i=0;i<n;i++){
+    const ang = (-90 + (360/total)*i) * Math.PI/180;
+    const ca = Math.cos(ang), sa = Math.sin(ang);
+    const x = CX + RING*ca, y = CY + RING*sa;
+    const camx = CX + camR*ca, camy = CY + camR*sa;
+
+    // state distribution: mostly online, few degraded, rare offline
+    let state='online';
+    if(i%9===4) state='degraded';
+    if(i===n-2 && n>7) state='offline';
+
+    const color = state==='online'?COL.green : state==='degraded'?COL.amber : COL.rose;
+
+    // spoke: edge → cloud
+    const line = el('line',{x1:CX, y1:CY, x2:x, y2:y,
+      stroke: state==='offline'?'rgba(251,94,109,.22)':'rgba(56,225,255,.14)',
+      'stroke-width':1.3});
+    if(state==='offline') line.setAttribute('stroke-dasharray','4 5');
+    linkG.appendChild(line);
+
+    // link: camera → its edge (short hop)
+    const camLink = el('line',{x1:camx, y1:camy, x2:x, y2:y,
+      stroke:'rgba(56,225,255,.30)', 'stroke-width':1.2});
+    linkG.appendChild(camLink);
+
+    // node group (edge compute box)
+    const g = el('g',{});
+    const halo = el('circle',{cx:x, cy:y, r:19, fill:color, opacity:.10, filter:'url(#soft)'});
+    const box  = el('rect',{x:x-13, y:y-13, width:26, height:26, rx:6, fill:'#0E1622', stroke:color, 'stroke-width':1.7});
+    const chip = el('rect',{x:x-6, y:y-6, width:12, height:12, rx:2.5, fill:'none', stroke:color, 'stroke-width':1.1, opacity:.7});
+    const pulse = el('circle',{cx:x, cy:y, r:15, fill:'none', stroke:COL.cyan, 'stroke-width':1.7, opacity:0});
+    g.appendChild(halo); g.appendChild(box); g.appendChild(chip); g.appendChild(pulse);
+
+    // camera glyph (outward, near boundary)
+    const camColor = state==='offline'? COL.orange : COL.cyan;
+    const cg2 = el('g',{});
+    cg2.appendChild(el('rect',{x:camx-8, y:camy-6, width:16, height:12, rx:2.5, fill:'#0B1420', stroke:camColor, 'stroke-width':1.3}));
+    cg2.appendChild(el('circle',{cx:camx, cy:camy, r:3.2, fill:'none', stroke:camColor, 'stroke-width':1.2}));
+    cg2.appendChild(el('circle',{cx:camx, cy:camy, r:1.3, fill:camColor}));
+    cg2.appendChild(el('rect',{x:camx-11, y:camy-2.5, width:3, height:5, rx:1, fill:camColor, opacity:.7}));
+
+    // edge label (placed inward, toward the cloud)
+    const lab = el('text',{x:x-20*ca, y:y-20*sa+3, 'text-anchor':'middle', fill:'#7C8CA3', 'font-family':'IBM Plex Mono', 'font-size':9});
+    lab.textContent = 'E'+String(i+1).padStart(2,'0');
+
+    svg.appendChild(g); svg.appendChild(cg2); svg.appendChild(lab);
+
+    edges.push({i, ang, ca, sa, x, y, camx, camy, state, color, camColor, pulse, box, halo, line, camLink, failoverTo:null});
+  }
+
+  // ── DISTRIBUTED FAILOVER: an offline edge's camera re-routes frames to the nearest live edge ──
+  edges.filter(e=>e.state==='offline').forEach(off=>{
+    let best=null, bestD=1e9;
+    edges.forEach(e=>{
+      if(e.state==='online'){
+        const d = Math.min(Math.abs(e.i-off.i), n-Math.abs(e.i-off.i));
+        if(d<bestD){ bestD=d; best=e; }
+      }
+    });
+    if(best){
+      off.failoverTo = best;
+      // repoint the camera link to the neighbour edge (orange, dashed)
+      off.camLink.setAttribute('x2', best.x); off.camLink.setAttribute('y2', best.y);
+      off.camLink.setAttribute('stroke','rgba(251,146,60,.65)');
+      off.camLink.setAttribute('stroke-dasharray','5 4');
+      off.camLink.setAttribute('stroke-width','1.6');
+      const mx=(off.camx+best.x)/2, my=(off.camy+best.y)/2;
+      const fl=el('text',{x:mx, y:my-5,'text-anchor':'middle', fill:COL.orange,'font-family':'IBM Plex Mono','font-size':8.5, 'font-weight':500});
+      fl.textContent='⇄ failover';
+      svg.appendChild(fl);
+    }
+  });
+
+  // ── mobile app node (bottom slot) ──
+  const mAng = (-90 + (360/total)*n) * Math.PI/180;
+  const mx = CX + RING*Math.cos(mAng);
+  const my = CY + RING*Math.sin(mAng);
+  const mLine = el('line',{x1:CX, y1:CY, x2:mx, y2:my, stroke:'rgba(167,139,250,.35)', 'stroke-width':1.5, 'stroke-dasharray':'5 4'});
+  linkG.appendChild(mLine);
+  const mg = el('g',{});
+  mg.appendChild(el('rect',{x:mx-13, y:my-19, width:26, height:38, rx:5, fill:'#0E1622', stroke:COL.violet, 'stroke-width':1.6}));
+  mg.appendChild(el('rect',{x:mx-9, y:my-14, width:18, height:24, rx:2, fill:'rgba(167,139,250,.15)'}));
+  mg.appendChild(el('circle',{cx:mx, cy:my+14, r:1.8, fill:COL.violet}));
+  const mlab = el('text',{x:mx, y:my+34, 'text-anchor':'middle', fill:COL.violet, 'font-family':'IBM Plex Mono', 'font-size':9.5});
+  mlab.textContent = 'RANGER APP';
+  mg.appendChild(mlab);
+  svg.appendChild(mg);
+  mobile = {x:mx, y:my, line:mLine};
+
+  // ── cloud server (center) — drawn last, on top ──
+  const cg = el('g',{});
+  cg.appendChild(el('circle',{cx:CX, cy:CY, r:62, fill:'url(#cloudGlow)'}));
+  const cloudRing = el('circle',{cx:CX, cy:CY, r:44, fill:'#0B1420', stroke:COL.cyan, 'stroke-width':2});
+  cg.appendChild(cloudRing);
+  // pulsing ring for heartbeat receive
+  const cPulse = el('circle',{cx:CX, cy:CY, r:44, fill:'none', stroke:COL.green, 'stroke-width':2, opacity:0});
+  cg.appendChild(cPulse);
+  // cloud glyph
+  const cloud = el('path',{d:`M ${CX-20} ${CY+4} a10 10 0 0 1 2 -19 a13 13 0 0 1 25 -3 a9 9 0 0 1 4 22 z`,
+    fill:'none', stroke:COL.cyan, 'stroke-width':2, 'stroke-linejoin':'round'});
+  cg.appendChild(cloud);
+  const ct = el('text',{x:CX, y:CY+26, 'text-anchor':'middle', fill:COL.cyan, 'font-family':'Space Grotesk', 'font-size':11, 'font-weight':600});
+  ct.textContent = 'CLOUD';
+  cg.appendChild(ct);
+  const ct2 = el('text',{x:CX, y:CY+64, 'text-anchor':'middle', fill:'#7C8CA3', 'font-family':'IBM Plex Mono', 'font-size':9});
+  ct2.textContent = 'ingest · orchestration · model registry';
+  cg.appendChild(ct2);
+  svg.appendChild(cg);
+  window._cPulse = cPulse;
+
+  document.getElementById('nodeCount').textContent = n;
+  updateKPIs();
+}
+
+/* ── moving packet along a spoke ── */
+function spawnPacket(from, to, color, r=3.2, dur=1100){
+  const p = el('circle',{cx:from.x, cy:from.y, r, fill:color});
+  p.style.filter = 'drop-shadow(0 0 4px '+color+')';
+  svg.appendChild(p);
+  packets.push({el:p, x0:from.x, y0:from.y, x1:to.x, y1:to.y, t0:performance.now(), dur, color});
+}
+
+function animatePackets(now){
+  for(let i=packets.length-1;i>=0;i--){
+    const pk = packets[i];
+    const k = (now - pk.t0)/pk.dur;
+    if(k>=1){ pk.el.remove(); packets.splice(i,1); continue; }
+    const e = k<.5 ? 2*k*k : 1-Math.pow(-2*k+2,2)/2; // easeInOut
+    pk.el.setAttribute('cx', pk.x0 + (pk.x1-pk.x0)*e);
+    pk.el.setAttribute('cy', pk.y0 + (pk.y1-pk.y0)*e);
+    pk.el.setAttribute('opacity', k<.85?1:(1-(k-.85)/.15));
+  }
+  requestAnimationFrame(animatePackets);
+}
+requestAnimationFrame(animatePackets);
+
+/* ── frame-processing pulse at a node ── */
+function framePulse(edge){
+  if(edge.state==='offline') return;
+  const p = edge.pulse;
+  p.setAttribute('r',15); p.setAttribute('opacity','.9');
+  const t0 = performance.now();
+  (function grow(){
+    const k=(performance.now()-t0)/650;
+    if(k>=1){ p.setAttribute('opacity',0); return; }
+    p.setAttribute('r', 15+18*k);
+    p.setAttribute('opacity', .9*(1-k));
+    requestAnimationFrame(grow);
+  })();
+}
+
+/* ── cloud heartbeat receive pulse ── */
+function cloudPulse(){
+  const p = window._cPulse; if(!p) return;
+  p.setAttribute('r',44); p.setAttribute('opacity','.8');
+  const t0=performance.now();
+  (function g(){ const k=(performance.now()-t0)/700; if(k>=1){p.setAttribute('opacity',0);return;}
+    p.setAttribute('r',44+22*k); p.setAttribute('opacity',.8*(1-k)); requestAnimationFrame(g); })();
+}
+
+/* ── siren / alert on a node → full detection → ranger-app push → popup ── */
+function showLeopardPopup(){ const el=document.getElementById('leopard-popup'); if(el) el.classList.add('show'); }
+
+function triggerSiren(edge, showPopup){
+  edge = edge || edges[Math.floor(Math.random()*edges.length)];
+  if(edge.state==='offline') edge = edge.failoverTo || edges.find(e=>e.state!=='offline') || edge;
+  const c = edge.color;
+  const tag = 'E'+String(edge.i+1).padStart(2,'0');
+
+  // 1) camera captures frame → edge
+  spawnPacket({x:edge.camx,y:edge.camy}, {x:edge.x,y:edge.y}, COL.rose, 4, 900);
+  setTimeout(()=>framePulse(edge), 850);
+  // flash node
+  let flashes=0;
+  const iv=setInterval(()=>{
+    edge.box.setAttribute('stroke', flashes%2? COL.rose : c);
+    edge.halo.setAttribute('fill', COL.rose);
+    edge.halo.setAttribute('opacity', flashes%2? .5:.15);
+    if(++flashes>7){ clearInterval(iv); edge.box.setAttribute('stroke',c); edge.halo.setAttribute('fill',c); edge.halo.setAttribute('opacity',.10); }
+  },200);
+  pushTerm(`[detect] ${tag} · LEOPARD confirmed · 99.4% · siren armed`, 'tr');
+
+  // 2) edge → cloud
+  setTimeout(()=> spawnPacket({x:edge.x,y:edge.y}, {x:CX,y:CY}, COL.rose, 4, 1500), 950);
+  // 3) cloud → ranger app (mobile) + terminal note
+  setTimeout(()=>{
+    spawnPacket({x:CX,y:CY}, mobile, COL.violet, 3.6, 1500);
+    pushTerm(`[push] ranger app notified · snapshot dispatched`, 'tv');
+  }, 2550);
+  // 4) notification lands on mobile → show leopard snapshot popup (only on user-triggered alert)
+  if(showPopup) setTimeout(showLeopardPopup, 4150);
+}
+
+/* ══════════════════════════════════════════════════════
+   ANIMATION LOOPS — heartbeat + camera frames
+   ══════════════════════════════════════════════════════ */
+let hbIdx=0;
+setInterval(()=>{                       // heartbeat round-robin (slowed)
+  if(!edges.length) return;
+  const e = edges[hbIdx % edges.length]; hbIdx++;
+  if(e.state==='offline') return;
+  spawnPacket({x:e.x,y:e.y},{x:CX,y:CY}, COL.green, 3, 1900);
+  setTimeout(cloudPulse, 1850);
+  setTimeout(()=>spawnPacket({x:CX,y:CY},{x:e.x,y:e.y}, COL.green, 2.6, 1900), 2050);
+}, 950);
+
+setInterval(()=>{                       // cameras → edge frames → cloud (slowed)
+  if(!edges.length) return;
+  edges.forEach(e=>{
+    if(e.state==='offline'){
+      // camera still alive → routes to nearest live edge (distributed failover)
+      if(e.failoverTo && Math.random()<0.55){
+        spawnPacket({x:e.camx,y:e.camy}, {x:e.failoverTo.x,y:e.failoverTo.y}, COL.orange, 2.6, 1700);
+        setTimeout(()=>framePulse(e.failoverTo), 1650);
+      }
+      return;
+    }
+    if(Math.random()<0.6){
+      spawnPacket({x:e.camx,y:e.camy}, {x:e.x,y:e.y}, COL.cyan, 2.4, 1100);   // camera → edge
+      setTimeout(()=>framePulse(e), 1050);
+      if(Math.random()<0.4) setTimeout(()=>spawnPacket({x:e.x,y:e.y},{x:CX,y:CY}, COL.cyan, 2.2, 1900), 1150); // edge → cloud
+    }
+  });
+}, 1500);
+
+// occasional mobile sync (slowed)
+setInterval(()=>{ if(mobile) spawnPacket(mobile,{x:CX,y:CY}, COL.violet, 2.6, 1700); }, 4200);
+
+// random siren every ~11s
+setInterval(()=>{ if(Math.random()<0.6) triggerSiren(); }, 11000);
+
+/* ══════════════════════════════════════════════════════
+   DASHBOARD — telemetry cards + KPIs
+   ══════════════════════════════════════════════════════ */
+const devSeed = [
+  {n:'edge-A17', loc:'Anjaneri ridge · cam-N', st:'online'},
+  {n:'edge-A42', loc:'Naneghat pass · cam-E', st:'online'},
+  {n:'edge-A63', loc:'Ghatghar dam · cam-S', st:'degraded'},
+  {n:'edge-A08', loc:'Sivneri fort · cam-W', st:'online'},
+  {n:'edge-A91', loc:'Kukdeshwar · cam-N', st:'offline'},
+];
+const devList = document.getElementById('devList');
+function stColor(s){ return s==='online'?COL.green : s==='degraded'?COL.amber : COL.rose; }
+function barColor(v){ return v<60?COL.green : v<85?COL.amber : COL.rose; }
+
+function renderDevs(){
+  devList.innerHTML='';
+  devSeed.forEach(d=>{
+    const c = stColor(d.st);
+    const off = d.st==='offline';
+    const cpu = off?0:Math.round(20+Math.random()*65);
+    const gpu = off?0:Math.round(30+Math.random()*60);
+    const mem = off?0:Math.round(35+Math.random()*50);
+    const tagBg = d.st==='online'?'rgba(74,222,128,.12)':d.st==='degraded'?'rgba(251,191,36,.12)':'rgba(251,94,109,.12)';
+    const card = document.createElement('div');
+    card.className='dev';
+    card.innerHTML = `
+      <div class="dev-top">
+        <span class="dev-dot" style="background:${c};box-shadow:0 0 6px ${c}"></span>
+        <span class="dev-name">${d.n}</span>
+        <span class="dev-loc">· ${d.loc}</span>
+        <span class="dev-tag" style="color:${c};background:${tagBg}">${d.st.toUpperCase()}</span>
+      </div>
+      <div class="dev-bars">
+        ${mtr('CPU',cpu,off)}${mtr('GPU',gpu,off)}${mtr('MEM',mem,off)}
+      </div>`;
+    devList.appendChild(card);
+  });
+}
+function mtr(label,v,off){
+  const c = off?COL.dim:barColor(v);
+  return `<div class="mtr"><div class="mtr-top"><span>${label}</span><b>${off?'—':v+'%'}</b></div>
+    <div class="bar"><i style="width:${off?0:v}%;background:${c}"></i></div></div>`;
+}
+renderDevs();
+setInterval(renderDevs, 5000);
+
+function updateKPIs(){
+  const online = edges.filter(e=>e.state==='online').length;
+  const deg = edges.filter(e=>e.state==='degraded').length;
+  const off = edges.filter(e=>e.state==='offline').length;
+  // scale to a nominal 100-node deployment for the KPIs
+  document.getElementById('hdr-active').textContent = 96;
+  document.getElementById('hdr-total').textContent = 100;
+}
+
+/* ══════════════════════════════════════════════════════
+   TERMINAL — remote SSH debug typing animation
+   ══════════════════════════════════════════════════════ */
+const term = document.getElementById('term');
+const termLines = [
+  {t:'ops@bastion:~$ ', c:'tp', typed:'wg show wg0 | grep -c peer', pause:500},
+  {t:'  100', c:'td', pause:250},
+  {t:'ops@bastion:~$ ', c:'tp', typed:'ssh edge-A17.junnar.vpn', pause:600},
+  {t:'  ● tunnel up · 10.42.0.17 · latency 22ms', c:'tc', pause:300},
+  {t:'edge-A17:~$ ', c:'tv', typed:'systemctl status inferencer', pause:500},
+  {t:'  ● active (running) · 28 fps · gpu 61% · temp 54°C', c:'tp', pause:300},
+  {t:'edge-A17:~$ ', c:'tv', typed:'tail -n1 /var/log/detect.jsonl', pause:500},
+  {t:'  {"cls":"leopard","conf":0.94,"ts":"05:12:41"}', c:'tw', pause:300},
+  {t:'edge-A17:~$ ', c:'tv', typed:'exit', pause:400},
+  {t:'  connection closed · session logged to audit', c:'td', pause:800},
+];
+let extLines = [];
+function pushTerm(txt, cls){ extLines.push({t:txt, c:cls}); }
+
+let li=0, phase='typing', ch=0, buf='';
+const cur = document.createElement('span'); cur.className='cursor';
+function renderTerm(){
+  term.innerHTML='';
+  // completed lines
+  for(let k=0;k<li;k++){
+    const L = termLines[k];
+    const d=document.createElement('div'); d.className='ln';
+    d.innerHTML = `<span class="${L.c}">${escapeHtml(L.t)}</span>${L.typed?`<span class="tc">${escapeHtml(L.typed)}</span>`:''}`;
+    term.appendChild(d);
+  }
+  // current line
+  if(li<termLines.length){
+    const L=termLines[li];
+    const d=document.createElement('div'); d.className='ln';
+    d.innerHTML = `<span class="${L.c}">${escapeHtml(L.t)}</span><span class="tc">${escapeHtml(buf)}</span>`;
+    d.appendChild(cur);
+    term.appendChild(d);
+  }
+  // external alert lines appended
+  extLines.slice(-3).forEach(L=>{
+    const d=document.createElement('div'); d.className='ln';
+    d.innerHTML=`<span class="${L.c}">${escapeHtml(L.t)}</span>`;
+    term.appendChild(d);
+  });
+  term.scrollTop = term.scrollHeight;
+}
+function escapeHtml(s){ return s.replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+
+function stepTerm(){
+  if(li>=termLines.length){ // restart loop
+    setTimeout(()=>{ li=0; buf=''; ch=0; phase='typing'; renderTerm(); stepTerm(); }, 2600);
+    return;
+  }
+  const L=termLines[li];
+  if(L.typed && phase==='typing'){
+    if(ch < L.typed.length){ buf += L.typed[ch++]; renderTerm(); setTimeout(stepTerm, 34+Math.random()*40); return; }
+    phase='done';
+  }
+  // commit line
+  renderTerm();
+  setTimeout(()=>{ li++; buf=''; ch=0; phase='typing'; renderTerm(); stepTerm(); }, L.pause||300);
+}
+renderTerm(); stepTerm();
+
+/* ══════════════════════════════════════════════════════
+   CONTROLS
+   ══════════════════════════════════════════════════════ */
+document.getElementById('nodeRange').addEventListener('input', e=>{
+  buildTopology(parseInt(e.target.value,10));
+});
+document.getElementById('sirenBtn').addEventListener('click', ()=> triggerSiren(null, true));
+
+/* keyframes injected */
+const style=document.createElement('style');
+style.textContent = '@keyframes spinRing{to{transform:rotate(360deg)}}';
+document.head.appendChild(style);
+
+buildTopology(N);
+</script>
+</body>
+</html>

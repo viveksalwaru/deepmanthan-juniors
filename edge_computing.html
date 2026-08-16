@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wildlife · Wildlife Edge Surveillance Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg: #070B12;
+        --bg-2: #0A1019;
+        --panel: #0E1622;
+        --panel-2: #121C2B;
+        --line: #1E2C3F;
+        --line-soft: #16212F;
+        --ink: #DCE6F2;
+        --ink-dim: #7C8CA3;
+        --ink-faint: #4A5970;
+
+        --cyan: #38E1FF;
+        --teal: #2DE3C0;
+        --green: #4ADE80;
+        --amber: #FBBF24;
+        --rose: #FB5E6D;
+        --violet: #A78BFA;
+        --magenta: #E879F9;
+
+        --offline-ink: #F08A8A;
+        --offline-bg: #1C0E12;
+        --offline-line: #532229;
+
+        --radius: 14px;
+        --radius-sm: 9px;
+        --shadow: 0 18px 50px -22px rgba(0,0,0,0.85);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { margin: 0; }
+
+    body {
+        font-family: "Sora", -apple-system, BlinkMacSystemFont, sans-serif;
+        color: var(--ink);
+        min-height: 100vh;
+        padding: 34px 28px 60px;
+        background:
+            radial-gradient(1100px 600px at 12% -8%, rgba(56,225,255,0.07), transparent 60%),
+            radial-gradient(900px 620px at 92% 0%, rgba(167,139,250,0.06), transparent 58%),
+            radial-gradient(800px 700px at 50% 120%, rgba(45,227,192,0.05), transparent 60%),
+            linear-gradient(180deg, var(--bg), var(--bg-2));
+        background-attachment: fixed;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* subtle grain/grid texture */
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+        background-size: 44px 44px;
+        pointer-events: none;
+        z-index: 0;
+        mask-image: radial-gradient(circle at 50% 35%, #000 0%, transparent 78%);
+    }
+
+    .shell { width: 1180px; max-width: 100%; position: relative; z-index: 1; }
+
+    /* ───────── Masthead ───────── */
+    .masthead {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        margin-bottom: 22px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid var(--line-soft);
+    }
+    .brand { display: flex; align-items: center; gap: 16px; }
+    .glyph {
+        width: 46px; height: 46px; border-radius: 12px;
+        background: linear-gradient(150deg, rgba(56,225,255,0.18), rgba(45,227,192,0.12));
+        border: 1px solid rgba(56,225,255,0.35);
+        display: grid; place-items: center;
+        box-shadow: inset 0 0 18px rgba(56,225,255,0.18), 0 8px 22px -10px rgba(56,225,255,0.5);
+    }
+    .glyph svg { width: 24px; height: 24px; }
+    .brand h1 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.83rem; font-weight: 700; margin: 0;
+        letter-spacing: -0.01em; line-height: 1;
+        background: linear-gradient(90deg, #F4FAFF, #9FE9FF 70%);
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .brand .tag {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.8rem; letter-spacing: 0.22em; text-transform: uppercase;
+        color: #ffffff; margin-top: 6px;
+    }
+    .masthead-right { text-align: right; display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+    .clock {
+        font-family: "IBM Plex Mono", monospace; font-size: 1.12rem; color: var(--ink);
+        letter-spacing: 0.04em;
+    }
+    .clock span { color: var(--ink-dim); }
+    .health-pill {
+        display: inline-flex; align-items: center; gap: 8px;
+        font-family: "IBM Plex Mono", monospace; font-size: 0.83rem; letter-spacing: 0.12em;
+        text-transform: uppercase; padding: 5px 12px; border-radius: 999px;
+        border: 1px solid var(--offline-line); color: var(--amber);
+        background: rgba(251,191,36,0.07);
+    }
+    .health-pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 8px var(--amber); animation: breathe 2s ease-in-out infinite; }
+    @keyframes breathe { 50% { opacity: 0.4; } }
+
+    /* ───────── Topology canvas ───────── */
+    .canvas-frame {
+        position: relative;
+        border-radius: var(--radius);
+        padding: 1px;
+        background: linear-gradient(160deg, rgba(56,225,255,0.22), rgba(30,44,63,0.4) 40%, rgba(167,139,250,0.16));
+        box-shadow: var(--shadow);
+    }
+    .canvas {
+        position: relative;
+        width: 100%;
+        height: 660px;
+        background:
+            radial-gradient(700px 420px at 30% 30%, rgba(56,225,255,0.045), transparent 70%),
+            linear-gradient(180deg, rgba(14,22,34,0.96), rgba(10,16,25,0.98));
+        border-radius: calc(var(--radius) - 1px);
+        overflow: hidden;
+    }
+    .canvas-label {
+        position: absolute; top: 14px; left: 18px;
+        font-family: "IBM Plex Mono", monospace; font-size: 0.76rem; letter-spacing: 0.2em;
+        text-transform: uppercase; color: #ffffff; z-index: 5;
+    }
+    /* column captions */
+    .col-cap {
+        position: absolute; font-family: "IBM Plex Mono", monospace; font-size: 0.71rem;
+        letter-spacing: 0.18em; text-transform: uppercase; color: #ffffff;
+        z-index: 5; top: 40px;
+    }
+
+    /* ───────── Nodes ───────── */
+    .node {
+        position: absolute;
+        width: 158px;
+        background: linear-gradient(180deg, var(--panel-2), var(--panel));
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        display: flex; flex-direction: column; align-items: center;
+        text-align: center;
+        z-index: 10;
+        box-shadow: 0 12px 30px -16px rgba(0,0,0,0.8);
+        padding: 11px 10px;
+        transition: border-color .35s ease, box-shadow .35s ease, transform .35s ease, background .35s ease;
+    }
+    .node .title {
+        font-family: "Space Grotesk", sans-serif; font-weight: 600;
+        font-size: 0.92rem; letter-spacing: 0.02em;
+        display: flex; align-items: center; gap: 6px;
+    }
+    .node .ico { width: 14px; height: 14px; opacity: 0.85; }
+    .node .desc {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.66rem; color: #ffffff; margin-top: 4px; letter-spacing: 0.05em;
+    }
+    .peripheral { gap: 2px; }
+
+    /* live camera viewport */
+    .edge-viewport {
+        width: 100%; height: 54px; margin-top: 9px;
+        background:
+            repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 3px),
+            radial-gradient(circle at 50% 60%, rgba(56,225,255,0.07), #04070C 75%);
+        border: 1px solid var(--line-soft);
+        border-radius: 6px; position: relative; overflow: hidden;
+        display: flex; align-items: center; justify-content: center;
+    }
+    .edge-viewport .reticle {
+        position: absolute; width: 26px; height: 26px; border: 1px solid rgba(56,225,255,0.3);
+        border-radius: 3px;
+    }
+    .edge-viewport .reticle::before, .edge-viewport .reticle::after {
+        content: ""; position: absolute; background: rgba(56,225,255,0.4);
+    }
+    .edge-viewport .reticle::before { width: 1px; height: 100%; left: 50%; }
+    .edge-viewport .reticle::after { height: 1px; width: 100%; top: 50%; }
+    .vp-tag {
+        position: absolute; bottom: 3px; right: 5px; font-family: "IBM Plex Mono", monospace;
+        font-size: 0.59rem; letter-spacing: 0.1em; color: rgba(74,222,128,0.8);
+    }
+    .vp-tag::before { content: "● REC "; color: var(--rose); }
+
+    .scan-line {
+        position: absolute; top: 0; left: 0; width: 100%; height: 22px;
+        background: linear-gradient(180deg, rgba(56,225,255,0.22), transparent);
+        animation: sweep 2.4s linear infinite;
+    }
+    @keyframes sweep { 0% { transform: translateY(-22px); } 100% { transform: translateY(54px); } }
+
+    /* status chip inside node */
+    .node-chip {
+        margin-top: 8px; font-family: "IBM Plex Mono", monospace; font-size: 0.64rem;
+        letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px;
+        background: rgba(74,222,128,0.1); color: var(--green); border: 1px solid rgba(74,222,128,0.25);
+    }
+
+    /* ───────── Offline (fault) node ───────── */
+    .node-offline {
+        background: linear-gradient(180deg, #160B0F, var(--offline-bg)) !important;
+        border-color: var(--offline-line) !important;
+        color: var(--offline-ink) !important;
+        box-shadow: inset 0 0 22px rgba(251,94,109,0.12), 0 12px 30px -16px rgba(0,0,0,0.8) !important;
+    }
+    .node-offline .title { color: var(--offline-ink); }
+    .node-offline .desc { color: #93545B !important; }
+    .node-offline .edge-viewport {
+        background: repeating-linear-gradient(0deg, rgba(251,94,109,0.05) 0 2px, transparent 2px 4px), #100407 !important;
+        border-color: var(--offline-line) !important;
+        font-family: "IBM Plex Mono", monospace; font-size: 0.68rem; font-weight: 600;
+        color: #E26A6A; letter-spacing: 0.12em;
+        animation: flicker .22s steps(2) infinite;
+    }
+    .node-offline .scan-line, .node-offline .reticle, .node-offline .vp-tag { display: none !important; }
+    .node-offline .node-chip { background: rgba(251,94,109,0.12); color: var(--offline-ink); border-color: var(--offline-line); }
+    @keyframes flicker { 0% { opacity: 0.72; } 100% { opacity: 1; } }
+
+    /* offline camera */
+    .cam-down { background: linear-gradient(180deg, #131A24, #0C121B) !important; border-color: var(--line-soft) !important; }
+    .cam-down .title { color: var(--ink-faint); }
+    .cam-down .desc { color: var(--offline-ink) !important; }
+
+    /* ───────── Positions ───────── */
+    #node-cam-1 { top: 80px;  left: 36px; }
+    #node-cam-2 { top: 236px; left: 36px; }
+    #node-cam-3 { top: 392px; left: 36px; }
+    #node-cam-4 { top: 540px; left: 36px; }
+
+    #node-edge-1 { top: 56px;  left: 320px; }
+    #node-edge-2 { top: 212px; left: 320px; }
+    #node-edge-3 { top: 368px; left: 320px; }
+    #node-edge-4 { top: 516px; left: 320px; }
+
+    #node-siren  { top: 290px; left: 620px; }
+    #node-cloud  { top: 140px; right: 88px; }
+    #node-mobile { bottom: 126px; right: 88px; }
+
+    /* node accent colors */
+    #node-cam-1 .ico, #node-cam-2 .ico, #node-cam-4 .ico { color: var(--cyan); }
+    #node-edge-1, #node-edge-2, #node-edge-4 { border-color: var(--line); }
+    #node-siren  { border-color: rgba(251,94,109,0.4); }
+    #node-siren .title { color: var(--rose); }
+    #node-cloud  { border-color: rgba(56,225,255,0.4); }
+    #node-cloud .title { color: var(--cyan); }
+    #node-mobile { border-color: rgba(251,191,36,0.4); }
+    #node-mobile .title { color: var(--amber); }
+
+    /* detection active states */
+    .edge-match {
+        border-color: var(--green) !important;
+        box-shadow: 0 0 0 1px rgba(74,222,128,0.4), 0 0 32px -4px rgba(74,222,128,0.45) !important;
+        transform: translateY(-2px);
+    }
+    .edge-match .edge-viewport { border-color: var(--rose); background: radial-gradient(circle at 50% 60%, rgba(251,94,109,0.22), #1a0508 75%); }
+    .edge-match .scan-line { background: linear-gradient(180deg, rgba(251,94,109,0.4), transparent); }
+    .edge-match .reticle { border-color: var(--rose); animation: lock .5s ease; }
+    @keyframes lock { 0% { transform: scale(1.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+    .edge-pinged { border-color: var(--violet) !important; box-shadow: 0 0 24px -6px rgba(167,139,250,0.5) !important; }
+
+    .pulse-siren  { animation: pSiren .55s ease infinite alternate; }
+    .pulse-cloud  { animation: pCloud .5s ease 3; }
+    .pulse-mobile { animation: pMobile .55s ease infinite alternate; }
+    @keyframes pSiren  { 100% { border-color: var(--rose); box-shadow: 0 0 30px -4px rgba(251,94,109,0.6); background: linear-gradient(180deg, #2a0d11, #1a0508); } }
+    @keyframes pCloud  { 100% { box-shadow: 0 0 30px -4px rgba(56,225,255,0.6); } }
+    @keyframes pMobile { 100% { border-color: var(--amber); box-shadow: 0 0 30px -4px rgba(251,191,36,0.6); background: linear-gradient(180deg, #2a2308, #1a1505); } }
+
+    /* ───────── Links ───────── */
+    svg.links { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+    svg.links path { stroke: var(--line); stroke-width: 1.6; fill: none; transition: stroke .3s; }
+    svg.links path.dead { stroke: #2A1418; stroke-dasharray: 4 5; }
+
+    .packet { position: absolute; width: 11px; height: 11px; border-radius: 50%; z-index: 20; }
+
+    /* ───────── Telemetry dashboard ───────── */
+    .grid { display: grid; grid-template-columns: 1.15fr repeat(4, 1fr); gap: 14px; margin-top: 22px; }
+
+    .panel {
+        background: linear-gradient(180deg, var(--panel-2), var(--panel));
+        border: 1px solid var(--line); border-radius: var(--radius);
+        padding: 16px; box-shadow: var(--shadow);
+    }
+    .panel-summary { display: flex; flex-direction: column; justify-content: space-between; }
+    .panel-summary .lead {
+        font-family: "IBM Plex Mono", monospace; font-size: 0.71rem; letter-spacing: 0.2em;
+        text-transform: uppercase; color: #ffffff;
+    }
+    .big-stat { font-family: "Space Grotesk", sans-serif; font-size: 2.71rem; font-weight: 700; margin: 6px 0 0; letter-spacing: -0.02em; }
+    .big-stat small { font-size: 1.12rem; color: var(--ink-dim); font-weight: 400; }
+    .summary-rows { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+    .summary-rows .r { display: flex; justify-content: space-between; font-size: 0.87rem; color: var(--ink-dim); }
+    .summary-rows .r b { color: var(--ink); font-weight: 500; font-family: "IBM Plex Mono", monospace; }
+    .summary-rows .r b.ok { color: var(--green); }
+    .summary-rows .r b.bad { color: var(--rose); }
+
+    .metric-card { transition: border-color .35s, box-shadow .35s; }
+    .card-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 11px; margin-bottom: 13px; border-bottom: 1px solid var(--line-soft); }
+    .card-header .name { font-family: "IBM Plex Mono", monospace; font-size: 0.85rem; letter-spacing: 0.06em; color: var(--ink); }
+    .badge { font-family: "IBM Plex Mono", monospace; font-size: 0.66rem; letter-spacing: 0.1em; padding: 3px 8px; border-radius: 999px; background: rgba(74,222,128,0.1); color: var(--green); border: 1px solid rgba(74,222,128,0.22); }
+    .badge-offline { background: rgba(251,94,109,0.12) !important; color: var(--offline-ink) !important; border-color: var(--offline-line) !important; }
+
+    .stat { margin-bottom: 12px; }
+    .stat:last-child { margin-bottom: 0; }
+    .stat .lbl { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--ink-dim); margin-bottom: 5px; }
+    .stat .lbl span:last-child { font-family: "IBM Plex Mono", monospace; color: var(--ink); }
+    .track { width: 100%; height: 5px; background: var(--bg-2); border-radius: 999px; overflow: hidden; }
+    .fill { height: 100%; width: 0%; border-radius: 999px; background: linear-gradient(90deg, var(--cyan), var(--teal)); transition: width .5s cubic-bezier(.4,0,.2,1), background .3s; }
+    .fill-offline { background: var(--offline-line) !important; width: 8% !important; }
+    .card-offline { border-color: var(--offline-line) !important; }
+
+    /* ───────── Leopard detected alert in metric card ───────── */
+    .leopard-alert {
+        display: none;
+        align-items: center;
+        gap: 9px;
+        margin-top: 13px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        background: rgba(251,94,109,0.13);
+        border: 1px solid rgba(251,94,109,0.42);
+        animation: alertPulse 0.9s ease infinite alternate;
+    }
+    .leopard-alert.show { display: flex; }
+    .leopard-alert .alert-dot {
+        width: 8px; height: 8px; border-radius: 50%;
+        background: var(--rose);
+        box-shadow: 0 0 8px var(--rose);
+        flex-shrink: 0;
+    }
+    .leopard-alert .alert-text {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.66rem; letter-spacing: 0.14em;
+        text-transform: uppercase; color: var(--rose); font-weight: 600;
+    }
+    .leopard-alert .alert-conf {
+        margin-left: auto;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.63rem; letter-spacing: 0.08em;
+        color: rgba(251,94,109,0.75);
+    }
+    @keyframes alertPulse { 100% { border-color: rgba(251,94,109,0.8); background: rgba(251,94,109,0.2); } }
+
+    /* ───────── Controls ───────── */
+    .controls {
+        margin-top: 22px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+        background: linear-gradient(180deg, var(--panel-2), var(--panel));
+        border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 20px;
+        box-shadow: var(--shadow);
+    }
+    .controls label { font-family: "IBM Plex Mono", monospace; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-dim); }
+    select {
+        font-family: "Sora", sans-serif; background: var(--bg-2); color: var(--ink);
+        border: 1px solid var(--line); padding: 11px 14px; border-radius: 10px; font-size: 0.99rem; outline: none;
+        cursor: pointer; transition: border-color .2s;
+    }
+    select:hover, select:focus { border-color: var(--cyan); }
+    .spacer { flex: 1; }
+    button {
+        font-family: "Sora", sans-serif; font-weight: 600; font-size: 0.99rem; cursor: pointer;
+        padding: 12px 22px; border-radius: 10px; border: 1px solid var(--line);
+        background: var(--bg-2); color: var(--ink); transition: all .2s ease;
+        display: inline-flex; align-items: center; gap: 8px;
+    }
+    button:hover { border-color: var(--ink-dim); transform: translateY(-1px); }
+    button:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+    #btn-trigger {
+        background: linear-gradient(180deg, #FB5E6D, #E1394A); color: #fff; border: none;
+        box-shadow: 0 10px 24px -10px rgba(251,94,109,0.8);
+    }
+    #btn-trigger:hover:not(:disabled) { box-shadow: 0 14px 30px -10px rgba(251,94,109,0.9); }
+    #btn-trigger svg { width: 15px; height: 15px; }
+
+    /* ───────── Terminal ───────── */
+    .terminal {
+        margin-top: 16px; height: 158px; overflow-y: auto;
+        background: linear-gradient(180deg, #05080D, #04060A);
+        border: 1px solid var(--line); border-radius: var(--radius);
+        font-family: "IBM Plex Mono", monospace; font-size: 0.87rem; line-height: 1.65;
+        padding: 14px 16px; color: var(--teal);
+    }
+    .terminal::-webkit-scrollbar { width: 8px; }
+    .terminal::-webkit-scrollbar-thumb { background: var(--line); border-radius: 8px; }
+    .term-head {
+        display: flex; align-items: center; gap: 7px; margin-bottom: 8px;
+        color: var(--ink-faint); font-size: 0.71rem; letter-spacing: 0.2em; text-transform: uppercase;
+    }
+    .term-head .dots { display: flex; gap: 5px; }
+    .term-head .dots i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+    .log-entry { margin-bottom: 3px; }
+    .log-time { color: var(--ink-faint); margin-right: 8px; }
+
+    @media (max-width: 1220px) {
+        .shell { width: 100%; }
+        .canvas { height: auto; min-height: 600px; }
+    }
+    .run-overlay-btn {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        z-index: 10;
+    }
+</style>
+</head>
+<body>
+<a href="training_live_project.html" class="dm-back" onclick="if(history.length>1){history.back();return false;} location.href='index.html'+(localStorage.getItem('dm_lastPath')?'#'+localStorage.getItem('dm_lastPath'):''); return false;">&#8592; Back</a>
+<style>
+.dm-back{ position:fixed; top:18px; left:22px; z-index:1000; display:inline-flex; align-items:center; gap:7px; font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:.85rem; color:var(--ink); text-decoration:none; background:rgba(14,22,34,0.82); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); border:1px solid var(--line); border-radius:10px; padding:9px 14px; transition:.15s; box-shadow:var(--shadow); }
+.dm-back:hover{ border-color:var(--cyan); color:#fff; transform:translateX(-3px); }
+@media(max-width:600px){ .dm-back{ top:12px; left:12px; font-size:.8rem; padding:8px 12px; } }
+</style>
+<div class="shell">
+
+    <!-- Masthead -->
+    <header class="masthead">
+        <div class="brand">
+            <div class="glyph">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#9FE9FF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a7 7 0 0 0-7 7c0 3 2 5 3 7l4 6 4-6c1-2 3-4 3-7a7 7 0 0 0-7-7z"/>
+                    <circle cx="12" cy="9" r="2.4"/>
+                </svg>
+            </div>
+            <div>
+                <h1>Wildlife Surveillance Grid - Edge Computing</h1>
+                <div class="tag">Junnar Leopard Corridor · Distributed Edge Vision Mesh</div>
+            </div>
+        </div>
+        <div class="masthead-right">
+            <button onclick="window.open('junnar_deployment.html','_blank')" title="Open the full 100-node Junnar deployment view" style="display:flex;align-items:center;gap:7px;background:#FB1E32;border:1px solid #FF6B78;color:#fff;font-family:'IBM Plex Mono',monospace;font-size:0.74rem;font-weight:700;padding:8px 14px;border-radius:9px;cursor:pointer;letter-spacing:0.03em;animation:hdvFlash 0.85s steps(1,end) infinite;" onmouseover="this.style.animationPlayState='paused';this.style.background='#FB1E32'" onmouseout="this.style.animationPlayState='running'">🌐 Holistic Deployment View ↗</button>
+            <div class="clock" id="clock"><span>UTC+05:30</span> 00:00:00</div>
+            <div class="health-pill"><span class="dot"></span> Mesh Degraded · 1 Node Offline</div>
+        </div>
+    </header>
+
+    <style>
+    .leopard-popup{ display:none; position:fixed; inset:0; z-index:99999; background:rgba(3,6,12,0.82); align-items:center; justify-content:center; padding:24px; }
+    .leopard-popup.show{ display:flex; animation:lpFade .25s ease; }
+    @keyframes lpFade{ from{opacity:0} to{opacity:1} }
+    .lp-box{ position:relative; max-width:760px; width:100%; background:#0E1622; border:1px solid var(--rose); border-radius:14px; overflow:hidden; box-shadow:0 0 44px rgba(251,94,109,0.45); }
+    .lp-banner{ display:flex; align-items:center; gap:10px; padding:12px 18px; font-family:'IBM Plex Mono',monospace; font-size:0.8rem; letter-spacing:0.12em; text-transform:uppercase; color:#fff; background:linear-gradient(90deg,rgba(251,94,109,0.92),rgba(251,94,109,0.5)); font-weight:600; }
+    .lp-dot{ width:10px; height:10px; border-radius:50%; background:#fff; box-shadow:0 0 10px #fff; animation:lpPulse .8s infinite alternate; }
+    @keyframes lpPulse{ from{opacity:1} to{opacity:0.3} }
+    .lp-img{ width:100%; display:block; max-height:60vh; object-fit:cover; }
+    .lp-missing{ display:none; align-items:center; justify-content:center; min-height:200px; padding:40px; text-align:center; color:var(--ink-dim); font-size:0.85rem; line-height:1.6; }
+    .lp-cap{ padding:11px 18px; font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:var(--ink-dim); border-top:1px solid var(--line); }
+    .lp-close{ position:absolute; top:12px; right:12px; z-index:2; background:rgba(3,6,12,0.72); color:#fff; border:1px solid rgba(255,255,255,0.45); border-radius:8px; padding:7px 14px; font-family:'IBM Plex Mono',monospace; font-size:0.72rem; cursor:pointer; transition:.2s; }
+    .lp-close:hover{ background:var(--rose); border-color:var(--rose); }
+    @keyframes hdvFlash {
+      0%, 49%   { background:#FB1E32; box-shadow:0 0 18px 5px rgba(251,30,50,0.85); border-color:#FF6B78; }
+      50%, 100% { background:#5c0a12; box-shadow:0 0 2px 0 rgba(251,30,50,0.15); border-color:#8B0D18; }
+    }
+    </style>
+    <div id="leopard-popup" class="leopard-popup">
+      <div class="lp-box">
+        <button class="lp-close" onclick="this.closest('.leopard-popup').classList.remove('show')">✕ Close</button>
+        <div class="lp-banner"><span class="lp-dot"></span> Leopard Detected · 99.4% confidence</div>
+        <img class="lp-img" src="leopard_detection.jpg" alt="Leopard detection snapshot" onerror="this.style.display='none';document.getElementById('lp-missing').style.display='flex';">
+        <div id="lp-missing" class="lp-missing">📷 leopard_detection.jpg not found.<br>Place the image file next to ai_suite.html to show the live snapshot.</div>
+        <div class="lp-cap">📍 junnar / dattanagar_1 · live camera snapshot · dispatched to Ranger App</div>
+      </div>
+    </div>
+
+    <!-- Topology -->
+    <div class="canvas-frame">
+        <div class="canvas" id="canvas-container">
+            <div class="canvas-label">Live Infrastructure Topology · Fail-over Active</div>
+            <span class="col-cap" style="left:60px;">Field Cameras</span>
+            <span class="col-cap" style="left:350px;">Edge Inference</span>
+            <span class="col-cap" style="left:632px;">Local Alarm</span>
+            <span class="col-cap" style="right:60px;">Cloud / Dispatch</span>
+
+            <svg class="links" id="links">
+                <path id="path-cam-edge1" d="M 194 106 L 320 131" />
+                <path id="path-cam-edge2" d="M 194 262 L 320 287" />
+                <path id="path-cam-edge3" class="dead" d="M 194 418 L 320 443" />
+                <path id="path-cam-edge4" d="M 194 566 L 320 591" />
+
+                <path id="path-edge1-siren" d="M 478 131 L 545 131 L 545 316 L 620 316" />
+                <path id="path-edge2-siren" d="M 478 287 L 545 287 L 545 316 L 620 316" />
+                <path id="path-edge3-siren" class="dead" d="M 478 443 L 545 443 L 545 316 L 620 316" />
+                <path id="path-edge4-siren" d="M 478 591 L 545 591 L 545 316 L 620 316" />
+
+                <path id="path-edge1-cloud" d="M 478 131 L 565 131 L 565 172 L 928 172" />
+                <path id="path-edge2-cloud" d="M 478 287 L 565 287 L 565 172 L 928 172" />
+                <path id="path-edge3-cloud" class="dead" d="M 478 443 L 565 443 L 565 172 L 928 172" />
+                <path id="path-edge4-cloud" d="M 478 591 L 565 591 L 565 172 L 928 172" />
+
+                <path id="path-cloud-mobile" d="M 1010 210 L 1010 470" />
+            </svg>
+
+            <!-- Cameras -->
+            <div class="node peripheral" id="node-cam-1" style="border-width: 3px;">
+                <div class="title"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2 7h13l3-2v10l-3-2H2z"/><circle cx="8.5" cy="11.5" r="2"/></svg>Cam · Lekurwadi</div>
+                <div class="desc">RTSP · 4K · 30fps</div>
+            </div>
+            <div class="node peripheral" id="node-cam-2" style="border-width: 3px;">
+                <div class="title"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2 7h13l3-2v10l-3-2H2z"/><circle cx="8.5" cy="11.5" r="2"/></svg>Cam · Aamboli Pass</div>
+                <div class="desc">RTSP · 4K · 30fps</div>
+            </div>
+            <div class="node peripheral cam-down" id="node-cam-3" style="border-width: 3px;">
+                <div class="title">Cam · Ghatghar Ridge</div>
+                <div class="desc">⚠ LINK INTERRUPTED</div>
+            </div>
+            <div class="node peripheral" id="node-cam-4" style="border-width: 3px;">
+                <div class="title"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2 7h13l3-2v10l-3-2H2z"/><circle cx="8.5" cy="11.5" r="2"/></svg>Cam · Nimgiri Slope</div>
+                <div class="desc">RTSP · 4K · 30fps</div>
+            </div>
+
+            <!-- Edge nodes -->
+            <div class="node" id="node-edge-1" style="border-width: 3px;">
+                <div class="title">Edge Node 01</div>
+                <div class="desc">Zone · Lekurwadi</div>
+                <div class="edge-viewport"><div class="scan-line"></div><div class="reticle"></div><div class="vp-tag">CH1</div></div>
+                <div class="node-chip" id="pulse-1">ACTIVE</div>
+            </div>
+            <div class="node" id="node-edge-2" style="border-width: 3px;">
+                <div class="title">Edge Node 02</div>
+                <div class="desc">Zone · Aamboli</div>
+                <div class="edge-viewport"><div class="scan-line"></div><div class="reticle"></div><div class="vp-tag">CH2</div></div>
+                <div class="node-chip" id="pulse-2">ACTIVE</div>
+            </div>
+            <div class="node node-offline" id="node-edge-3" style="border-width: 3px;">
+                <div class="title">Edge Node 03</div>
+                <div class="desc">Zone · Ghatghar</div>
+                <div class="edge-viewport">[ SIGNAL LOST ]</div>
+                <div class="node-chip" id="pulse-3">CRASHED</div>
+            </div>
+            <div class="node" id="node-edge-4" style="border-width: 3px;">
+                <div class="title">Edge Node 04</div>
+                <div class="desc">Zone · Nimgiri</div>
+                <div class="edge-viewport"><div class="scan-line"></div><div class="reticle"></div><div class="vp-tag">CH4</div></div>
+                <div class="node-chip" id="pulse-4">ACTIVE</div>
+            </div>
+
+            <!-- Peripherals -->
+            <div class="node peripheral" id="node-siren">
+                <div class="title"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 17h14l-2-5V9a5 5 0 0 0-10 0v3z"/><path d="M10 21h4"/></svg>Local Siren</div>
+                <div class="desc">Acoustic Deterrent</div>
+            </div>
+            <div class="node peripheral" id="node-cloud">
+                <div class="title"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 18a4 4 0 1 1 1-7.9A5 5 0 0 1 17 9a3.5 3.5 0 0 1 0 9z"/></svg>Cloud Gateway</div>
+                <div class="desc">REST Ingress Pool</div>
+            </div>
+            <div class="node peripheral" id="node-mobile">
+                <div class="title"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>Ranger App</div>
+                <div class="desc">Field Terminals</div>
+            </div>
+        </div>
+    <button id="btn-trigger" class="run-overlay-btn" onclick="runPipelineSimulation()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg>
+        Simulate Leopard Detection
+    </button>
+    </div>
+
+    <!-- Telemetry -->
+    <div class="grid">
+        <div class="panel panel-summary">
+            <div>
+                <div class="lead">Corridor Status</div>
+                <div class="big-stat" id="uptime-stat">99.2<small>% mesh</small></div>
+            </div>
+            <div class="summary-rows">
+                <div class="r"><span>Edge nodes online</span><b class="ok" id="sum-online">3 / 4</b></div>
+                <div class="r"><span>Streams ingesting</span><b id="sum-streams">3</b></div>
+                <div class="r"><span>Failover route</span><b class="bad">N03 → N02</b></div>
+                <div class="r"><span>Detections today</span><b id="sum-detect">0</b></div>
+            </div>
+        </div>
+
+        <div class="panel metric-card" id="card-node-1">
+            <div class="card-header"><span class="name">EDGE_01</span><span class="badge" id="badge-1">ACTIVE</span></div>
+            <div class="stat"><div class="lbl"><span>CPU Core Load</span><span id="txt-cpu-1">18%</span></div><div class="track"><div class="fill" id="bar-cpu-1" style="width:18%"></div></div></div>
+            <div class="stat"><div class="lbl"><span>GPU Inference</span><span id="txt-gpu-1">45%</span></div><div class="track"><div class="fill" id="bar-gpu-1" style="width:45%;background:linear-gradient(90deg,var(--teal),var(--green))"></div></div></div>
+            <div class="stat"><div class="lbl"><span>Memory Pool</span><span id="txt-mem-1">32%</span></div><div class="track"><div class="fill" id="bar-mem-1" style="width:32%"></div></div></div>
+            <div class="leopard-alert" id="leopard-alert-1"><span class="alert-dot"></span><span class="alert-text">Leopard Detected</span><span class="alert-conf">99.4% conf</span></div>
+        </div>
+
+        <div class="panel metric-card" id="card-node-2">
+            <div class="card-header"><span class="name">EDGE_02</span><span class="badge" id="badge-2">ACTIVE</span></div>
+            <div class="stat"><div class="lbl"><span>CPU Core Load</span><span id="txt-cpu-2">22%</span></div><div class="track"><div class="fill" id="bar-cpu-2" style="width:22%"></div></div></div>
+            <div class="stat"><div class="lbl"><span>GPU Inference</span><span id="txt-gpu-2">41%</span></div><div class="track"><div class="fill" id="bar-gpu-2" style="width:41%;background:linear-gradient(90deg,var(--teal),var(--green))"></div></div></div>
+            <div class="stat"><div class="lbl"><span>Memory Pool</span><span id="txt-mem-2">35%</span></div><div class="track"><div class="fill" id="bar-mem-2" style="width:35%"></div></div></div>
+            <div class="leopard-alert" id="leopard-alert-2"><span class="alert-dot"></span><span class="alert-text">Leopard Detected</span><span class="alert-conf">99.4% conf</span></div>
+        </div>
+
+        <div class="panel metric-card card-offline" id="card-node-3">
+            <div class="card-header"><span class="name" style="color:var(--offline-ink)">EDGE_03</span><span class="badge badge-offline" id="badge-3">CRASHED</span></div>
+            <div class="stat"><div class="lbl"><span>CPU Core Load</span><span style="color:var(--offline-line)">ERR</span></div><div class="track"><div class="fill fill-offline"></div></div></div>
+            <div class="stat"><div class="lbl"><span>GPU Inference</span><span style="color:var(--offline-line)">ERR</span></div><div class="track"><div class="fill fill-offline"></div></div></div>
+            <div class="stat"><div class="lbl"><span>Memory Pool</span><span style="color:var(--offline-line)">ERR</span></div><div class="track"><div class="fill fill-offline"></div></div></div>
+        </div>
+
+        <div class="panel metric-card" id="card-node-4">
+            <div class="card-header"><span class="name">EDGE_04</span><span class="badge" id="badge-4">ACTIVE</span></div>
+            <div class="stat"><div class="lbl"><span>CPU Core Load</span><span id="txt-cpu-4">19%</span></div><div class="track"><div class="fill" id="bar-cpu-4" style="width:19%"></div></div></div>
+            <div class="stat"><div class="lbl"><span>GPU Inference</span><span id="txt-gpu-4">43%</span></div><div class="track"><div class="fill" id="bar-gpu-4" style="width:43%;background:linear-gradient(90deg,var(--teal),var(--green))"></div></div></div>
+            <div class="stat"><div class="lbl"><span>Memory Pool</span><span id="txt-mem-4">33%</span></div><div class="track"><div class="fill" id="bar-mem-4" style="width:33%"></div></div></div>
+            <div class="leopard-alert" id="leopard-alert-4"><span class="alert-dot"></span><span class="alert-text">Leopard Detected</span><span class="alert-conf">99.4% conf</span></div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+        <label for="edge-select">Target Corridor</label>
+        <select id="edge-select">
+            <option value="1">Edge 01 · Lekurwadi Corridor</option>
+            <option value="2">Edge 02 · Aamboli Pass</option>
+            <option value="3">Edge 03 · Ghatghar Ridge — FAULT</option>
+            <option value="4">Edge 04 · Nimgiri Slope</option>
+        </select>
+        <button onclick="resetPipeline()">Reset Mesh</button>
+    </div>
+
+    <!-- Terminal -->
+    <div class="terminal" id="terminal-screen">
+        <div class="term-head">
+            <span class="dots"><i style="background:var(--rose)"></i><i style="background:var(--amber)"></i><i style="background:var(--green)"></i></span>
+            event stream · aranya-grid.log
+        </div>
+        <div class="log-entry"><span class="log-time">[SYSTEM]</span> <span style="color:#ffffff">Heartbeat lost on Edge Node 03 (Ghatghar Ridge). Mesh isolation engaged · fail-over standing by.</span></div>
+    </div>
+</div>
+
+<script>
+    const logScreen = document.getElementById('terminal-screen');
+    const canvas = document.getElementById('canvas-container');
+    const sirenNode = document.getElementById('node-siren');
+    const cloudNode = document.getElementById('node-cloud');
+    const mobileNode = document.getElementById('node-mobile');
+
+    let continuousStreamsInterval = null;
+    let healthCheckInterval = null;
+    let pipelineActive = false;
+    let currentCheckNode = 1;
+    let detectCount = 0;
+
+    // Live clock
+    setInterval(() => {
+        const d = new Date();
+        document.getElementById('clock').innerHTML =
+            '<span>UTC+05:30</span> ' + d.toTimeString().split(' ')[0];
+    }, 1000);
+
+    function appendLog(message, color = "var(--teal)") {
+        const now = new Date();
+        const t = now.toTimeString().split(' ')[0] + '.' + String(now.getMilliseconds()).padStart(3,'0');
+        const entry = document.createElement('div');
+        entry.className = "log-entry";
+        entry.innerHTML = `<span class="log-time">[${t}]</span> <span style="color:${color}">${message}</span>`;
+        logScreen.appendChild(entry);
+        logScreen.scrollTop = logScreen.scrollHeight;
+    }
+
+    function createAndAnimatePacket(pathId, duration, color, reverse, callback) {
+        const path = document.getElementById(pathId);
+        if (!path) { if (callback) callback(); return; }
+        const pathLength = path.getTotalLength();
+        const packet = document.createElement('div');
+        packet.className = 'packet';
+        packet.style.backgroundColor = color;
+        packet.style.boxShadow = `0 0 12px ${color}, 0 0 4px ${color}`;
+        canvas.appendChild(packet);
+
+        let startTime = null;
+        function step(ts) {
+            if (!startTime) startTime = ts;
+            let p = (ts - startTime) / duration;
+            if (p > 1) p = 1;
+            const target = reverse ? pathLength * (1 - p) : pathLength * p;
+            const pt = path.getPointAtLength(target);
+            packet.style.left = (pt.x - 5.5) + 'px';
+            packet.style.top = (pt.y - 5.5) + 'px';
+            if (p < 1) requestAnimationFrame(step);
+            else { packet.remove(); if (callback) callback(); }
+        }
+        requestAnimationFrame(step);
+    }
+
+    function updateCardMetrics(id, cpu, gpu, mem, accent) {
+        if (id === 3) return;
+        const card = document.getElementById(`card-node-${id}`);
+        if (accent) card.style.boxShadow = `0 0 0 1px ${accent}33, var(--shadow)`;
+        else card.style.boxShadow = "";
+        document.getElementById(`txt-cpu-${id}`).innerText = cpu + "%";
+        document.getElementById(`bar-cpu-${id}`).style.width = cpu + "%";
+        document.getElementById(`txt-gpu-${id}`).innerText = gpu + "%";
+        document.getElementById(`bar-gpu-${id}`).style.width = gpu + "%";
+        document.getElementById(`txt-mem-${id}`).innerText = mem + "%";
+        document.getElementById(`bar-mem-${id}`).style.width = mem + "%";
+    }
+
+    function startParallelStreamVisualizers() {
+        continuousStreamsInterval = setInterval(() => {
+            if (pipelineActive) return;
+            for (let i = 1; i <= 4; i++) {
+                if (i === 3) continue;
+                createAndAnimatePacket(`path-cam-edge${i}`, 2600, "#5C6B82", false, null);
+            }
+        }, 1500);
+    }
+
+    function startCloudMonitoringDaemon() {
+        healthCheckInterval = setInterval(() => {
+            if (pipelineActive) return;
+            let targetNode = currentCheckNode;
+
+            if (targetNode === 3) {
+                appendLog(`[monitor] probing Edge Node 03 connectivity…`, "var(--violet)");
+                setTimeout(() => {
+                    appendLog(`[timeout] Node 03 socket ping unanswered · heartbeat signature lost.`, "var(--rose)");
+                }, 800);
+                currentCheckNode = 4;
+                return;
+            }
+
+            const activeEdge = document.getElementById(`node-edge-${targetNode}`);
+            appendLog(`[monitor] cloud pulling health specs from Edge Node 0${targetNode}…`, "var(--violet)");
+
+            createAndAnimatePacket(`path-edge${targetNode}-cloud`, 1500, "var(--violet)", true, () => {
+                activeEdge.classList.add('edge-pinged');
+                setTimeout(() => {
+                    let cpu = Math.floor(Math.random()*12)+12;
+                    let gpu = Math.floor(Math.random()*15)+38;
+                    let mem = Math.floor(Math.random()*8)+28;
+                    appendLog(`[telemetry] Node 0${targetNode} ▸ heartbeat OK · cpu ${cpu}% · gpu ${gpu}% · mem ${mem}%`, "var(--teal)");
+                    updateCardMetrics(targetNode, cpu, gpu, mem, "#A78BFA");
+                    createAndAnimatePacket(`path-edge${targetNode}-cloud`, 1500, "var(--teal)", false, () => {
+                        activeEdge.classList.remove('edge-pinged');
+                        document.getElementById(`card-node-${targetNode}`).style.boxShadow = "";
+                    });
+                }, 400);
+            });
+            currentCheckNode = currentCheckNode >= 4 ? 1 : currentCheckNode + 1;
+        }, 4500);
+    }
+
+    function runPipelineSimulation() {
+        const selectedNodeId = parseInt(document.getElementById('edge-select').value);
+
+        if (selectedNodeId === 3) {
+            appendLog(`[ingress] cannot capture stream — Edge Node 03 (Ghatghar Ridge) is OFFLINE.`, "var(--rose)");
+            appendLog(`[failover] load shifting · re-routing Ghatghar streams upstream to Edge Node 02…`, "var(--amber)");
+            document.getElementById('edge-select').value = "2";
+            setTimeout(runPipelineSimulation, 1200);
+            return;
+        }
+
+        pipelineActive = true;
+        document.getElementById('btn-trigger').disabled = true;
+        const activeEdgeNode = document.getElementById(`node-edge-${selectedNodeId}`);
+
+        appendLog(`[ingress 0${selectedNodeId}] extracting raw RTSP visual buffer…`, "var(--ink)");
+
+        createAndAnimatePacket(`path-cam-edge${selectedNodeId}`, 2500, "var(--green)", false, () => {
+            appendLog(`[edge 0${selectedNodeId}] object detection complete ▸ LEOPARD CONFIRMED · match 99.4%`, "var(--green)");
+            activeEdgeNode.classList.add('edge-match');
+            updateCardMetrics(selectedNodeId, 89, 98, 76, "#4ADE80");
+            const chip = document.getElementById(`pulse-${selectedNodeId}`);
+            chip.innerText = "LEOPARD";
+            chip.style.background = "rgba(251,94,109,0.18)";
+            chip.style.color = "var(--rose)";
+            chip.style.borderColor = "rgba(251,94,109,0.4)";
+
+            // Show leopard detected alert in the metric card
+            const alertBanner = document.getElementById(`leopard-alert-${selectedNodeId}`);
+            if (alertBanner) alertBanner.classList.add('show');
+
+            detectCount++;
+            document.getElementById('sum-detect').innerText = detectCount;
+
+            setTimeout(() => {
+                appendLog(`[gpio 0${selectedNodeId}] engaging local acoustic deterrent relay…`, "var(--rose)");
+                createAndAnimatePacket(`path-edge${selectedNodeId}-siren`, 1200, "var(--rose)", false, () => {
+                    appendLog("[alarm] siren line active · audio deterrent broadcasting.", "var(--rose)");
+                    sirenNode.classList.add('pulse-siren');
+                });
+            }, 600);
+
+            setTimeout(() => {
+                appendLog(`[rest 0${selectedNodeId}] POST /api/v1/alerts · bounding-box metadata payload…`, "var(--cyan)");
+                createAndAnimatePacket(`path-edge${selectedNodeId}-cloud`, 3500, "var(--cyan)", false, () => {
+                    appendLog("[cloud] transaction committed · status 201 Created.", "var(--cyan)");
+                    cloudNode.classList.add('pulse-cloud');
+                    setTimeout(() => {
+                        appendLog("[notify] dispatching push payload to ranger terminals…", "var(--amber)");
+                        createAndAnimatePacket('path-cloud-mobile', 2000, "var(--amber)", false, () => {
+                            appendLog("[mobile] alert delivered · ranger override alarm sounding.", "var(--amber)");
+                            mobileNode.classList.add('pulse-mobile');
+                            var lpEl = document.getElementById('leopard-popup'); if (lpEl) lpEl.classList.add('show');
+                            document.getElementById('btn-trigger').disabled = false;
+                            pipelineActive = false;
+                        });
+                    }, 900);
+                });
+            }, 1500);
+        });
+    }
+
+    function resetPipeline() {
+        pipelineActive = false;
+        for (let i = 1; i <= 4; i++) {
+            if (i === 3) continue;
+            const edge = document.getElementById(`node-edge-${i}`);
+            edge.classList.remove('edge-match', 'edge-pinged');
+            const chip = document.getElementById(`pulse-${i}`);
+            chip.innerText = "ACTIVE";
+            chip.style.background = "rgba(74,222,128,0.1)";
+            chip.style.color = "var(--green)";
+            chip.style.borderColor = "rgba(74,222,128,0.25)";
+            const baseCpu = [0,15,20,0,17][i] || 16;
+            updateCardMetrics(i, baseCpu, 42, 31, null);
+            // Hide leopard alert banner on reset
+            const alertBanner = document.getElementById(`leopard-alert-${i}`);
+            if (alertBanner) alertBanner.classList.remove('show');
+        }
+        sirenNode.classList.remove('pulse-siren');
+        cloudNode.classList.remove('pulse-cloud');
+        mobileNode.classList.remove('pulse-mobile');
+        document.querySelectorAll('.packet').forEach(el => el.remove());
+        document.getElementById('btn-trigger').disabled = false;
+        var lpEl = document.getElementById('leopard-popup'); if (lpEl) lpEl.classList.remove('show');
+        appendLog("mesh reset · ambient fail-over tracking loops re-armed.", "var(--ink-dim)");
+    }
+
+    startParallelStreamVisualizers();
+    startCloudMonitoringDaemon();
+</script>
+</body>
+</html>
