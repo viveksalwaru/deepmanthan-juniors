@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. Contact: vivek@deepmanthan.ai -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Mission · DeepManthan Juniors</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#0b1020; --bg2:#0f1630; --panel:#151d38; --line:#26315a; --ink:#EAF0FF; --dim:#93a2c8;
+    --cyan:#38E1FF; --teal:#2DD4BF; --amber:#FFB454; --green:#5BE49B; --pink:#FF7BC0; --violet:#A78BFA; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(1100px 620px at 15% -8%,#2a2160,transparent),radial-gradient(900px 520px at 92% 2%,#0f3a57,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh;overflow-x:hidden}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);position:sticky;top:0;z-index:5;backdrop-filter:blur(6px);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:linear-gradient(135deg,var(--amber),var(--pink));padding:4px 12px;border-radius:20px}
+  .wrap{max-width:940px;margin:0 auto;padding:8px 18px 60px}
+
+  /* hero */
+  .hero{text-align:center;padding:52px 8px 30px;position:relative}
+  .eyebrow{font-family:'Baloo 2';font-weight:800;letter-spacing:.22em;font-size:.8rem;color:var(--violet);text-transform:uppercase}
+  .hero h1{font-size:clamp(2rem,6.4vw,3.5rem);line-height:1.06;margin:12px 0 4px;
+    background:linear-gradient(92deg,var(--cyan),var(--violet),var(--amber));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .hero .lead{color:#cdd3ff;font-weight:700;max-width:660px;margin:14px auto 0;font-size:clamp(1rem,2.4vw,1.16rem)}
+  .hero .kalam{margin-top:18px;display:inline-block;background:rgba(255,180,84,.12);border:1px solid var(--amber);border-radius:30px;padding:8px 18px;font-weight:800;color:#ffe0b0;font-size:.92rem}
+  .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+  .btn{font-family:'Baloo 2';font-weight:800;text-decoration:none;border-radius:14px;padding:13px 22px;font-size:1rem;transition:.15s;display:inline-block}
+  .btn.primary{color:#05121c;background:linear-gradient(135deg,var(--cyan),var(--violet));box-shadow:0 12px 30px -12px var(--violet)}
+  .btn.primary:hover{transform:translateY(-2px)}
+  .btn.ghost{color:var(--ink);border:1.5px solid var(--line)}.btn.ghost:hover{border-color:var(--cyan);color:var(--cyan)}
+
+  .sec{margin-top:48px}
+  .sec-h{text-align:center;margin-bottom:8px}
+  .sec-h h2{font-size:clamp(1.5rem,4vw,2.1rem)}
+  .sec-h p{color:var(--dim);font-weight:700;max-width:620px;margin:6px auto 0}
+
+  /* pillars */
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+  .pillar{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;transition:.16s}
+  .pillar:hover{transform:translateY(-4px)}
+  .pillar .ic{font-size:2.2rem}
+  .pillar h3{font-size:1.15rem;margin:8px 0 4px}
+  .pillar.c1{border-top:3px solid var(--cyan)}.pillar.c1 h3{color:var(--cyan)}
+  .pillar.c2{border-top:3px solid var(--amber)}.pillar.c2 h3{color:var(--amber)}
+  .pillar.c3{border-top:3px solid var(--green)}.pillar.c3 h3{color:var(--green)}
+  .pillar p{color:#c3cbe8;font-weight:600;font-size:.92rem;line-height:1.55}
+
+  /* gap section */
+  .gap{background:linear-gradient(135deg,rgba(255,123,192,.1),rgba(167,139,250,.1));border:1px solid var(--line);border-radius:22px;padding:26px 22px;margin-top:24px}
+  .gap h2{text-align:center;font-size:clamp(1.4rem,3.6vw,2rem);background:linear-gradient(90deg,var(--pink),var(--violet));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .gap .intro{text-align:center;color:#e7ecff;font-weight:700;max-width:680px;margin:10px auto 4px;line-height:1.6}
+  .gap .intro b{color:var(--amber)}
+  .demo{background:#0a1024;border:1px solid var(--line);border-radius:16px;padding:18px 14px;margin-top:18px}
+  .demo .cap{text-align:center;font-family:'Baloo 2';font-weight:700;color:var(--cyan);font-size:.95rem;margin-bottom:12px}
+  .flow{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+  .cam{text-align:center}.cam .big{font-size:2.4rem;line-height:1}.cam small{color:var(--dim);font-weight:700;font-size:.72rem;display:block;margin-top:2px}
+  .mx{display:inline-grid;grid-template-columns:repeat(2,1fr);gap:3px;padding:6px 4px;border-left:2px solid var(--dim);border-right:2px solid var(--dim);border-radius:4px}
+  .mx b{background:#141d3a;border:1px solid var(--line);border-radius:5px;width:34px;height:30px;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';font-weight:700;font-size:.9rem;color:#dbe6ff}
+  .mx.w b{color:#cbb8ff}.mx.p b{color:#8affc9;border-color:#2f6a4f}
+  .op{font-family:'Baloo 2';font-weight:800;font-size:1.4rem;color:var(--dim)}
+  .mlabel{text-align:center;font-size:.66rem;color:var(--dim);font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-top:5px}
+  .decision{text-align:center;margin-top:16px;font-family:'Baloo 2';font-size:1.25rem;min-height:32px;transition:.2s}
+  .car{font-size:2.2rem;transition:.2s}
+
+  /* credibility */
+  .cred{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:26px;margin-top:24px}
+  .cred .stat{text-align:center;padding-right:22px;border-right:1px solid var(--line)}
+  .cred .stat .n{font-family:'Baloo 2';font-weight:800;font-size:clamp(3rem,9vw,4.6rem);line-height:1;background:linear-gradient(135deg,var(--green),var(--cyan));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .cred .stat .l{color:var(--dim);font-weight:800;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+  .cred .txt h3{color:var(--green);font-size:1.25rem;margin-bottom:6px}
+  .cred .txt p{color:#c3cbe8;font-weight:600;line-height:1.6}
+  .cred .txt b{color:var(--cyan)}
+
+  /* manifesto / closing */
+  .manifesto{text-align:center;margin-top:46px;padding:34px 20px;border-radius:24px;background:linear-gradient(135deg,rgba(56,225,255,.1),rgba(167,139,250,.12));border:2px solid rgba(255,255,255,.14)}
+  .manifesto h2{font-size:clamp(1.5rem,4vw,2.2rem);background:linear-gradient(90deg,var(--cyan),var(--violet),var(--amber));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .manifesto p{color:#e7ecff;font-weight:700;max-width:640px;margin:12px auto 0;font-size:1.05rem;line-height:1.6}
+  .foot{text-align:center;color:#8b93c7;font-size:.8rem;margin-top:30px;font-weight:600;line-height:1.6}
+  .foot b{color:#cdd3ff}
+
+  @media(max-width:720px){.pillars{grid-template-columns:1fr}.cred{grid-template-columns:1fr}.cred .stat{border-right:none;border-bottom:1px solid var(--line);padding:0 0 16px}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html" class="back">← Lessons</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span>
+    <span class="tag">✨ Our Mission</span>
+  </div>
+
+  <div class="wrap">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="eyebrow">Why we built this</div>
+      <h1>The next great mind<br>could be in any classroom.</h1>
+      <p class="lead">DeepManthan Juniors exists so that <b style="color:var(--amber)">every</b> student — no matter where they study — gets the same spark, the same tools, and the same chance to fall in love with learning.</p>
+      <div class="kalam">🇮🇳 Because we never know who the next <b>A.P.J. Abdul Kalam</b> will be.</div>
+      <div class="cta-row">
+        <a class="btn primary" href="index.html">🚀 Explore the lessons</a>
+        <a class="btn ghost" href="juniors_ai_journey.html">🧠 See the AI Journey</a>
+      </div>
+    </section>
+
+    <!-- PILLARS -->
+    <section class="sec">
+      <div class="sec-h"><h2>What drives us</h2><p>We're not here to help students pass one more exam. We're here to change how they think.</p></div>
+      <div class="pillars">
+        <div class="pillar c1">
+          <div class="ic">🌍</div>
+          <h3>Equal quality for all</h3>
+          <p>Great education shouldn't depend on your pin code. Every child deserves the same world-class spark — because talent is everywhere, opportunity isn't. We're changing that.</p>
+        </div>
+        <div class="pillar c2">
+          <div class="ic">⚡</div>
+          <h3>A catalyst for thinking</h3>
+          <p>We trigger thinking power. Instead of handing over answers, we make students <b>wonder, experiment and question</b> — the very habits that turn learners into future innovators.</p>
+        </div>
+        <div class="pillar c3">
+          <div class="ic">🧠</div>
+          <h3>Think like an engineer</h3>
+          <p>We grow <b>computational thinking</b> &amp; curiosity: break big problems into small ones, think in systems, and stay hungry to solve real-world challenges. That's what builds better engineers.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE GAP -->
+    <section class="gap">
+      <h2>We learn to pass exams. But where does it all actually go?</h2>
+      <p class="intro">Through school and college we memorise formulas for the test — and rarely see where they live in the real world. DeepManthan Juniors closes that gap: <b>every concept is tied to how industry actually uses it.</b></p>
+
+      <div class="demo">
+        <div class="cap">Example: how <b>simple matrix multiplication</b> helps a self-driving car 🚗 “see”</div>
+        <div class="flow">
+          <div class="cam"><div class="big">📷</div><small>camera data</small></div>
+          <span class="op">→</span>
+          <div><div class="mx cam-mx" id="mA"></div><div class="mlabel">sensor pixels</div></div>
+          <span class="op">×</span>
+          <div><div class="mx w" id="mW"></div><div class="mlabel">learned weights</div></div>
+          <span class="op">=</span>
+          <div><div class="mx p" id="mP"></div><div class="mlabel">what it means</div></div>
+        </div>
+        <div class="decision" id="decision"><span class="car" id="car">🚗</span> <span id="dtext">…</span></div>
+      </div>
+      <p class="intro" style="margin-top:14px;font-size:.95rem">Every second, cameras pour in a flood of numbers. Those numbers become <b>matrices</b> — and multiplying them is literally how the car spots a pedestrian and decides to brake. <b>The maths on your exam paper is driving the future.</b></p>
+    </section>
+
+    <!-- CREDIBILITY -->
+    <section class="cred">
+      <div class="stat"><div class="n"><span id="years">0</span>+</div><div class="l">Years of industry<br>experience</div></div>
+      <div class="txt">
+        <h3>Taught by people who've built the real thing</h3>
+        <p>DeepManthan AI brings <b>50+ years of combined industry experience</b> — from real AI systems shipped in the real world. Our knowledge stays current, so students always learn what's <b>actually used today</b>, not just decades-old textbook theory. That's our guarantee: the latest knowledge, made simple.</p>
+      </div>
+    </section>
+
+    <!-- MANIFESTO -->
+    <section class="manifesto">
+      <h2>This is our contribution to society.</h2>
+      <p>To light a spark in one more young mind. To show a student that the formula on the board can move a car, cure a disease, or launch a rocket. And maybe — just maybe — to help the next great innovator discover exactly what they're capable of. 🚀</p>
+      <div class="cta-row" style="margin-top:20px">
+        <a class="btn primary" href="index.html">Start learning by playing →</a>
+      </div>
+    </section>
+
+    <div class="foot">
+      Made with ❤️ by <b>DeepManthan AI</b> — a deep-tech company that builds real AI systems and loves teaching young minds.<br>
+      © 2026 DeepManthan AI · All Rights Reserved.
+    </div>
+  </div>
+
+<script>
+  // count-up for years
+  (function(){ const el=document.getElementById('years'); const target=50; const t0=performance.now(), dur=1400;
+    function step(now){ const p=Math.min(1,(now-t0)/dur); el.textContent=Math.round(p*target); if(p<1)requestAnimationFrame(step); }
+    setTimeout(()=>requestAnimationFrame(step),300);
+  })();
+
+  // matrix-multiply demo
+  const W=[[2,1],[1,2]];
+  const SCEN=[
+    {A:[[8,1],[2,7]], car:'🚶', text:'Pedestrian ahead → <b style="color:#FF7BC0">BRAKE!</b>', col:'#FF7BC0'},
+    {A:[[1,2],[2,1]], car:'🛣️', text:'Clear road → <b style="color:#5BE49B">GO</b>', col:'#5BE49B'},
+    {A:[[9,2],[8,1]], car:'🛑', text:'Stop sign → <b style="color:#FFB454">STOP</b>', col:'#FFB454'},
+    {A:[[3,6],[1,2]], car:'🚦', text:'Red light → <b style="color:#FF7BC0">HALT</b>', col:'#FF7BC0'}
+  ];
+  function mul(A,B){ const C=[[0,0],[0,0]]; for(let i=0;i<2;i++)for(let j=0;j<2;j++)for(let k=0;k<2;k++)C[i][j]+=A[i][k]*B[k][j]; return C; }
+  function grid(el,M){ el.innerHTML=M.flat().map(v=>`<b>${v}</b>`).join(''); }
+  grid(document.getElementById('mW'),W);
+  let si=0;
+  function render(){ const s=SCEN[si]; const P=mul(s.A,W);
+    grid(document.getElementById('mA'),s.A); grid(document.getElementById('mP'),P);
+    const d=document.getElementById('decision'); d.style.opacity=0;
+    setTimeout(()=>{ document.getElementById('car').textContent=s.car; document.getElementById('dtext').innerHTML=s.text; d.style.opacity=1; },160);
+    si=(si+1)%SCEN.length;
+  }
+  render(); setInterval(render,2600);
+</script>
+</body>
+</html>

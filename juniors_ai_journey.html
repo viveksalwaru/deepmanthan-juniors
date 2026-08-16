@@ -38,6 +38,8 @@
   .ovl{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
   .lfill{fill:#8affc9;opacity:.9;mix-blend-mode:screen;filter:drop-shadow(0 0 7px #5BE49B)}
   .lfill.flash{opacity:1;filter:drop-shadow(0 0 18px #aaffdd)}
+  .fchip{opacity:0;transition:opacity .5s ease}
+  .fchip.on{opacity:1}
   .teacher{position:absolute;left:3%;top:26%;width:34%;max-width:240px;text-align:center;z-index:3;transition:opacity .4s}
   .teacher.dim{opacity:.3}
   .teacher .person{font-size:clamp(30px,5.4vw,58px);line-height:1;animation:tbob 3s ease-in-out infinite}
@@ -217,43 +219,79 @@
   const brainBubble=document.getElementById('brainBubble');
   function brainSay(){ brainBubble.classList.remove('show'); void brainBubble.offsetWidth; brainBubble.classList.add('show'); }
   const BARS=[{x:1298,top:300,h:132},{x:1324,top:296,h:134},{x:1350,top:293,h:134},{x:1376,top:294,h:132},{x:1402,top:298,h:128}], BW=12;
+  const FEATS=[['👁️','eyes',210],['〰️','whiskers',272],['🎨','fur colour',334],['👂','ears',396],['👃','nose',458]];
   function build(){
     let bars=''; BARS.forEach((b,i)=>{ bars+=`<rect class="lfill" id="lf${i}" x="${b.x}" y="${b.top+b.h}" width="${BW}" height="0" rx="3"/>`; });
+    let feats=''; FEATS.forEach(([ic,lb,cy],i)=>{ feats+=`<g class="fchip" id="fc${i}">
+      <line x1="1412" y1="356" x2="1434" y2="${cy}" stroke="#5BE49B" stroke-width="1.4" opacity=".55"/>
+      <rect x="1434" y="${cy-20}" width="150" height="40" rx="12" fill="rgba(10,16,32,.82)" stroke="#5BE49B" stroke-width="1.4"/>
+      <text x="1454" y="${cy+7}" font-size="21" text-anchor="middle">${ic}</text>
+      <text x="1474" y="${cy+6}" font-size="18" fill="#dfffe9" font-family="Baloo 2, sans-serif" font-weight="700">${lb}</text></g>`; });
     ovl.innerHTML=`
       <path id="pipe" fill="none" stroke="none" d="M 778 462 C 892 514 1004 518 1096 498 C 1170 482 1228 452 1276 410 C 1300 386 1318 372 1332 360"/>
-      ${bars}
+      ${bars}${feats}
       <g id="travelers"></g>`;
   }
   build();
   const pipe=document.getElementById('pipe'), plen=pipe.getTotalLength(), travelersG=document.getElementById('travelers');
   function setBars(level){ BARS.forEach((b,i)=>{ const h=level*b.h, f=document.getElementById('lf'+i); f.setAttribute('y',(b.top+b.h-h).toFixed(1)); f.setAttribute('height',h.toFixed(1)); }); }
   function flashBars(){ for(let i=0;i<5;i++){ const f=document.getElementById('lf'+i); f.classList.add('flash'); setTimeout(()=>f.classList.remove('flash'),800);} }
-  function makeCat(emoji,color){ const g=document.createElementNS(svgNS,'g');
-    g.innerHTML=`<rect x="-27" y="-27" width="54" height="54" rx="13" fill="#0d1430" stroke="${color}" stroke-width="3"/><text x="0" y="15" text-anchor="middle" font-size="40">${emoji}</text>`;
+  function revealFeatures(n){ for(let i=0;i<5;i++){ document.getElementById('fc'+i).classList.toggle('on', i<n); } }
+  const CAT_STYLES=[
+    {fur:'#E8944A',eye:'#8fce54',stripes:true,patch:false},
+    {fur:'#9AA6B8',eye:'#8fce54',stripes:true,patch:false},
+    {fur:'#3b3f4d',eye:'#FFD34D',stripes:false,patch:false},
+    {fur:'#EDE7DA',eye:'#6cc0ff',stripes:false,patch:false},
+    {fur:'#C6893F',eye:'#8fce54',stripes:true,patch:true},
+    {fur:'#2f3440',eye:'#9be27a',stripes:false,patch:true}
+  ];
+  const PREDICT_STYLE={fur:'#EAD9B0',earFur:'#5f4b3a',mask:'#5f4b3a',eye:'#5fb8ff',stripes:false,patch:false};
+  function makeCatImg(st,border){ const g=document.createElementNS(svgNS,'g');
+    const earFur = st.earFur || st.fur;
+    const stripes = st.stripes ? '<path d="M 0 -22 v 10 M -9 -20 l -3 8 M 9 -20 l 3 8" stroke="rgba(0,0,0,.25)" stroke-width="2.5" fill="none" stroke-linecap="round"/>' : '';
+    const patch = st.patch ? '<ellipse cx="0" cy="13" rx="17" ry="13" fill="#f3efe6"/>' : '';
+    const mask = st.mask ? `<ellipse cx="0" cy="9" rx="25" ry="23" fill="${st.mask}"/>` : '';
+    g.innerHTML=`
+      <rect x="-54" y="-50" width="108" height="100" rx="18" fill="rgba(10,16,32,.80)" stroke="${border}" stroke-width="2.5"/>
+      <path d="M -30 -20 L -42 -48 L -8 -30 Z" fill="${earFur}"/>
+      <path d="M 30 -20 L 42 -48 L 8 -30 Z" fill="${earFur}"/>
+      <path d="M -27 -24 L -34 -42 L -14 -30 Z" fill="#f2a7bd"/>
+      <path d="M 27 -24 L 34 -42 L 14 -30 Z" fill="#f2a7bd"/>
+      <ellipse cx="0" cy="4" rx="34" ry="30" fill="${st.fur}"/>
+      ${stripes}${patch}${mask}
+      <ellipse cx="-13" cy="0" rx="7.5" ry="9" fill="#fff"/><ellipse cx="13" cy="0" rx="7.5" ry="9" fill="#fff"/>
+      <ellipse cx="-13" cy="0" rx="5" ry="8" fill="${st.eye}"/><ellipse cx="13" cy="0" rx="5" ry="8" fill="${st.eye}"/>
+      <ellipse cx="-13" cy="1" rx="2.4" ry="6.4" fill="#0a1024"/><ellipse cx="13" cy="1" rx="2.4" ry="6.4" fill="#0a1024"/>
+      <circle cx="-15" cy="-3" r="1.6" fill="#fff"/><circle cx="11" cy="-3" r="1.6" fill="#fff"/>
+      <path d="M -4 12 L 4 12 L 0 17 Z" fill="#e86a8a"/>
+      <path d="M 0 17 q -5 6 -10 3 M 0 17 q 5 6 10 3" stroke="#5a3a1f" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      <g stroke="rgba(255,255,255,.85)" stroke-width="1.4" stroke-linecap="round">
+        <line x1="-14" y1="12" x2="-50" y2="7"/><line x1="-14" y1="16" x2="-50" y2="18"/>
+        <line x1="14" y1="12" x2="50" y2="7"/><line x1="14" y1="16" x2="50" y2="18"/></g>`;
     return g; }
   let running=false, learned=0;
-  function train(){ if(running)return; running=true; learned=0; setBars(0); aha.style.display='none';
+  function train(){ if(running)return; running=true; learned=0; setBars(0); revealFeatures(0); aha.style.display='none';
     counter.textContent='Cats learned: 0 / 10'; cap.innerHTML='🎓 Learning: showing your brain lots of cats…';
     teacher.classList.remove('dim'); brainBubble.classList.remove('show'); sayCat();
-    const travelers=[]; let spawned=0; const dur=1150;
+    const travelers=[]; let spawned=0; const dur=2100;
     const timer=setInterval(()=>{ if(spawned>=10){clearInterval(timer);return;} spawned++;
-      const g=makeCat('🐱','#5BE49B'); travelersG.appendChild(g); travelers.push({g,start:performance.now(),done:false}); sayCat();
-    },380);
+      const st=CAT_STYLES[(spawned-1)%CAT_STYLES.length]; const g=makeCatImg(st,'#5BE49B'); travelersG.appendChild(g); travelers.push({g,start:performance.now(),done:false}); sayCat();
+    },600);
     function loop(now){ travelers.forEach(t=>{ if(t.done)return; const p=Math.min(1,(now-t.start)/dur), pt=pipe.getPointAtLength(p*plen);
         t.g.setAttribute('transform',`translate(${pt.x.toFixed(1)},${pt.y.toFixed(1)})`);
-        if(p>=1){ t.done=true; t.g.remove(); learned++; setBars(learned/10); counter.textContent=`Cats learned: ${learned} / 10`; } });
+        if(p>=1){ t.done=true; t.g.remove(); learned++; setBars(learned/10); revealFeatures(Math.min(5,Math.ceil(learned/2))); counter.textContent=`Cats learned: ${learned} / 10`; } });
       if(spawned<10 || !travelers.every(t=>t.done)) requestAnimationFrame(loop);
-      else { running=false; cap.innerHTML='✅ Training done! The layers now hold the cat’s <b>features</b>.'; }
+      else { running=false; cap.innerHTML='✅ Training done! The layers now store the cat’s <b>features</b> — eyes, whiskers, colour…'; }
     }
     requestAnimationFrame(loop);
   }
-  function predict(){ if(running)return; if(learned<10){ cap.innerHTML='🎓 Train first — tap “Train with 10 cats”.'; return; } running=true; aha.style.display='none'; teacher.classList.add('dim'); brainBubble.classList.remove('show');
+  function predict(){ if(running)return; if(learned<10){ cap.innerHTML='🎓 Train first — tap “Train with 10 cats”.'; return; } running=true; aha.style.display='none'; teacher.classList.add('dim'); brainBubble.classList.remove('show'); revealFeatures(5);
     cap.innerHTML='🔮 A brand-new cat your brain has NEVER seen…';
-    const g=makeCat('🐈','#38E1FF'); travelersG.appendChild(g); const start=performance.now(), dur=1350;
+    const g=makeCatImg(PREDICT_STYLE,'#38E1FF'); travelersG.appendChild(g); const start=performance.now(), dur=2500;
     function loop(now){ const p=Math.min(1,(now-start)/dur), pt=pipe.getPointAtLength(p*plen);
       g.setAttribute('transform',`translate(${pt.x.toFixed(1)},${pt.y.toFixed(1)})`);
       if(p<1) requestAnimationFrame(loop); else { g.remove(); flashBars(); brainSay();
-        cap.innerHTML='🐱 “It’s a CAT!” — known from the features it learned, even though this exact cat is new.';
+        cap.innerHTML='🐱 “It’s a CAT!” — matched by its features, even though this exact cat is new.';
         aha.style.display='block'; running=false; }
     }
     requestAnimationFrame(loop);
