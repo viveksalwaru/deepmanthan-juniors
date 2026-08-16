@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- dm-copyright-notice (c) 2026 DeepManthan AI - All Rights Reserved. Proprietary. Contact: vivek@deepmanthan.ai -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI that protects leopards · DeepManthan Juniors</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#0b1020; --bg2:#0f1630; --panel:#151d38; --line:#26315a; --ink:#EAF0FF; --dim:#93a2c8;
+    --cyan:#38E1FF; --teal:#2DD4BF; --amber:#FFB454; --green:#5BE49B; --pink:#FF7BC0; --violet:#A78BFA; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:radial-gradient(900px 520px at 15% -8%,#12402f,transparent),radial-gradient(800px 500px at 90% 4%,#241a4a,transparent),linear-gradient(160deg,var(--bg),var(--bg2));color:var(--ink);min-height:100vh}
+  h1,h2,h3{font-family:'Baloo 2',cursive}
+  .top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.7);position:sticky;top:0;z-index:5;backdrop-filter:blur(6px);flex-wrap:wrap}
+  .back{color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:9px;padding:6px 12px;font-weight:700;font-size:.85rem}.back:hover{background:var(--cyan);color:#05121c}
+  .brand{font-family:'Baloo 2';font-weight:800;font-size:1.05rem}.brand span{color:var(--amber)}
+  .tag{margin-left:auto;font-size:.72rem;font-weight:800;color:#05121c;background:linear-gradient(135deg,var(--green),var(--cyan));padding:4px 12px;border-radius:20px}
+  .wrap{max-width:860px;margin:0 auto;padding:22px 18px 56px}
+  .hero{text-align:center;margin-bottom:16px}
+  .hero .em{font-size:2.4rem}
+  .hero h1{font-size:clamp(1.7rem,5.4vw,2.6rem);margin:6px 0;background:linear-gradient(90deg,var(--green),var(--cyan),var(--amber));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .hero p{color:#cdd3ff;font-weight:700;max-width:620px;margin:0 auto;font-size:clamp(.98rem,2.4vw,1.12rem)}
+
+  .story{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:16px;color:#c3cbe8;font-weight:600;line-height:1.6}
+  .story b{color:var(--amber)}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}
+  /* camera feed */
+  .feed{position:relative;height:340px;border-radius:14px;overflow:hidden;border:1px solid var(--line);
+    background:linear-gradient(180deg,#0a1533 0%,#122145 55%,#0a1020 100%)}
+  .hud{position:absolute;top:12px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:center;z-index:4}
+  .rec{color:#ff7b7b;font-weight:800;font-size:.72rem;font-family:monospace;display:flex;align-items:center;gap:6px}
+  .rec i{width:9px;height:9px;border-radius:50%;background:#ff5555;display:inline-block;animation:blink 1.1s infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+  .ts{color:var(--dim);font-size:.72rem;font-family:monospace}
+  .moon{position:absolute;top:34px;right:60px;font-size:1.8rem;filter:drop-shadow(0 0 12px rgba(255,255,220,.5))}
+  .star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;opacity:.5}
+  .trees{position:absolute;bottom:34px;left:0;right:0;display:flex;justify-content:space-around;font-size:2.3rem;filter:brightness(.5) saturate(.7);z-index:1}
+  .ground{position:absolute;bottom:0;left:0;right:0;height:46px;background:linear-gradient(180deg,transparent,#05070f);z-index:1}
+  .leopard{position:absolute;bottom:40px;left:102%;font-size:3.2rem;z-index:2;transition:left 4.2s linear;filter:drop-shadow(0 4px 6px #000)}
+  .leopard.walk{left:41%}
+  .leopard.walking{animation:walkbob .48s ease-in-out infinite}
+  @keyframes walkbob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-7px) rotate(3deg)}}
+  .scan{position:absolute;top:0;bottom:0;width:4px;left:0;opacity:0;z-index:3;background:linear-gradient(180deg,transparent,var(--cyan),transparent);box-shadow:0 0 14px var(--cyan)}
+  .scan.scanning{animation:sweep 1.4s linear infinite}
+  @keyframes sweep{0%{left:0%;opacity:0}8%{opacity:.95}92%{opacity:.95}100%{left:100%;opacity:0}}
+  .bbox{position:absolute;left:37%;bottom:34px;width:122px;height:104px;border:2.5px solid var(--green);border-radius:8px;opacity:0;transform:scale(1.12);transition:.25s;box-shadow:0 0 20px -3px var(--green);z-index:3}
+  .bbox.show{opacity:1;transform:scale(1)}
+  .bbox .tg{position:absolute;top:-24px;left:-2px;background:var(--green);color:#05121c;font-family:'Baloo 2';font-weight:800;font-size:.72rem;padding:2px 9px;border-radius:6px;white-space:nowrap}
+  .statusline{position:absolute;bottom:9px;left:0;right:0;text-align:center;font-family:'Baloo 2';font-weight:700;color:#fff;font-size:.98rem;text-shadow:0 2px 6px #000;z-index:4;padding:0 10px}
+
+  .controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+  .btn{font-family:'Baloo 2';font-weight:800;border:none;border-radius:13px;padding:12px 20px;cursor:pointer;font-size:1rem;box-shadow:0 6px 0 rgba(0,0,0,.25);transition:.1s}
+  .btn:active{transform:translateY(3px);box-shadow:0 3px 0 rgba(0,0,0,.25)}
+  .btn.go{background:var(--green);color:#05121c}.btn.reset{background:#33406e;color:#fff}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+
+  .pipe{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:16px}
+  .pnode{background:var(--bg2);border:1.5px solid var(--line);border-radius:12px;padding:9px 12px;text-align:center;min-width:82px;transition:.3s}
+  .pnode.on{border-color:var(--green);background:rgba(91,228,155,.16);box-shadow:0 0 16px -6px var(--green)}
+  .pnode .i{font-size:1.4rem}.pnode small{display:block;font-size:.66rem;font-weight:800;color:var(--dim);margin-top:2px}.pnode.on small{color:#bdead0}
+  .par{color:var(--teal);font-weight:800}
+
+  .alert{margin-top:16px;background:linear-gradient(120deg,rgba(91,228,155,.14),rgba(56,225,255,.12));border:1.5px solid var(--green);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;opacity:0;transform:translateY(10px);transition:.35s}
+  .alert.show{opacity:1;transform:none}
+  .alert .big{font-size:1.8rem}
+  .alert .t{font-family:'Baloo 2';font-weight:800;color:#dfffe9}.alert .s{color:#aeb8dd;font-weight:600;font-size:.86rem}
+  .counter{text-align:center;margin-top:12px;font-family:'Baloo 2';font-weight:800;color:var(--amber)}
+
+  .how{background:linear-gradient(120deg,rgba(167,139,250,.1),rgba(56,225,255,.1));border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:20px}
+  .how h3{color:var(--violet);font-size:1.1rem;margin-bottom:6px}
+  .how p{color:#c3cbe8;font-weight:600;line-height:1.6}.how b{color:var(--cyan)}
+  .how a{color:var(--amber);font-weight:800;text-decoration:none}.how a:hover{text-decoration:underline}
+
+  .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+  .cta{font-family:'Baloo 2';font-weight:800;text-decoration:none;border-radius:14px;padding:12px 20px;font-size:1rem;transition:.15s}
+  .cta.primary{color:#05121c;background:linear-gradient(135deg,var(--cyan),var(--violet));box-shadow:0 12px 30px -12px var(--violet)}
+  .cta.primary:hover{transform:translateY(-2px)}
+  .cta.ghost{color:var(--ink);border:1.5px solid var(--line)}.cta.ghost:hover{border-color:var(--cyan);color:var(--cyan)}
+  .foot{text-align:center;color:#6f7c9e;font-size:.78rem;margin-top:26px;font-weight:600}
+  @media(prefers-reduced-motion:reduce){.leopard{transition:none}.leopard.walking{animation:none}.scan.scanning{animation:none}}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="juniors_mission.html" class="back">← Mission</a>
+    <span class="brand">DeepManthan <span>Juniors</span></span>
+    <span class="tag">🐆 AI for Good</span>
+  </div>
+
+  <div class="wrap">
+    <div class="hero">
+      <div class="em">🐆🛡️</div>
+      <h1>AI that keeps villages <em>and</em> leopards safe</h1>
+      <p>A real problem, solved with the same idea you just learned — a smart camera that <b>recognises</b> a leopard and warns everyone in time.</p>
+    </div>
+
+    <div class="story">
+      🌙 Near <b>Junnar</b>, close to Pune, leopards sometimes wander out of the forest toward farms and homes at night. That's dangerous — for the people <i>and</i> for the leopard. What if a smart camera could spot the leopard early and instantly alert the rangers and villagers? Press the button and watch it work. 👇
+    </div>
+
+    <div class="card">
+      <div class="feed" id="feed">
+        <div class="hud">
+          <span class="rec"><i></i> REC</span>
+          <span class="ts" id="ts">Junnar · Corridor Cam 01 · night</span>
+        </div>
+        <div class="moon">🌙</div>
+        <div class="trees">🌲🌳🌲🌲🌳🌲🌳🌲</div>
+        <div class="ground"></div>
+        <div class="leopard" id="leo">🐆</div>
+        <div class="scan" id="scan"></div>
+        <div class="bbox" id="bbox"><span class="tg" id="btag">🐆 Leopard · 99%</span></div>
+        <div class="statusline" id="status">🌙 The corridor is calm and quiet…</div>
+      </div>
+
+      <div class="controls">
+        <button class="btn go" id="sim">▶ Simulate a leopard</button>
+        <button class="btn reset" id="reset">↺ Reset</button>
+      </div>
+
+      <div class="pipe" id="pipe">
+        <div class="pnode" data-i="0"><div class="i">📷</div><small>camera sees</small></div>
+        <span class="par">→</span>
+        <div class="pnode" data-i="1"><div class="i">🧠</div><small>AI recognises</small></div>
+        <span class="par">→</span>
+        <div class="pnode" data-i="2"><div class="i">🚨</div><small>alert sent</small></div>
+        <span class="par">→</span>
+        <div class="pnode" data-i="3"><div class="i">🛡️</div><small>everyone safe</small></div>
+      </div>
+
+      <div class="alert" id="alert">
+        <div class="big">📲</div>
+        <div><div class="t">Rangers &amp; villagers alerted!</div><div class="s">A snapshot is sent to the Ranger App — people move to safety and the leopard is gently guided back to the forest.</div></div>
+      </div>
+      <div class="counter" id="counter">Leopards spotted safely today: 0</div>
+    </div>
+
+    <div class="how">
+      <h3>🧠 Wait… this is the cat trick again!</h3>
+      <p>Remember how your brain learned to spot a cat? This camera learned what a <b>leopard</b> looks like — its spots, its shape, its eyes — from <b>thousands of example photos</b> (training). Now it recognises a leopard it has never seen before, instantly (that's <b>inference</b>). Same idea you explored in the <a href="juniors_ai_journey.html">AI Journey</a> — but here it's saving real lives.</p>
+    </div>
+
+    <div class="cta-row">
+      <a class="cta primary" href="index.html">🚀 Explore the lessons</a>
+      <a class="cta ghost" href="edge_computing.html">🔧 See the real professional console →</a>
+    </div>
+
+    <div class="foot">DeepManthan Juniors · real AI for a safer world · © 2026 DeepManthan AI — All Rights Reserved.</div>
+  </div>
+
+<script>
+  const $=id=>document.getElementById(id);
+  const leo=$('leo'), scan=$('scan'), bbox=$('bbox'), status=$('status'), alertEl=$('alert'), counter=$('counter');
+  const nodes=[...document.querySelectorAll('.pnode')];
+  let busy=false, spotted=0;
+  // stars
+  const feed=$('feed'); for(let i=0;i<26;i++){ const s=document.createElement('div'); s.className='star'; s.style.left=Math.random()*100+'%'; s.style.top=Math.random()*55+'%'; s.style.opacity=(.3+Math.random()*.5); feed.appendChild(s); }
+  function litNodes(n){ nodes.forEach((el,i)=>el.classList.toggle('on', i<n)); }
+  function reset(){ busy=false; leo.style.transition='none'; leo.classList.remove('walk','walking'); void leo.offsetWidth; leo.style.transition='';
+    bbox.classList.remove('show'); scan.classList.remove('scanning'); alertEl.classList.remove('show'); litNodes(0); status.textContent='🌙 The corridor is calm and quiet…'; }
+  function simulate(){ if(busy)return; busy=true; bbox.classList.remove('show'); alertEl.classList.remove('show'); litNodes(0);
+    status.textContent='👀 Something is moving in the corridor…';
+    // snap to the right edge (no slide), then walk slowly left
+    leo.style.transition='none'; leo.classList.remove('walk','walking'); void leo.offsetWidth;
+    leo.style.transition=''; void leo.offsetWidth; leo.classList.add('walk','walking');
+    // camera scans continuously the whole time
+    scan.classList.remove('scanning'); void scan.offsetWidth; scan.classList.add('scanning');
+    litNodes(1);
+    const WALK=4200, HOLD=2600;
+    setTimeout(()=>{ // arrived → the leopard stops and the AI is actively looking
+      leo.classList.remove('walking');
+      status.textContent='🧠 AI is looking… scanning &amp; matching features (spots, shape, eyes)…';
+    }, WALK);
+    setTimeout(()=>{ // detected → lock on, stop scanning
+      scan.classList.remove('scanning');
+      bbox.classList.add('show'); status.innerHTML='🐆 <b>Leopard detected — 99% sure!</b>'; litNodes(2);
+    }, WALK+HOLD);
+    setTimeout(()=>{ // alert + safe
+      alertEl.classList.add('show'); litNodes(4); status.innerHTML='✅ Alert sent — everyone stays safe.';
+      spotted++; counter.textContent='Leopards spotted safely today: '+spotted; busy=false;
+    }, WALK+HOLD*2);
+  }
+  $('sim').onclick=simulate; $('reset').onclick=reset;
+</script>
+</body>
+</html>
